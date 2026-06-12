@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartik Sirohi | Resume</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            color: #222;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .download {
+            margin-top: 25px;
+        }
+
+        .download a {
+            border: 1px solid #222;
+            padding: 10px 18px;
+            border-radius: 6px;
+            transition: 0.2s ease;
+        }
+
+        .download a:hover {
+            background: #222;
+            color: white;
+        }
+
+        .about {
+            text-align: center;
+            color: #444;
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+        }
+
+        section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            margin-bottom: 24px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .item-title {
+            font-weight: bold;
+        }
+
+        .item-subtitle {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .skills {
+            display: grid;
+            gap: 12px;
+        }
+
+        .skill-group strong {
+            display: inline-block;
+            min-width: 170px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .item-header {
+                flex-direction: column;
+            }
+
+            .skill-group strong {
+                display: block;
+                margin-bottom: 4px;
+            }
+        }
+
+        .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.skill-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.skill-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.skill-card p {
+    margin: 0;
+    color: #555;
+}
+
+.item p {
+    margin-top: 8px;
+    color: #555;
+}
+
+.item-subtitle a:hover,
+.item-title a:hover {
+    text-decoration: underline;
+}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Kartik Sirohi</h1>
+
+        <p class="tagline">
+            AI Systems • Performance Engineering • High Performance Computing
+        </p>
+
+        <div class="links">
+            <a href="mailto:kartik.orion.dev@gmail.com">Email</a>
+            <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
+            <a href="./index.html">Home</a>
+        </div>
+
+        <div class="download">
+            <a href="./assets/sirohikartik_latest.pdf" download>
+                Download Resume (PDF)
+            </a>
+        </div>
+    </div>
+
+    <div class="about">
+        <p>
+            I work at the intersection of artificial intelligence and systems
+            engineering, with a focus on performance optimization, memory-efficient
+            computing, inference systems, information retrieval, and large-scale AI
+            infrastructure.
+        </p>
+    </div>
+
+    <section>
+        <h2>Education</h2>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">NIT Jalandhar</span>
+                <span>2024 – Present</span>
+            </div>
+
+            <div class="item-subtitle">
+                B.Tech, Information Technology • CGPA: 9.5 / 10.0
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Experience</h2>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">
+                    Project Lead — EPSE (Efficient Protein Search Engine)
+                </span>
+                <span>Jun 2026 – Present</span>
+            </div>
+
+            <div class="item-subtitle">
+                Open Source
+            </div>
+
+            <ul>
+                <li>
+                    Building a memory-efficient protein sequence search engine in C.
+                </li>
+                <li>
+                    Focused on paging-based indexing and large-scale biological
+                    sequence retrieval.
+                </li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">
+                    AI Research Intern — University of Galway
+                </span>
+                <span>Jan 2026 – Mar 2026</span>
+            </div>
+
+            <ul>
+                <li>
+                    Co-authored DICE-RoBERTa, a compute-efficient video
+                    classification architecture.
+                </li>
+                <li>
+                    Achieved 85% accuracy on UCF101 using only 9.8 GFLOPs/video.
+                </li>
+                <li>
+                    Contributed to research in computational psychiatry.
+                </li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">
+                    Freelance AI / Backend Engineer
+                </span>
+                <span>Aug 2025 – Dec 2025</span>
+            </div>
+
+            <ul>
+                <li>
+                    Built AI-powered API testing infrastructure.
+                </li>
+                <li>
+                    Designed context-aware LLM pipelines for automated test generation.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">
+                    tinyGPT
+                </span>
+                <span>2026</span>
+            </div>
+
+            <div class="item-subtitle">
+                C++ Transformer Inference Engine
+            </div>
+
+            <ul>
+                <li>
+                    Built a 30M parameter decoder-only transformer from scratch.
+                </li>
+                <li>
+                    Implemented SIMD-optimized matrix multiplication and
+                    cache-aware kernels.
+                </li>
+                <li>
+                    Achieved 96.9ms TTFT on Apple M1 Air.
+                </li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">
+                    Mini-Torch
+                </span>
+                <span>2026</span>
+            </div>
+
+            <div class="item-subtitle">
+                Neural Network Framework
+            </div>
+
+            <ul>
+                <li>
+                    Built a custom tensor engine with reverse-mode automatic differentiation.
+                </li>
+                <li>
+                    Implemented SGD, Adam, and dynamic computation graphs.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+
+<section>
+    <h2>Open Source</h2>
+
+<div class="item">
+    <div class="item-header">
+        <span class="item-title">
+            <a href="https://github.com/ggerganov/llama.cpp" target="_blank">
+                ggml-org/llama.cpp
+            </a>
+        </span>
+        <span>2026</span>
+    </div>
+
+    <div class="item-subtitle">
+        <a href="https://github.com/ggerganov/llama.cpp/pull/22209" target="_blank">
+            PR #22209 (Merged)
+        </a>
+    </div>
+
+    <p>
+        Vectorized <code>ggml_vec_dot_q4_1_q8_1</code> by rewriting a hot-path
+        quantized dot product using SIMD intrinsics, improving LLM inference throughput.
+    </p>
+</div>
+
+<div class="item">
+    <div class="item-header">
+        <span class="item-title">
+            <a href="https://github.com/pytorch/pytorch" target="_blank">
+                pytorch/pytorch
+            </a>
+        </span>
+        <span>2026</span>
+    </div>
+
+    <div class="item-subtitle">
+        <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank">
+            PR #172200 (Merged)
+        </a>
+    </div>
+
+    <p>
+        Fixed NaN propagation in the tensor clamp operation and independently
+        navigated PyTorch's large codebase and review process.
+    </p>
+</div>
+
+<div class="item">
+    <div class="item-header">
+        <span class="item-title">
+            <a href="https://github.com/dspinellis/alexandria3k" target="_blank">
+                alexandria3k
+            </a>
+        </span>
+        <span>2026</span>
+    </div>
+
+    <div class="item-subtitle">
+        <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank">
+            PR #63 (Merged)
+        </a>
+    </div>
+
+    <p>
+        Reduced lookup complexity from O(n) to O(1) through algorithmic restructuring.
+    </p>
+</div>
+
+<div class="item">
+    <div class="item-header">
+        <span class="item-title">
+            <a href="https://github.com/scipy/scipy" target="_blank">
+                scipy/scipy
+            </a>
+        </span>
+        <span>2025</span>
+    </div>
+
+    <div class="item-subtitle">
+        <a href="https://github.com/scipy/scipy/pull/23129" target="_blank">
+            PR #23129 (Merged)
+        </a>
+    </div>
+
+    <p>
+        Added documentation examples for the Gauss–Jacobi quadrature API.
+    </p>
+</div>
+
+<div class="item">
+    <div class="item-header">
+        <span class="item-title">
+            <a href="https://github.com/Tracer-Cloud/opensre" target="_blank">
+                Tracer-Cloud/opensre
+            </a>
+        </span>
+        <span>2026</span>
+    </div>
+
+    <div class="item-subtitle">
+        <a href="https://github.com/Tracer-Cloud/opensre/pull/852" target="_blank">PR #852</a>,
+        <a href="https://github.com/Tracer-Cloud/opensre/pull/917" target="_blank">PR #917</a>,
+        <a href="https://github.com/Tracer-Cloud/opensre/pull/1059" target="_blank">PR #1059</a>
+        (Merged)
+    </div>
+
+    <p>
+        Added unit tests for data validation and Grafana Tempo mixins.
+    </p>
+</div>
+
+
+           </section>
+
+    <section>
+        <h2>Technical Skills</h2>
+
+        
+<section>
+
+<div class="skills-grid">
+
+    <div class="skill-card">
+        <h3>Performance & Systems</h3>
+        <p>
+            C++, SIMD (AVX, NEON), OpenMP, Multithreading,
+            Cache-Aware Algorithms, Memory Optimization
+        </p>
+    </div>
+
+    <div class="skill-card">
+        <h3>AI & Machine Learning</h3>
+        <p>
+            Transformers, LLMs, CNNs, RAG,
+            Autograd, Quantization, FAISS
+        </p>
+    </div>
+
+    <div class="skill-card">
+        <h3>Backend</h3>
+        <p>
+            FastAPI, Express, REST APIs,
+            PostgreSQL, Async Systems
+        </p>
+    </div>
+
+    <div class="skill-card">
+        <h3>Languages</h3>
+        <p>
+            C++, Python, JavaScript
+        </p>
+    </div>
+
+    <div class="skill-card">
+        <h3>Tools</h3>
+        <p>
+            Linux, Git, Postman, Vercel
+        </p>
+    </div>
+
+    <div class="skill-card">
+        <h3>Computer Science</h3>
+        <p>
+            Operating Systems, Computer Architecture,
+            DBMS, OOP, Data Structures & Algorithms
+        </p>
+    </div>
+
+</div>
+    </section>
+
+    <div class="footer">
+        Built by Kartik Sirohi
+    </div>
+
+</body>
+</html>

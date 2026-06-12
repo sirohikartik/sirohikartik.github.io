@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartik Sirohi | Open Source</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            color: #222;
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .contributions {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .contribution {
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .contribution h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .year {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+
+        .links a {
+            color: #555;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .stats {
+            margin-bottom: 35px;
+            padding: 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+        }
+
+        .stats p {
+            margin: 0;
+            color: #555;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .contribution {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Open Source</h1>
+
+        <p class="subtitle">
+            Contributions to machine learning, scientific computing,
+            systems software, and developer tooling.
+        </p>
+
+        <div class="nav">
+            <a href="./index.html">Home</a>
+            <a href="./resume.html">Resume</a>
+            <a href="./projects.html">Projects</a>
+        </div>
+    </div>
+
+    <div class="stats">
+        <p>
+            I've contributed to projects spanning LLM inference,
+            deep learning frameworks, scientific computing,
+            observability tooling, and data infrastructure.
+        </p>
+    </div>
+
+    <div class="contributions">
+
+        <div class="contribution">
+            <h2>ggml-org / llama.cpp</h2>
+
+            <div class="year">2026</div>
+
+            <p>
+                One of the most widely used open-source inference engines
+                for running large language models efficiently on consumer hardware.
+            </p>
+
+            <div class="links">
+                <a href="https://github.com/ggerganov/llama.cpp" target="_blank">
+                    Repository
+                </a>
+
+                <a href="https://github.com/ggerganov/llama.cpp/pull/22209" target="_blank">
+                    PR #22209
+                </a>
+            </div>
+
+            <ul>
+                <li>
+                    Vectorized <code>ggml_vec_dot_q4_1_q8_1</code>.
+                </li>
+
+                <li>
+                    Rewrote a hot-path quantized dot product using SIMD intrinsics.
+                </li>
+
+                <li>
+                    Directly improves LLM inference throughput.
+                </li>
+            </ul>
+        </div>
+
+        <div class="contribution">
+            <h2>PyTorch</h2>
+
+            <div class="year">2026</div>
+
+            <p>
+                The world's most widely used deep learning framework.
+            </p>
+
+            <div class="links">
+                <a href="https://github.com/pytorch/pytorch" target="_blank">
+                    Repository
+                </a>
+
+                <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank">
+                    PR #172200
+                </a>
+            </div>
+
+            <ul>
+                <li>
+                    Fixed NaN propagation in tensor clamp operations.
+                </li>
+
+                <li>
+                    Investigated behavior across the tensor computation stack.
+                </li>
+
+                <li>
+                    Navigated PyTorch's review and testing process independently.
+                </li>
+            </ul>
+        </div>
+
+        <div class="contribution">
+            <h2>alexandria3k</h2>
+
+            <div class="year">2026</div>
+
+            <p>
+                Research data engineering platform used for large-scale
+                scholarly data processing.
+            </p>
+
+            <div class="links">
+                <a href="https://github.com/dspinellis/alexandria3k" target="_blank">
+                    Repository
+                </a>
+
+                <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank">
+                    PR #63
+                </a>
+            </div>
+
+            <ul>
+                <li>
+                    Reduced lookup complexity from O(n) to O(1).
+                </li>
+
+                <li>
+                    Improved performance through algorithmic restructuring.
+                </li>
+            </ul>
+        </div>
+
+        <div class="contribution">
+            <h2>SciPy</h2>
+
+            <div class="year">2025</div>
+
+            <p>
+                Core scientific computing library for Python.
+            </p>
+
+            <div class="links">
+                <a href="https://github.com/scipy/scipy" target="_blank">
+                    Repository
+                </a>
+
+                <a href="https://github.com/scipy/scipy/pull/23129" target="_blank">
+                    PR #23129
+                </a>
+            </div>
+
+            <ul>
+                <li>
+                    Added documentation examples for the
+                    Gauss–Jacobi quadrature API.
+                </li>
+
+                <li>
+                    Improved discoverability and usability of numerical methods.
+                </li>
+            </ul>
+        </div>
+
+        <div class="contribution">
+            <h2>Tracer-Cloud / opensre</h2>
+
+            <div class="year">2026</div>
+
+            <p>
+                Open-source reliability engineering and observability platform.
+            </p>
+
+            <div class="links">
+                <a href="https://github.com/Tracer-Cloud/opensre" target="_blank">
+                    Repository
+                </a>
+
+                <a href="https://github.com/Tracer-Cloud/opensre/pull/852" target="_blank">
+                    PR #852
+                </a>
+
+                <a href="https://github.com/Tracer-Cloud/opensre/pull/917" target="_blank">
+                    PR #917
+                </a>
+
+                <a href="https://github.com/Tracer-Cloud/opensre/pull/1059" target="_blank">
+                    PR #1059
+                </a>
+            </div>
+
+            <ul>
+                <li>
+                    Added tests for validation logic.
+                </li>
+
+                <li>
+                    Added Grafana Tempo mixin testing.
+                </li>
+
+                <li>
+                    Improved reliability of the project's CI pipeline.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Built by Kartik Sirohi
+    </div>
+
+</body>
+</html>

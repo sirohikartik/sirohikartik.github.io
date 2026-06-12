@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartik Sirohi | Projects</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            color: #222;
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .project {
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .project h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .stack {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        .project-links a {
+            color: #555;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .project {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Projects</h1>
+
+        <p class="subtitle">
+            Systems, AI, performance engineering, and infrastructure projects.
+        </p>
+
+        <div class="nav">
+            <a href="./index.html">Home</a>
+            <a href="./resume.html">Resume</a>
+            <a href="./opensource.html">Open Source</a>
+        </div>
+    </div>
+
+    <div class="projects">
+
+        <!-- EPSE -->
+
+        <div class="project">
+            <h2>EPSE — Efficient Protein Search Engine</h2>
+
+            <div class="stack">
+                C • Information Retrieval • Bioinformatics • Systems Engineering
+            </div>
+
+            <p>
+                EPSE is an experimental protein database search engine designed
+                for resource-constrained environments. Rather than loading every
+                protein embedding into memory, EPSE organizes proteins into
+                clusters and only loads the most relevant partitions during
+                retrieval, dramatically reducing memory requirements.
+            </p>
+
+            <div class="project-links">
+                <a href="https://github.com/sirohikartik/EPSE" target="_blank">
+                    GitHub
+                </a>
+
+                <a href="https://epse.vercel.app" target="_blank">
+                    Website
+                </a>
+
+                <a href="https://epse-docs.vercel.app" target="_blank">
+                    Documentation
+                </a>
+            </div>
+
+            <ul>
+                <li>Built in C for efficient execution and memory usage.</li>
+                <li>Protein embeddings generated using ESM-2 (35M parameter model).</li>
+                <li>Clustering-based retrieval using cosine similarity.</li>
+                <li>Disk-backed embedding storage to reduce RAM consumption.</li>
+                <li>Focused on large-scale biological sequence search.</li>
+                <li>Search pipeline currently under active development.</li>
+            </ul>
+        </div>
+
+        <!-- tinyGPT -->
+
+        <div class="project">
+            <h2>tinyGPT</h2>
+
+            <div class="stack">
+                C++ • Transformers • SIMD • High Performance Computing
+            </div>
+
+            <p>
+                A custom transformer inference engine written from scratch for
+                running a 30 million parameter TinyStories language model.
+                Features SIMD-optimized matrix multiplication and cache-aware
+                execution.
+            </p>
+
+            <div class="project-links">
+                <a href="https://github.com/sirohikartik/tinygpt" target="_blank">
+                    GitHub
+                </a>
+            </div>
+
+            <ul>
+                <li>Complete decoder-only transformer implementation.</li>
+                <li>GPT-2 compatible byte pair encoding tokenizer.</li>
+                <li>SIMD accelerated matrix multiplication using AVX and NEON.</li>
+                <li>Cache-aware tiled kernels for improved memory locality.</li>
+                <li>96.9ms Time-to-First-Token on Apple M1 Air.</li>
+                <li>1.88 tokens/sec generation throughput.</li>
+            </ul>
+        </div>
+
+        <!-- Mini-Torch -->
+
+        <div class="project">
+            <h2>Mini-Torch</h2>
+
+            <div class="stack">
+                Python • Deep Learning • Automatic Differentiation
+            </div>
+
+            <p>
+                A minimal deep learning framework built from scratch to
+                understand the internals of modern machine learning libraries.
+                Includes automatic differentiation, optimization, and neural
+                network training.
+            </p>
+
+            <div class="project-links">
+                <a href="https://github.com/sirohikartik/mini-torch" target="_blank">
+                    GitHub
+                </a>
+
+                <a href="https://sirohikartik.github.io/mini-torch/docs.html" target="_blank">
+                    Documentation
+                </a>
+            </div>
+
+            <ul>
+                <li>Custom Tensor implementation.</li>
+                <li>Reverse-mode automatic differentiation.</li>
+                <li>Dynamic computation graph.</li>
+                <li>Gradient accumulation and backpropagation.</li>
+                <li>SGD and Adam optimizers.</li>
+                <li>End-to-end neural network training support.</li>
+            </ul>
+        </div>
+
+        <!-- Athena -->
+
+        <div class="project">
+            <h2>Athena</h2>
+
+            <div class="stack">
+                Python • Retrieval • Search • Local LLMs
+            </div>
+
+            <p>
+                Athena is an open-source search agent that combines web search,
+                intelligent scraping, semantic retrieval, and local language
+                models to answer questions using current information from the
+                web.
+            </p>
+
+            <div class="project-links">
+                <a href="https://github.com/sirohikartik/athena" target="_blank">
+                    GitHub
+                </a>
+            </div>
+
+            <ul>
+                <li>DuckDuckGo-powered search pipeline.</li>
+                <li>Hybrid scraping using requests and Selenium.</li>
+                <li>Semantic retrieval using sentence-transformers and FAISS.</li>
+                <li>Local LLM inference through Ollama.</li>
+                <li>Source attribution and citation support.</li>
+                <li>Privacy-first design with local processing.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Built by Kartik Sirohi
+    </div>
+
+</body>
+</html>
