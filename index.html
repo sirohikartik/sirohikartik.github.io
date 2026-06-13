@@ -12,7 +12,7 @@
 
     <meta name="author" content="Kartik Sirohi" />
 
-    <link rel="canonical" href="https://yourdomain.com/" />
+    <link rel="canonical" href="https://sirohikartik.github.io" />
 
     <meta property="og:title"
         content="Kartik Sirohi" />
@@ -22,12 +22,7 @@
 
     <meta property="og:type" content="website" />
 
-    <meta property="og:url" content="https://yourdomain.com/" />
 
-    <meta property="og:image"
-        content="https://yourdomain.com/profile.jpg" />
-
-    <meta name="twitter:card" content="summary_large_image" />
 </head><style>
 
 
@@ -45,6 +40,15 @@ align-items: center;
 font-family: Arial, sans-serif;
 line-height: 1.7;
 color: #222;
+
+}
+
+
+body.dark{
+
+ background: #121212;
+    color: white;
+
 
 }
 
@@ -106,9 +110,48 @@ transition: 0.2s ease;
 background: #222;
 color: white;
 }
+
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    border: none;
+    border-radius: 999px;
+
+    padding: 10px 18px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    background: #f0f0f0;
+    color: #222;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    transition: all 0.25s ease;
+}
+
+#theme-toggle:hover {
+    transform: translateY(-2px);
+}
+
+body.dark #theme-toggle {
+    background: #242424;
+    color: white;
+}
+
+body.dark .quote {
+    color: #ddd;
+}
+
+body.dark .neovim {
+    color: #bbb;
+}
 </style>
 <body>
-
     
 <div class="Hero">
     <h1>Kartik Sirohi</h1>
@@ -145,5 +188,24 @@ color: white;
     </a>
 </div>
    </body>
+<script>
+    const theme = localStorage.getItem("theme");
+
+if (theme === "dark") {
+    document.body.classList.add("dark");
+}
+  function toggleTheme() {
+    const btn = document.getElementById("theme-toggle");
+
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        btn.textContent = "☀️ Light";
+    } else {
+        localStorage.setItem("theme", "light");
+        btn.textContent = "🌙 Dark";
+    }
+}</script>
 
 </html>
