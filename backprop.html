@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Representations by Back-propagating Errors</title>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+    font-size: 20px;
+    line-height: 1.8;
+    color: #242424;
+    background: #fff;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  h1 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #111;
+    margin-bottom: 16px;
+  }
+
+  .byline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  h2 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #111;
+    margin: 56px 0 16px;
+  }
+
+  h3 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin: 40px 0 12px;
+  }
+
+  p { margin-bottom: 28px; }
+
+  ol {
+    margin: 0 0 28px 28px;
+  }
+
+  ol li {
+    margin-bottom: 6px;
+  }
+
+  .math-block {
+    overflow-x: auto;
+    margin: 32px 0;
+    padding: 4px 0;
+  }
+
+  blockquote {
+    border-left: 3px solid #242424;
+    margin: 32px 0;
+    padding: 4px 0 4px 24px;
+    color: #555;
+    font-style: italic;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #e6e6e6;
+    margin: 48px 0;
+  }
+
+  a {
+    color: #242424;
+    text-decoration: underline;
+  }
+
+  .resources ol { margin-top: 8px; }
+
+  @media (max-width: 600px) {
+    body { font-size: 18px; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 22px; }
+    .container { padding: 48px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Learning Representations by Back-propagating Errors</h1>
+  <div class="byline">David E. Rumelhart &nbsp;·&nbsp; Geoffrey E. Hinton &nbsp;·&nbsp; Ronald J. Williams</div>
+
+  <p>This paper marks the beginning of modern deep learning and the popularization of backpropagation, the algorithm used to train deep neural networks. In a way this is the most important paper in deep learning and hence it's the perfect paper to start with.</p>
+
+  <h3>Prerequisites</h3>
+  <ol>
+    <li>A bit of multivariable calculus (chain rule)</li>
+    <li>A bit of linear algebra (vector dot products and notation)</li>
+    <li>A little bit of mathematical thinking</li>
+  </ol>
+
+  <hr class="divider">
+
+  <h2>Neural Networks</h2>
+
+  <p>Neural networks are the foundation of deep learning. Here we are going to provide an intuitive introduction and translate that to a more mathematical view of the subject.</p>
+
+  <p>Let us begin by considering a problem. Suppose you wish to define a function on the domain of images say \(\mathcal{I}\) which consists of images of both cats and dogs and you wish for your function to correctly classify a given image as a cat or a dog. This is a pretty difficult function to come up with yourself and so is a function that classifies the picture of a mole on one's skin as malignant or non-malignant.</p>
+
+  <p>Since these functions are hard to define we are going to approximate them and Neural Networks are the way to do this.</p>
+
+  <p>So essentially how it works is, you have an input vector with a dimension (say \(i\)) and then you map that \(i\)-dimensional vector to a different dimension to understand the complex relations between those individual units in that dimension. What this means is that we connect the input layer to a hidden layer of dimension say \(m\) and usually \(m > i\). Now this may also be reversed in some cases, the point is we take a different-dimension view of our input vector. This allows our network to understand the intricate details of the relationships of the features or units of our input dimension.</p>
+
+  <p>Now what we can do with this is we can then further propagate that hidden layer to more hidden layers until we reach our output dimension say \(o\).</p>
+
+  <p>So what happens during that transformation to each vector upon transformation across these layers?</p>
+
+  <p>Well, if we strictly go by the paper, they first proceed with a linear transformation of the vector given by:</p>
+
+  <div class="math-block">$$x^{(n+1)} = W^{(n)} x^{(n)} + b^{(n)}$$</div>
+
+  <p>Here \(n\) denotes the layer index. The vector \(x^{(n)}\) represents the activations of the \(n\)-th layer and \(x^{(n+1)}\) represents the activations of the next layer. The weight matrix \(W^{(n)} \in \mathbb{R}^{b \times a}\) maps an input of dimension \(a\) to an output of dimension \(b\). The bias vector \(b^{(n)} \in \mathbb{R}^{b}\) allows the transformation to be shifted.</p>
+
+  <p>But we don't stop there, we also apply a non-linear function to these values which are called activation functions. By using these non-linear functions we achieve non-linearity in our connections which means that we can now understand non-linear relationships between our data. The original paper uses the sigmoid function given by:</p>
+
+  <div class="math-block">$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</div>
+
+  <p>But what are these weights? Well we do not know because if we did then we would know the answer. So what we do is we randomly initialize these weights and we usually use our friendly neighbourhood Gaussian distribution.</p>
+
+  <p>But if these weights are randomly initialized then how do we get to the answer?</p>
+
+  <p>The answer to this question is the backbone of modern deep learning and the answer is...</p>
+
+  <hr class="divider">
+
+  <h2>BACKPROPAGATION</h2>
+
+  <p>The way the paper describes this felt a bit confusing but I will try to make it as simple as possible.</p>
+
+  <p>Now we will explain how it all works. Suppose you have to solve a problem of predicting a numerical value from some data. Imagine a neural network that has the following structure:</p>
+
+  <ol>
+    <li>An input layer of dimension \(a\): \(x \in \mathbb{R}^a\)</li>
+    <li>A hidden layer of dimension \(b\): \(h \in \mathbb{R}^b\)</li>
+    <li>An output layer of dimension \(o\): \(\hat{y} \in \mathbb{R}^o\)</li>
+  </ol>
+
+  <p>The hidden layer representation is given by:</p>
+
+  <div class="math-block">$$h = \sigma\left(W^{(1)} x + b^{(1)}\right)$$</div>
+
+  <p>where \(W^{(1)} \in \mathbb{R}^{b \times a}\), \(b^{(1)} \in \mathbb{R}^b\)</p>
+
+  <p>The final output is given by:</p>
+
+  <div class="math-block">$$\hat{y} = \sigma\left(W^{(2)} h + b^{(2)}\right)$$</div>
+
+  <p>where \(W^{(2)} \in \mathbb{R}^{o \times b}\), \(b^{(2)} \in \mathbb{R}^o\)</p>
+
+  <p>What we just did is called a forward pass in the network — meaning we went from the input to the output. But this output is utter rubbish because our weights were random so we will get a random answer.</p>
+
+  <p>Now comes the most important step: we call it training the network, meaning we adjust the weights which were randomly initialized to get a better answer from our neural network.</p>
+
+  <p>But to find out how much we must correct ourselves, we first need to understand how wrong we were in the first place — and for that we use something known as a loss function. Loss functions are of many types but since here we are predicting a numerical value (called regression) and not classifying (called classification) we can use the Mean Squared Error (MSE) given by:</p>
+
+  <div class="math-block">$$L = \frac{1}{2}(\hat{y} - y)^2$$</div>
+
+  <p>This is the case for a single value where \(\hat{y} \in \mathbb{R}\), \(y \in \mathbb{R}\). For our output layer it's given by:</p>
+
+  <div class="math-block">$$L = \frac{1}{2}\|\hat{y} - y\|^2, \quad \hat{y} \in \mathbb{R}^{o},\ y \in \mathbb{R}^{o}$$</div>
+
+  <p>Now we have the information as to how wrong we are — let's now adjust our weights to make our network better. We adjust each of our weights as:</p>
+
+  <div class="math-block">$$w \leftarrow w - \alpha \cdot \nabla_{w} L$$</div>
+
+  <p>So we have to calculate the gradient of our loss function with respect to each weight, and we can easily do so by using the chain rule.</p>
+
+  <p>Let us denote the pre-activation values of the output layer as:</p>
+
+  <div class="math-block">$$z^{(2)} = W^{(2)}h + b^{(2)}$$</div>
+
+  <p>so that \(\hat{y} = \sigma(z^{(2)})\).</p>
+
+  <p>The gradient of the loss function with respect to the network output is:</p>
+
+  <div class="math-block">$$\frac{\partial L}{\partial \hat{y}} = \hat{y} - y$$</div>
+
+  <p>Using the derivative of the sigmoid function:</p>
+
+  <div class="math-block">$$\sigma'(z) = \sigma(z)(1 - \sigma(z))$$</div>
+
+  <p>we obtain the error term for the output layer:</p>
+
+  <div class="math-block">$$\delta^{(2)} = (\hat{y} - y) \odot \hat{y}(1 - \hat{y})$$</div>
+
+  <p>The gradient of the loss with respect to the output layer weights and bias is:</p>
+
+  <div class="math-block">$$\frac{\partial L}{\partial W^{(2)}} = \delta^{(2)} h^\top$$</div>
+  <div class="math-block">$$\frac{\partial L}{\partial b^{(2)}} = \delta^{(2)}$$</div>
+
+  <p>We now propagate this error backward to the hidden layer:</p>
+
+  <div class="math-block">$$\frac{\partial L}{\partial h} = (W^{(2)})^\top \delta^{(2)}$$</div>
+
+  <p>Let the hidden layer pre-activation be:</p>
+
+  <div class="math-block">$$z^{(1)} = W^{(1)}x + b^{(1)}$$</div>
+
+  <p>and recall that \(h = \sigma(z^{(1)})\).</p>
+
+  <p>The error term for the hidden layer is then:</p>
+
+  <div class="math-block">$$\delta^{(1)} = \left( (W^{(2)})^\top \delta^{(2)} \right) \odot h(1 - h)$$</div>
+
+  <p>The gradients with respect to the hidden layer parameters are:</p>
+
+  <div class="math-block">$$\frac{\partial L}{\partial W^{(1)}} = \delta^{(1)} x^\top$$</div>
+  <div class="math-block">$$\frac{\partial L}{\partial b^{(1)}} = \delta^{(1)}$$</div>
+
+  <p>Finally, the weights are updated using gradient descent with learning rate \(\alpha\):</p>
+
+  <div class="math-block">
+    $$W^{(2)} \leftarrow W^{(2)} - \alpha \frac{\partial L}{\partial W^{(2)}}$$
+    $$b^{(2)} \leftarrow b^{(2)} - \alpha \frac{\partial L}{\partial b^{(2)}}$$
+    $$W^{(1)} \leftarrow W^{(1)} - \alpha \frac{\partial L}{\partial W^{(1)}}$$
+    $$b^{(1)} \leftarrow b^{(1)} - \alpha \frac{\partial L}{\partial b^{(1)}}$$
+  </div>
+
+  <blockquote>Note: We usually omit the sigmoid function in the output layer in regression networks but we showed it here just to give the reader a better understanding of how the chain rule is used in Backpropagation.</blockquote>
+
+  <p>The paper also describes an enhanced weight update using momentum. In modern notation:</p>
+
+  <div class="math-block">$$v_t = \alpha v_{t-1} - \eta \nabla_w L$$</div>
+  <div class="math-block">$$w_t = w_{t-1} + v_t$$</div>
+
+  <p>where \(v_t \equiv \Delta w(t)\).</p>
+
+  <hr class="divider">
+
+  <div class="resources">
+    <h3>More Resources</h3>
+    <ol>
+      <li><a href="https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">3Blue1Brown — Neural Network Playlist</a></li>
+      <li><a href="https://www.youtube.com/watch?v=VMj-3S1tku0&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ">Andrej Karpathy — Zero to Hero Playlist</a></li>
+    </ol>
+  </div>
+
+</div>
+</body>
+</html>
