@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building tinyGPT: A Transformer Inference Engine From Scratch in C++</title>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+
+  :root[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #242424;
+    --heading-color: #111111;
+    --byline-color: #757575;
+    --border-color: #e6e6e6;
+    --blockquote-color: #555555;
+    --table-header-bg: #f7f7f7;
+    --table-row-hover: #fafafa;
+    --toggle-bg: #e6e6e6;
+    --toggle-icon: '🌙';
+  }
+
+  :root[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --heading-color: #ffffff;
+    --byline-color: #a0a0a0;
+    --border-color: #2c2c2c;
+    --blockquote-color: #b0b0b0;
+    --table-header-bg: #1a1a1a;
+    --table-row-hover: #1e1e1e;
+    --toggle-bg: #2c2c2c;
+    --toggle-icon: '☀️';
+  }
+
+  body {
+    font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+    font-size: 20px;
+    line-height: 1.8;
+    color: var(--text-color);
+    background: var(--bg-color);
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+    position: relative;
+  }
+
+  /* Theme Toggle Button */
+  .theme-toggle {
+    position: absolute;
+    top: 32px;
+    right: 24px;
+    background: var(--toggle-bg);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .theme-toggle::before {
+    content: var(--toggle-icon);
+  }
+
+  h1 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: var(--heading-color);
+    margin-bottom: 16px;
+    padding-right: 50px;
+  }
+
+  .byline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    color: var(--byline-color);
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  h2 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 56px 0 16px;
+  }
+
+  h3 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--heading-color);
+    margin: 40px 0 12px;
+  }
+
+  p { margin-bottom: 28px; }
+
+  ol, ul {
+    margin: 0 0 28px 28px;
+  }
+
+  ol li, ul li {
+    margin-bottom: 8px;
+  }
+
+  /* Responsive Table Styling */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 32px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    text-align: left;
+  }
+
+  th, td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  th {
+    background-color: var(--table-header-bg);
+    color: var(--heading-color);
+    font-weight: 600;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background-color: var(--table-row-hover);
+  }
+
+  .math-block {
+    overflow-x: auto;
+    margin: 32px 0;
+    padding: 4px 0;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--heading-color);
+    margin: 32px 0;
+    padding: 4px 0 4px 24px;
+    color: var(--blockquote-color);
+    font-style: italic;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 48px 0;
+  }
+
+  a {
+    color: var(--heading-color);
+    text-decoration: underline;
+  }
+
+  .resources ol { margin-top: 8px; }
+
+  @media (max-width: 600px) {
+    body { font-size: 18px; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 22px; }
+    .container { padding: 64px 20px 80px; }
+    .theme-toggle { top: 16px; right: 20px; }
+    th, td { padding: 10px 12px; font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"></button>
+
+  <h1>Building tinyGPT: A Transformer Inference Engine From Scratch in C++</h1>
+  <div class="byline">Kartik Sirohi &nbsp;·&nbsp; Learning &amp; Systems</div>
+
+  <p>Back in April, I set out with a simple goal: build and understand a Transformer language model end to end — not just training it, but everything that happens after, all the way down to the metal.</p>
+
+  <h2>Where it started</h2>
+  <p>The spark came from contributing to <code>llama.cpp</code>, where I implemented a SIMD-vectorized version of <code>ggml_vec_dot_q4_1_q8_1</code> — a quantized dot-product kernel used during inference. That PR taught me a lot about one optimized operation. But it also left me with a bigger question: what happens around that one kernel? How does a model actually get from "trained weights" to "text streaming out token by token," and what does it take to make that fast?</p>
+  <p>I decided the only real way to find out was to build the whole stack myself — training included.</p>
+
+  <h2>Phase 1: Training the model</h2>
+  <p>I implemented a decoder-only Transformer in PyTorch and trained a ~30M parameter GPT on the TinyStories dataset, on Kaggle, for 2 epochs. Nothing exotic here — the interesting part of this project was never the training run, it was what came after.</p>
+  
+  <h3>Final architecture</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Parameters</td>
+          <td>~30M</td>
+        </tr>
+        <tr>
+          <td>\(d_{\text{model}}\)</td>
+          <td>256</td>
+        </tr>
+        <tr>
+          <td>Heads</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>Blocks</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>\(d_k\) (per head)</td>
+          <td>32</td>
+        </tr>
+        <tr>
+          <td>Vocabulary</td>
+          <td>50,257 (GPT-2 BPE)</td>
+        </tr>
+        <tr>
+          <td>Max sequence length</td>
+          <td>128</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Once training was done, I exported the weights and made a deliberate choice: no <code>torch.jit</code>, no ONNX, no existing runtime. I wanted to write the inference engine myself, in C++, from the ground up.</p>
+
+  <h2>Phase 2: Writing an inference engine from nothing</h2>
+  <p>The engine grew in distinct stages, each one solving a specific bottleneck I hit in the previous one.</p>
+
+  <ul>
+    <li><strong>Stage 1 — Get it working:</strong> A minimal C++ engine that loads exported <code>.npy</code> weights and runs autoregressive generation. No optimization, just correctness. I built a custom tensor library from scratch—implementing matrix multiplication, multi-head attention, LayerNorm, softmax, GELU, positional encodings, and the complete autoregressive inference pipeline. The engine loads exported NumPy weights directly and is organized as a set of header-only components (<code>tensor.hpp</code>, <code>runner.hpp</code>, <code>parser.hpp</code>).</li>
+    <li><strong>Stage 2 — Make the hot path fast:</strong> The obvious bottleneck in any Transformer forward pass is matrix multiplication. I added ARM NEON SIMD vectorization to the core tensor ops (<code>operator+</code>, <code>operator*</code>, LayerNorm, softmax, <code>add_bias</code>), and switched matmul to a cache-aware \(32 \times 32\) tiled implementation to cut down on cache misses and make better use of memory bandwidth.</li>
+    <li><strong>Stage 3 — Stop recomputing what you already know:</strong> Naive autoregressive decoding recomputes attention over the entire sequence at every step, even though most of it hasn't changed. I added KV caching, storing past key/value tensors so each new token only requires computing attention for the new position — turning an \(\mathcal{O}(n^2)\) generation loop into something closer to \(\mathcal{O}(n)\).</li>
+    <li><strong>Stage 4 — Use all the cores:</strong> Single-threaded SIMD only gets you so far. I added OpenMP parallelism across matmul, multi-head attention, and other compute-heavy ops, with adaptive thresholds so small tensors don't pay threading overhead for no benefit.</li>
+  </ul>
+
+  <h2>Results</h2>
+  <p>I benchmarked the final engine against a naive PyTorch implementation, on both MPS and CPU, on an Apple M1 MacBook Air (mean of 5 runs):</p>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>PyTorch (MPS)</th>
+          <th>PyTorch (CPU)</th>
+          <th>Custom C++ Engine</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Time-to-First-Token</td>
+          <td>910.29 ms</td>
+          <td>13.53 ms</td>
+          <td>14.08 ms</td>
+        </tr>
+        <tr>
+          <td>Avg time/token</td>
+          <td>87.00 ms</td>
+          <td>12.20 ms</td>
+          <td>8.11 ms</td>
+        </tr>
+        <tr>
+          <td>Throughput</td>
+          <td>11.49 tok/s</td>
+          <td>81.96 tok/s</td>
+          <td>120.94 tok/s</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The MPS comparison looks dramatic, but the more honest and interesting number is the CPU-vs-CPU one: even against PyTorch's own CPU path, the custom engine wins on every metric, purely from tiling, SIMD, KV caching, and threading — no exotic tricks, just doing the well-known things correctly and stacking them.</p>
+
+  <h2>What actually mattered</h2>
+  <p>If I had to rank the four optimizations by impact:</p>
+  
+  <ol>
+    <li><strong>KV caching</strong> gave the single biggest algorithmic win — it changes the complexity class of generation, not just the constant factor.</li>
+    <li><strong>Tiled matmul</strong> mattered because, at this model size, matrix multiplication dominates the per-token cost, and cache misses were the silent killer in the naive version.</li>
+    <li><strong>SIMD</strong> compounds on top of tiling — once the memory access pattern is cache-friendly, vectorizing the arithmetic gives another significant improvement.</li>
+    <li><strong>OpenMP</strong> was the smallest but easiest win, and only paid off once the per-operation cost was high enough to amortize threading overhead — which is why the adaptive threshold mattered.</li>
+  </ol>
+
+  <p>The broader lesson: inference engineering isn't really about writing a forward pass. It's about not doing work you don't have to do (KV caching), respecting the memory hierarchy (tiling), and using the hardware you actually have (SIMD + threads). None of these ideas are novel—they're standard techniques used in mature inference systems such as <code>llama.cpp</code> and <code>vLLM</code>—but implementing them myself, and watching the profiler numbers change as each optimization landed, made the "why" click in a way that simply reading papers never did.</p>
+
+  <h2>Where it's limited (on purpose)</h2>
+  <p>This is a learning project, not a production runtime, and it's honest about that:</p>
+  <ul>
+    <li>CPU-only, optimized for Apple Silicon (ARM NEON)</li>
+    <li>Batch size of 1</li>
+    <li>FP32 only — no quantization yet</li>
+    <li>Fixed maximum context length</li>
+  </ul>
+
+  <h2>What's next</h2>
+  <p>The natural next step is weight quantization (starting with INT8 and eventually mixed precision), followed by exploring multi-GPU inference to better understand tensor parallelism, communication costs, and memory-bandwidth tradeoffs at larger scales.</p>
+
+  <blockquote>
+    Note: AI assistance was used for debugging, error handling, and some boilerplate during development. The model implementation, training pipeline, inference engine architecture, and optimization strategy are my own work.
+  </blockquote>
+
+  <hr class="divider">
+
+  <div class="resources">
+    <h3>Project Resources</h3>
+    <ol>
+      <li>Code Repository: <a href="https://github.com/sirohikartik/tinygpt" target="_blank" rel="noopener">github.com/sirohikartik/tinygpt</a></li>
+    </ol>
+  </div>
+</div>
+
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  // Check for saved theme preference, otherwise default to dark
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  root.setAttribute('data-theme', savedTheme);
+
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    root.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+</script>
+</body>
+</html>
