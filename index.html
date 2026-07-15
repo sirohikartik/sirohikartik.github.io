@@ -775,15 +775,17 @@
 
   <div class="projects-grid">
 
-    <div class="project-item reveal">
-      <div class="project-header">
-        <div class="project-name">tinyGPT</div>
-        <a href="https://github.com/sirohikartik/tinygpt" target="_blank" class="project-link">GitHub ↗</a>
-      </div>
-      <div class="project-stack">C++ · Python · PyTorch · Transformer</div>
-      <p class="project-desc">End-to-end GPT training and inference engine. 30M-parameter decoder-only model trained on TinyStories, with a native C++ inference engine implementing MHA, layer norm, KV-cache, and SIMD-optimized tiled matrix multiplication.</p>
-      <span class="project-stat">58.2ms TTFT · 84.65 tok/s on M1 CPU</span>
-    </div>
+<div class="project-item reveal">
+  <div class="project-header">
+    <div class="project-name">tinyGPT</div>
+    <a href="https://github.com/sirohikartik/tinygpt" target="_blank" class="project-link">GitHub ↗</a>
+  </div>
+  <div class="project-stack">C++ · Python · PyTorch · Transformer</div>
+  <p class="project-desc">
+    End-to-end GPT training and inference engine. 30M-parameter decoder-only model trained on TinyStories, with a native C++ inference engine implementing multi-head attention, LayerNorm, KV caching, ARM NEON SIMD-optimized tiled matrix multiplication, and OpenMP parallelism.
+  </p>
+  <span class="project-stat">14.08 ms TTFT · 8.11 ms/token · 120.94 tok/s on M1 CPU</span>
+</div>
 
     <div class="project-item reveal">
       <div class="project-header">
