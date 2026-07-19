@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartik Sirohi</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1b1b1b;
+    --fg2: #47484b;
+    --fg3: #767676;
+    --accent: #1a56b0;
+    --line: rgba(0,0,0,0.14);
+    --line-soft: rgba(0,0,0,0.08);
+    --serif: Georgia, 'Times New Roman', 'Charter', serif;
+    --mono: 'Courier New', monospace;
+  }
+  [data-theme="dark"] {
+    --bg: #0d0e10;
+    --fg: #e7e6e1;
+    --fg2: #b7b6b0;
+    --fg3: #8a8983;
+    --accent: #7fa2cf;
+    --line: rgba(255,255,255,0.16);
+    --line-soft: rgba(255,255,255,0.09);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(26,86,176,0.35);
+    text-underline-offset: 2px;
+  }
+  [data-theme="dark"] a { text-decoration-color: rgba(127,162,207,0.4); }
+  a:hover { text-decoration-color: currentColor; }
+
+  .theme-toggle {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 10;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--fg3);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    user-select: none;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 4.5rem;
+  }
+
+  /* ---------- header ---------- */
+  h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin: 0 0 1.3rem;
+  }
+
+  .bio {
+    font-size: 1rem;
+    color: var(--fg2);
+    margin: 0 0 0.9rem;
+    max-width: 62ch;
+  }
+
+  .links-row {
+    margin-top: 1.4rem;
+    font-size: 0.95rem;
+  }
+  .links-row a { margin-right: 1.3rem; }
+
+  /* ---------- sections ---------- */
+  section {
+    margin-top: 3rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 1.1rem;
+  }
+
+  /* plain bullet lists, like News / Open Source / Blog */
+  ul.plain {
+    margin: 0;
+    padding-left: 1.3rem;
+  }
+  ul.plain li {
+    margin-bottom: 0.6rem;
+    color: var(--fg2);
+  }
+  ul.plain li:last-child { margin-bottom: 0; }
+  ul.plain li::marker { color: var(--accent); }
+
+  /* ---------- experience / projects entries ---------- */
+  .entry {
+    margin-bottom: 1.5rem;
+    padding-top: 1.2rem;
+  }
+  .entry:first-child { padding-top: 0; }
+  .entry:not(:first-child) { border-top: 1px solid var(--line-soft); }
+  .entry:last-child { margin-bottom: 0; }
+
+  .entry-line {
+    margin: 0 0 0.3rem;
+  }
+  .entry-line .meta {
+    color: var(--fg3);
+    font-size: 0.9rem;
+  }
+
+  .entry-desc {
+    margin: 0;
+    color: var(--fg2);
+    font-size: 0.98rem;
+  }
+
+  .entry-links {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+  }
+  .entry-links a { margin-right: 1.1rem; }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-soft);
+    font-size: 0.88rem;
+    color: var(--fg3);
+  }
+  footer a { color: var(--fg3); margin-right: 1rem; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 4rem 1.25rem 3rem; }
+    h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="dot"></span>
+  <span class="toggle-label">DARK</span>
+</button>
+
+<div class="wrap">
+
+  <h1>Kartik Sirohi</h1>
+
+ <p class="bio">
+    I'm an IT undergrad at <a href="https://nitj.ac.in/" target="_blank">NIT Jalandhar</a>.
+  </p>
+  <p class="bio">
+    I'm working on architectural optimizations in the current AI landscape &mdash; inference
+    engines , RAG systems, and data collection pipelines. I previously worked at the
+    <a href="https://www.universityofgalway.ie/" target="_blank">University of Galway</a> as an AI Research Intern.
+  </p>
+
+ 
+
+  <div class="links-row">
+    <a href="mailto:kartik.orion.dev@gmail.com">Email</a>
+    <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/kartik-sirohi-b81625325" target="_blank">LinkedIn</a>
+    <a href="https://x.com/Jon00Doe297" target="_blank">Twitter</a>
+  </div>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience">
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <p class="entry-line"><strong>Research Intern</strong>, <a href="https://qworld.net/" target="_blank">QWorld</a> <span class="meta">&mdash; Jul 2026 to Present</span></p>
+      <p class="entry-desc">
+        Building the dataset curation pipeline for large-scale multi-family ransomware
+        classification, and developing QTagger+, a quantum ML framework for ransomware
+        tagging with generative data augmentation. Supervised by Dr. Simranjit Singh.
+      </p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-line"><strong>AI Research Intern (Remote)</strong>, <a href="https://www.universityofgalway.ie/" target="_blank">University of Galway</a> <span class="meta">&mdash; Jan 2026 to Mar 2026</span></p>
+      <p class="entry-desc">
+        Contributed to DICE-RoBERTa, an explainable video classification framework
+        combining dense image captioning with RoBERTa-based action classification on
+        UCF101, accepted at ComSys 2026. Co-authored a second paper on deep neural
+        networks in computational psychiatry, currently under review at IEEE Access.
+        Supervised by Dr. Priyanka Verma.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── OPEN SOURCE ── -->
+  <section id="oss">
+    <h2>Open Source</h2>
+    <ul class="plain">
+      <li>
+        <strong><a href="https://github.com/ggml-org/llama.cpp" target="_blank">ggml-org / llama.cpp</a></strong> &mdash; SIMD-vectorized
+        <code>ggml_vec_dot_q4_1_q8_1</code>, a performance-critical quantized dot-product
+        kernel used during LLM inference.
+        <a href="https://github.com/ggml-org/llama.cpp/pull/22209" target="_blank">PR #22209 ↗</a>
+      </li>
+      <li>
+        <strong><a href="https://github.com/pytorch/pytorch" target="_blank">PyTorch</a></strong> &mdash; Fixed a NaN-propagation bug in
+        <code>tensor.clamp()</code>, with regression tests, through PyTorch's large-scale
+        review process.
+        <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank">PR #172200 ↗</a>
+      </li>
+      <li>
+        <strong><a href="https://github.com/dspinellis/alexandria3k" target="_blank">alexandria3k</a></strong> &mdash; Redesigned the lookup pipeline, reducing
+        query complexity from O(n) to O(1).
+        <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank">PR #63 ↗</a>
+      </li>
+      <li>
+        <strong><a href="https://github.com/scipy/scipy" target="_blank">SciPy</a></strong> &mdash; Added documentation examples for the
+        Gauss&ndash;Jacobi quadrature API.
+        <a href="https://github.com/scipy/scipy/pull/23129" target="_blank">PR #23129 ↗</a>
+      </li>
+      <li>
+        <strong><a href="https://github.com/Tracer-Cloud/opensre" target="_blank">Tracer-Cloud / OpenSRE</a></strong> &mdash; Unit tests and validation utilities
+        for data pipelines and Grafana Tempo observability components (three merged PRs).
+        <a href="https://github.com/Tracer-Cloud/opensre/pull/852" target="_blank">PR #852, #917, #1059 ↗</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="entry">
+      <p class="entry-line"><strong>tinyGPT</strong> <span class="meta">&mdash; C++, Python, PyTorch, Transformer</span></p>
+      <p class="entry-desc">
+        End-to-end GPT training and inference engine. A 30M-parameter decoder-only model
+        trained on TinyStories, paired with a native C++ inference engine implementing
+        multi-head attention, LayerNorm, KV caching, and ARM NEON SIMD-optimized tiled
+        matrix multiplication with OpenMP parallelism (14.08ms TTFT, 8.11ms/token, ~121
+        tok/s on M1 CPU). Later ported the NEON kernels to SSE instructions and deployed
+        the engine on a free Render instance, now running live at roughly 5&ndash;7 tok/s.
+      </p>
+      <p class="entry-links">
+        <a href="https://tinygpt.onrender.com" target="_blank">Live demo ↗</a>
+        <a href="https://github.com/sirohikartik/tinygpt" target="_blank">GitHub ↗</a>
+        <a href="https://sirohikartik.github.io/tinygpt" target="_blank">Write-up ↗</a>
+      </p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-line"><strong>mini-torch</strong> <span class="meta">&mdash; Python, Autograd</span></p>
+      <p class="entry-desc">
+        Minimal deep learning framework built from first principles. Reverse-mode automatic
+        differentiation over a dynamic computation graph, gradient accumulation,
+        SGD+momentum and Adam optimizers, training MLPs to approximate continuous functions.
+      </p>
+      <p class="entry-links">
+        <a href="https://github.com/sirohikartik/mini-torch" target="_blank">GitHub ↗</a>
+      </p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-line"><strong>Rocky</strong> <span class="meta">&mdash; Python, LLM Agents, Sentence-BERT, Whisper API</span></p>
+      <p class="entry-desc">
+        Real-time speech-to-Indian Sign Language translation engine. Chunked Whisper
+        transcription feeds a dual-stage vocabulary resolver (exact lookup &rarr;
+        Sentence-BERT similarity matching), while a closed-loop LLM grammar agent enforces
+        ISL structure (topic&ndash;comment order, time-first ordering) constrained to the
+        resolved vocabulary to avoid hallucinated signs. Output renders as stitched video
+        or 3D avatar rotation data.
+      </p>
+      <p class="entry-links">
+        <a href="https://github.com/sirohikartik/rocky" target="_blank">GitHub ↗</a>
+      </p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-line"><strong>Athena</strong> <span class="meta">&mdash; Python, FAISS, Ollama, RAG</span></p>
+      <p class="entry-desc">
+        Privacy-preserving local RAG search agent. Concurrent web scraping, dense embedding
+        generation via Sentence Transformers, FAISS-based semantic retrieval, and
+        source-grounded generation using locally hosted LLMs.
+      </p>
+      <p class="entry-links">
+        <a href="https://github.com/sirohikartik/athena" target="_blank">GitHub ↗</a>
+      </p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-line"><strong>Linear Algebra Engine</strong> <span class="meta">&mdash; C++, pybind11</span></p>
+      <p class="entry-desc">
+        C++ linear algebra library with Python bindings. Gaussian elimination,
+        Gauss&ndash;Jordan inversion, cache-friendly blocked matrix multiplication, and
+        determinant computation, exposed to Python through pybind11.
+      </p>
+      <p class="entry-links">
+        <a href="https://github.com/sirohikartik/linalg" target="_blank">GitHub ↗</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── BLOG ── -->
+  <section id="blog">
+    <h2>Blog</h2>
+    <ul class="plain">
+      <li><a href="https://sirohikartik.github.io/tinygpt" target="_blank">Building tinyGPT: A Transformer Inference Engine From Scratch in C++</a> &mdash; training a 30M-parameter GPT and writing its inference engine by hand, from a naive forward pass to SIMD, tiling, KV caching, and OpenMP.</li>
+      <li><a href="https://sirohikartik.github.io/backprop.html" target="_blank">Learning Representations by Back-propagating Errors</a> &mdash; an intuitive walkthrough of backpropagation and neural network training.</li>
+      <li><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/" target="_blank">Graph Retrieval Methods: Retrieving Knowledge via Relationships</a> &mdash; an introduction to graph-based retrieval methods for Retrieval-Augmented Generation.</li>
+      <li><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470" target="_blank">The Intuition Behind Neural Networks</a> &mdash; visualizing parameter optimization during neural network training.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <a href="mailto:kartik.orion.dev@gmail.com">kartik.orion.dev@gmail.com</a>
+    <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/kartik-sirohi-b81625325" target="_blank">LinkedIn</a>
+    <a href="https://x.com/Jon00Doe297" target="_blank">Twitter</a>
+  </footer>
+
+</div>
+
+<script>
+  const root = document.documentElement;
+  const toggleLabel = document.querySelector('.toggle-label');
+  let dark = false;
+  function toggleTheme() {
+    dark = !dark;
+    root.setAttribute('data-theme', dark ? 'dark' : '');
+    toggleLabel.textContent = dark ? 'LIGHT' : 'DARK';
+  }
+</script>
+
+</body>
+</html>
