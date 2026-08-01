@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI as a Compiler, Not a Programmer</title>
+   </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F03NZLPT1H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-F03NZLPT1H');
+  </script>
+
 <style>
   :root {
     --bg: #14161a;
@@ -201,7 +211,7 @@ PROCESS
 </h2>
 
 <p>Another thing to think about is, the spec and code must change in resonance not in isolation during maintainence i.e. as the codebase evolves so does the spec.</p>
-<p>A possible solution is a CI workflow that fails if code and spec do not match.</p>
+<p>A possible solution is a CI workflow that fails if code and spec do not match. But how exactly that should work is an open problem too. Using an LLM as a judge for this stage seems expensive and non-deterministic and making the spec file too specified turns it into a programming language basically. </p>
   <h2>Possible Rules</h2>
 
   <p>The agent should follow strict rules:</p>
