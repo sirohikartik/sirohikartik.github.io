@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI as a Compiler, Not a Programmer</title>
+<style>
+  :root {
+    --bg: #14161a;
+    --bg-raised: #1b1e24;
+    --text: #d9dce1;
+    --text-dim: #868c96;
+    --rule: #2a2e35;
+    --accent: #8fa3b3;
+    --code-bg: #101216;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 8rem;
+  }
+
+  .eyebrow {
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  h1 {
+    font-size: 2.15rem;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 2.5rem;
+    color: #f0f1f3;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #f0f1f3;
+    margin: 3rem 0 1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  p {
+    margin: 0 0 1.25rem;
+    color: var(--text);
+  }
+
+  strong { color: #f0f1f3; font-weight: 600; }
+
+  ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.2rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.2rem;
+  }
+
+  li::marker {
+    color: var(--accent);
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.25rem 1.4rem;
+    overflow-x: auto;
+    margin: 1.75rem 0;
+  }
+
+  code {
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #b8c4cc;
+  }
+
+  .callout {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: #f0f1f3;
+    margin: 2rem 0;
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 480px) {
+    main { padding: 3.5rem 1.25rem 5rem; }
+    h1 { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="eyebrow">Proposal</div>
+  <h1>AI as a Compiler, Not a Programmer</h1>
+
+  <p>Over the past few months, I've been thinking about a different way to use AI coding agents.</p>
+
+  <p>Today, the common workflow looks something like this: <strong>"Build me a REST API."</strong> The AI decides the architecture, creates classes, chooses libraries, invents helper functions, and generates hundreds of lines of code. We then review and edit what it produced.</p>
+
+  <p>While this is productive, it also means the AI owns many of the design decisions.</p>
+
+  <p>What if we flipped the workflow?</p>
+
+  <p>Instead of asking the AI to design software, we write the software ourselves — but in a human-readable specification.</p>
+  
+
+
+  <p>For example:</p>
+
+  <pre><code>FILE auth.spec
+
+CLASS AuthService
+
+FUNCTION login(username, password) -> Token
+
+PROCESS
+1. Find user.
+2. If missing, return InvalidCredentials.
+3. Verify password.
+4. Generate JWT.
+5. Return token.</code></pre>
+
+  <p>The AI's only job is to compile this into Python, TypeScript, Rust, or any other language. The specification becomes the source of truth. The generated code becomes an implementation.</p>
+
+  <h2>Why?</h2>
+
+  <p>I think this changes the relationship between developers and AI. Instead of:</p>
+
+  <ul>
+    <li>AI owns the architecture.</li>
+    <li>Human reviews the code.</li>
+  </ul>
+
+  <p>We get:</p>
+
+  <ul>
+    <li>Human owns the architecture.</li>
+    <li>AI owns syntax, boilerplate, imports, formatting, and repetitive implementation.</li>
+  </ul>
+  
+
+
+
+  <h2> What Already Exists? </h2>
+  
+<p>A paradigm called as spec-driven development already exists but actually it's more like this way : <br>
+
+  Most SDD tooling right now (Spec Kit, Agent OS, etc.) still has the AI write the spec collaboratively from a rough prompt, then implement it.
+</p>
+
+<p>
+  If the AI writes the spec, the AI is still making the design decisions, just one layer removed. So the main problem with AI owning the design decisions still remains.
+</p>
+
+  <p> What I'm talking about is having the human write the pseudocode per file by hand then treat AI as a tool that converts that pseudocode into actual code.</p>
+
+<h2>What Happens When the Human's Spec is Wrong or Incomplete?</h2>
+<p>
+  This is another problem. But it has a simpler solution also, have the AI make suggestions where the pseudocode seems ambigious or incorrect, the AI stops the execution and suggests corrections/details and human improves the pseudocode as per their competence.
+</p>
+<p>Yes, this reintroduces AI judgment, but scoped to flagging gaps rather than filling them silently — the human still decides, the AI just points.</p>
+
+
+<h2>
+  Maintainence and Evolving Codebase
+</h2>
+
+<p>Another thing to think about is, the spec and code must change in resonance not in isolation during maintainence i.e. as the codebase evolves so does the spec.</p>
+<p>A possible solution is a CI workflow that fails if code and spec do not match.</p>
+  <h2>Possible Rules</h2>
+
+  <p>The agent should follow strict rules:</p>
+
+  <ul>
+    <li>Never invent APIs.</li>
+    <li>Never rename functions or classes.</li>
+    <li>Never change architecture.</li>
+    <li>Never add features that aren't in the spec.</li>
+    <li>If something is ambiguous, ask instead of guessing.</li>
+  </ul>
+
+  <h2>Benefits</h2>
+
+  <p>This approach could make AI-generated code more predictable.</p>
+
+  <ul>
+    <li>The human keeps ownership of design.</li>
+    <li>Specifications become documentation.</li>
+    <li>Code reviews compare implementation against the spec.</li>
+    <li>The same specification could generate implementations in multiple languages.</li>
+    <li>Regeneration becomes possible without losing intent.</li>
+  </ul>
+
+  <h2>Open Questions</h2>
+
+  <p>This is only an idea, not a finished methodology. Questions I'm still exploring:</p>
+
+  <ul>
+    <li>What should a good <code>.spec</code> format look like?</li>
+    <li>How much detail should live in the specification?</li>
+    <li>Can agents generate deterministic implementations from it? Although LLMs are not deterministic but can we achieve a certain level of determinism via a hard harness over the agent and unambigious instructions.</li>
+    <li>Can repositories eventually be built around specifications instead of source code?</li>
+  </ul>
+
+<p>If you've tried this and it broke down, I want to know where</p>
+
+
+<a href="mailto:kartik.orion.dev@gmail.com">Mail Me!</a>
+
+</main>
+</body>
+</html>
