@@ -10,16 +10,15 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #faf9f6;
-      --fg: #1b1b1b;
-      --fg2: #2c2c2e;
-      --fg3: #5e5e60;
+      --bg: #ffffff;
+      --fg: #1a1a1a;
+      --fg2: #333333;
+      --fg3: #666666;
       --accent: #1a56b0;
       --line: rgba(0,0,0,0.10);
-      --line-soft: rgba(0,0,0,0.05);
+      --line-soft: rgba(0,0,0,0.06);
       --serif: Georgia, 'Times New Roman', 'Charter', serif;
       --mono: 'Courier New', monospace;
-      --glow: rgba(26,86,176,0.08);
       --sidebar-width: 180px;
     }
 
@@ -30,8 +29,7 @@
       --fg3: #aaaaaa;
       --accent: #8ab2f0;
       --line: rgba(255,255,255,0.12);
-      --line-soft: rgba(255,255,255,0.05);
-      --glow: rgba(138,178,240,0.08);
+      --line-soft: rgba(255,255,255,0.06);
     }
 
     body {
@@ -40,24 +38,9 @@
       font-family: var(--serif);
       font-size: 18px;
       line-height: 1.65;
-      transition: background 0.3s, color 0.3s;
       padding: 2rem 1.5rem 3rem;
-      position: relative;
-      overflow-x: hidden;
       padding-left: calc(var(--sidebar-width) + 2.5rem);
     }
-
-    #particles-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.25;
-    }
-    [data-theme="dark"] #particles-canvas { opacity: 0.35; }
 
     .wrap {
       max-width: 720px;
@@ -80,13 +63,11 @@
       flex-direction: column;
       justify-content: space-between;
       z-index: 30;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: background 0.3s, border-color 0.3s;
+      transition: background 0.2s, border-color 0.2s;
     }
     .sidebar-top { display: flex; flex-direction: column; gap: 1.8rem; }
-    .sidebar-brand { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
-    .sidebar-brand span { color: var(--accent); }
+    .sidebar-brand { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--fg); }
+    .sidebar-brand span { color: var(--fg); }
     .sidebar-nav { display: flex; flex-direction: column; gap: 0.6rem; }
     .sidebar-nav a {
       color: var(--fg3);
@@ -95,18 +76,18 @@
       font-weight: 400;
       padding: 0.25rem 0;
       border-bottom: 1px solid transparent;
-      transition: color 0.2s, border-color 0.2s, transform 0.2s;
+      transition: color 0.15s, border-color 0.15s;
       display: inline-block;
       width: fit-content;
     }
-    .sidebar-nav a:hover { color: var(--fg); border-bottom-color: var(--accent); transform: translateX(4px); }
-    [data-theme="dark"] .sidebar-nav a { color: #cccccc; }
+    .sidebar-nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+    [data-theme="dark"] .sidebar-nav a { color: #aaaaaa; }
     [data-theme="dark"] .sidebar-nav a:hover { color: #ffffff; border-bottom-color: #ffffff; }
     .sidebar-nav a.active { color: var(--fg); border-bottom-color: var(--accent); font-weight: 600; }
     [data-theme="dark"] .sidebar-nav a.active { color: #ffffff; border-bottom-color: #ffffff; }
 
     .sidebar-footer { font-size: 0.75rem; color: var(--fg3); display: flex; flex-direction: column; gap: 0.4rem; }
-    .sidebar-footer a { color: var(--fg3); text-decoration: none; transition: color 0.2s; }
+    .sidebar-footer a { color: var(--fg3); text-decoration: none; transition: color 0.15s; }
     .sidebar-footer a:hover { color: var(--fg); }
     [data-theme="dark"] .sidebar-footer a:hover { color: #ffffff; }
 
@@ -116,11 +97,11 @@
       text-decoration: underline;
       text-underline-offset: 2px;
       text-decoration-thickness: 1px;
-      transition: color 0.2s, text-shadow 0.3s;
+      transition: color 0.15s;
     }
-    a:hover { color: var(--fg); text-shadow: 0 0 12px var(--glow); }
+    a:hover { color: var(--fg); }
     [data-theme="dark"] a { color: #ffffff; font-weight: 700; }
-    [data-theme="dark"] a:hover { color: #bbbbbb; text-shadow: 0 0 16px rgba(255,255,255,0.15); }
+    [data-theme="dark"] a:hover { color: #bbbbbb; }
 
     h1 {
       font-size: 2.4rem;
@@ -128,18 +109,12 @@
       letter-spacing: -0.02em;
       margin: 0 0 0.5rem;
       line-height: 1.2;
-      background: linear-gradient(135deg, var(--fg), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: inline-block;
+      color: var(--fg);
     }
-    [data-theme="dark"] h1 { background: linear-gradient(135deg, #ffffff, #8ab2f0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     .bio { font-size: 1rem; color: var(--fg2); margin: 0.25rem 0 0.5rem; max-width: 64ch; }
     .links-row { margin-top: 1.2rem; font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; }
-    .links-row a { display: inline-block; transition: transform 0.2s ease, color 0.2s; }
-    .links-row a:hover { transform: translateY(-2px) scale(1.02); }
+    .links-row a { display: inline-block; }
 
     section { margin-top: 2.8rem; position: relative; }
     h2 {
@@ -150,60 +125,35 @@
       border-bottom: 1px solid var(--line-soft);
       padding-bottom: 0.3rem;
       display: inline-block;
-      position: relative;
+      color: var(--fg);
     }
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 40%;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.4s ease;
-    }
-    section:hover h2::after { width: 100%; }
 
     ul.plain { list-style: none; padding-left: 0; }
     ul.plain li {
       margin-bottom: 0.9rem;
       color: var(--fg2);
       padding-left: 0.2rem;
-      position: relative;
-      transition: transform 0.2s ease, padding-left 0.2s;
     }
     ul.plain li:last-child { margin-bottom: 0; }
     ul.plain li::before {
-      content: "◆";
+      content: "·";
       color: var(--accent);
       font-weight: 700;
       margin-right: 0.6rem;
-      font-size: 0.7rem;
-      display: inline-block;
-      transition: transform 0.3s ease;
     }
-    ul.plain li:hover { transform: translateX(4px); padding-left: 4px; }
-    ul.plain li:hover::before { transform: rotate(90deg) scale(1.1); }
 
     .entry {
       margin-bottom: 1.8rem;
       padding-bottom: 1.2rem;
       border-bottom: 1px solid var(--line-soft);
-      transition: background 0.3s, padding-left 0.3s, box-shadow 0.3s;
-      border-radius: 4px;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
     }
     .entry:last-child { border-bottom: none; margin-bottom: 0; }
-    .entry:hover { background: var(--glow); padding-left: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-    [data-theme="dark"] .entry:hover { background: rgba(255,255,255,0.02); box-shadow: 0 4px 20px rgba(255,255,255,0.02); }
 
-    .entry-line { margin: 0 0 0.2rem; font-weight: 600; }
+    .entry-line { margin: 0 0 0.2rem; font-weight: 600; color: var(--fg); }
     .entry-line .meta { font-weight: 400; color: var(--fg3); font-size: 0.9rem; }
     .entry-desc { margin: 0.2rem 0 0.3rem; color: var(--fg2); }
     .entry-links { margin-top: 0.4rem; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.2rem 1.2rem; }
-    .entry-links a { display: inline-block; transition: transform 0.2s ease, color 0.2s; }
-    .entry-links a:hover { transform: translateY(-2px) scale(1.02); }
+    .entry-links a { display: inline-block; }
 
     .footer-links {
       margin-top: 3.5rem;
@@ -215,21 +165,21 @@
       flex-wrap: wrap;
       gap: 0.5rem 1.4rem;
     }
-    .footer-links a { color: var(--fg3); transition: color 0.2s, transform 0.2s; }
-    [data-theme="dark"] .footer-links a { color: #cccccc; font-weight: 400; }
-    .footer-links a:hover { color: var(--fg); transform: translateY(-2px); }
+    .footer-links a { color: var(--fg3); transition: color 0.15s; }
+    [data-theme="dark"] .footer-links a { color: #aaaaaa; font-weight: 400; }
+    .footer-links a:hover { color: var(--fg); }
     [data-theme="dark"] .footer-links a:hover { color: #ffffff; }
 
     .progress-bar {
       position: fixed;
       top: 0;
       left: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), #a0c0f0);
+      height: 2px;
+      background: var(--accent);
       z-index: 100;
       width: 0%;
-      opacity: 0.7;
-      transition: width 0.1s linear;
+      opacity: 0.5;
+      transition: none;
     }
 
     .theme-toggle {
@@ -246,23 +196,20 @@
       align-items: center;
       gap: 0.4rem;
       user-select: none;
-      transition: border-color 0.3s, color 0.3s, transform 0.2s;
+      transition: border-color 0.15s, color 0.15s;
       width: fit-content;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
     }
-    .theme-toggle:hover { border-color: var(--accent); color: var(--fg); transform: scale(1.05); }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--fg); }
     [data-theme="dark"] .theme-toggle:hover { border-color: #ffffff; color: #ffffff; }
-    .theme-toggle:active { transform: scale(0.95); }
     .theme-icon { width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; }
-    .theme-icon svg { width: 14px; height: 14px; transition: opacity 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .theme-icon svg { width: 14px; height: 14px; }
 
     .top-hint {
       position: fixed;
       bottom: 1.5rem;
       right: 1.5rem;
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       border: 1px solid var(--line);
       background: var(--bg);
@@ -273,39 +220,23 @@
       cursor: pointer;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, color 0.3s, box-shadow 0.3s;
+      transition: opacity 0.15s, border-color 0.15s, color 0.15s;
       z-index: 10;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.02);
     }
-    .top-hint.show { opacity: 0.7; pointer-events: auto; }
-    .top-hint:hover { border-color: var(--accent); color: var(--fg); transform: scale(1.1) translateY(-3px); box-shadow: 0 8px 30px var(--glow); }
-    [data-theme="dark"] .top-hint:hover { border-color: #ffffff; color: #ffffff; box-shadow: 0 8px 30px rgba(255,255,255,0.05); }
+    .top-hint.show { opacity: 0.6; pointer-events: auto; }
+    .top-hint:hover { border-color: var(--accent); color: var(--fg); }
+    [data-theme="dark"] .top-hint:hover { border-color: #ffffff; color: #ffffff; }
 
     .reveal {
       opacity: 0;
-      transform: translateY(30px) scale(0.98);
-      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(18px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
-
-    .stagger-children > * {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
-    .stagger-children.visible > *:nth-child(2) { transition-delay: 0.10s; opacity: 1; transform: translateY(0); }
-    .stagger-children.visible > *:nth-child(3) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
-    .stagger-children.visible > *:nth-child(4) { transition-delay: 0.20s; opacity: 1; transform: translateY(0); }
-    .stagger-children.visible > *:nth-child(5) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
-    .stagger-children.visible > *:nth-child(6) { transition-delay: 0.30s; opacity: 1; transform: translateY(0); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     ::selection { background: rgba(26,86,176,0.15); }
     [data-theme="dark"] ::selection { background: rgba(255,255,255,0.12); }
 
-    /* mobile nav */
     .mobile-nav {
       display: none;
       margin-bottom: 2rem;
@@ -321,10 +252,10 @@
       font-weight: 400;
       border-bottom: 2px solid transparent;
       padding-bottom: 0.15rem;
-      transition: color 0.2s, border-color 0.2s;
+      transition: color 0.15s, border-color 0.15s;
     }
     .mobile-nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
-    [data-theme="dark"] .mobile-nav a { color: #cccccc; }
+    [data-theme="dark"] .mobile-nav a { color: #aaaaaa; }
     [data-theme="dark"] .mobile-nav a:hover { color: #ffffff; border-bottom-color: #ffffff; }
     .mobile-nav a.active { color: var(--fg); border-bottom-color: var(--accent); font-weight: 600; }
     [data-theme="dark"] .mobile-nav a.active { color: #ffffff; border-bottom-color: #ffffff; }
@@ -337,14 +268,12 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal, .stagger-children > * { transition: none; opacity: 1; transform: none; }
-      .theme-toggle, .top-hint, .links-row a, .entry-links a { transition: none; }
+      .reveal { transition: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
 
-<canvas id="particles-canvas"></canvas>
 <div class="progress-bar" id="progressBar"></div>
 
 <!-- ── SIDEBAR ── -->
@@ -366,7 +295,6 @@
       </span>
       <span id="toggleLabel">DARK</span>
     </button>
-    
   </div>
 </aside>
 
@@ -412,7 +340,7 @@
   <!-- OPEN SOURCE -->
   <section id="oss" class="reveal" style="transition-delay:0.15s;">
     <h2>Open Source</h2>
-    <ul class="plain stagger-children" id="ossList">
+    <ul class="plain">
       <li><strong><a href="https://github.com/ggml-org/llama.cpp" target="_blank">ggml-org / llama.cpp</a></strong> — SIMD-vectorized <code>ggml_vec_dot_q4_1_q8_1</code> kernel. <a href="https://github.com/ggml-org/llama.cpp/pull/22209" target="_blank">PR #22209</a></li>
       <li><strong><a href="https://github.com/pytorch/pytorch" target="_blank">PyTorch</a></strong> — NaN-propagation fix in <code>tensor.clamp()</code>. <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank">PR #172200</a></li>
       <li><strong><a href="https://github.com/dspinellis/alexandria3k" target="_blank">alexandria3k</a></strong> — lookup pipeline O(n)→O(1). <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank">PR #63</a></li>
@@ -464,9 +392,9 @@
   <!-- BLOG -->
   <section id="blog" class="reveal" style="transition-delay:0.25s;">
     <h2>Blog</h2>
-    <ul class="plain stagger-children" id="blogList">
+    <ul class="plain">
       <li><a href="https://sirohikartik.github.io/spec_workflow" target="_blank">Formalizing a more human design ownership centered variation of spec driven development</a></li>
-      <li><a href="https://sirohikartik.github.io/tinygpt_blog.html" target="_blank">Building tinyGPT: A Transformer Inference Engine From Scratch in C++</a> — training + inference from naive to SIMD/tiling/KV cache.</li>
+      <li><a href="https://sirohikartik.github.io/tinygpt" target="_blank">Building tinyGPT: A Transformer Inference Engine From Scratch in C++</a> — training + inference from naive to SIMD/tiling/KV cache.</li>
       <li><a href="https://sirohikartik.github.io/backprop.html" target="_blank">Learning Representations by Back-propagating Errors</a> — intuitive backprop walkthrough.</li>
       <li><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/" target="_blank">Graph Retrieval Methods: Retrieving Knowledge via Relationships</a></li>
       <li><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470" target="_blank">The Intuition Behind Neural Networks</a></li>
@@ -483,80 +411,6 @@
 </div>
 
 <script>
-  /* ── Particle Network ── */
-  (function() {
-    const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-    const NUM = 55;
-    const MAX_DIST = 140;
-    const SPEED = 0.25;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * SPEED * 2;
-        this.vy = (Math.random() - 0.5) * SPEED * 2;
-        this.radius = 1.2 + Math.random() * 1.2;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1a56b0';
-        ctx.fill();
-        ctx.globalAlpha = 0.4;
-        ctx.closePath();
-        ctx.globalAlpha = 1;
-      }
-    }
-
-    for (let i = 0; i < NUM; i++) particles.push(new Particle());
-
-    function drawLines() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < MAX_DIST) {
-            const alpha = 1 - (dist / MAX_DIST);
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1a56b0';
-            ctx.globalAlpha = alpha * 0.25;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      drawLines();
-      requestAnimationFrame(animate);
-    }
-    animate();
-  })();
-
   /* ── Theme ── */
   const root = document.documentElement;
   const toggleLabel = document.getElementById('toggleLabel');
@@ -591,7 +445,7 @@
       if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal, .stagger-children').forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   /* ── active nav ── */
   const allNavLinks = document.querySelectorAll('.sidebar-nav a, .mobile-nav a');
