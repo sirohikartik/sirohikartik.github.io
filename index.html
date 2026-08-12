@@ -42,6 +42,7 @@
       font-size: 18px;
       line-height: 1.6;
       padding: 2rem 1.5rem;
+      padding-top: 6rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -52,6 +53,47 @@
       max-width: 780px;
       margin: 0.5rem auto;
       width: 100%;
+    }
+
+    /* ── TOP NAV (desktop + mobile) ── */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line-soft);
+      padding: 0.8rem 1.5rem;
+      z-index: 40;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2rem 2rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .top-nav a {
+      color: var(--fg3);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 0.2rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .top-nav a:hover {
+      color: var(--fg);
+      border-bottom-color: var(--accent);
+    }
+    [data-theme="dark"] .top-nav a {
+      color: #aaa;
+    }
+    [data-theme="dark"] .top-nav a:hover {
+      color: #fff;
+      border-bottom-color: #fff;
     }
 
     /* ── typography ── */
@@ -137,10 +179,9 @@
       }
     }
 
-    /* ── sections: more gap, headings bigger ── */
     section {
       margin-top: 0;
-      margin-bottom: 2.4rem;   /* increased gap between sections */
+      margin-bottom: 2.4rem;
     }
     section:last-of-type {
       margin-bottom: 0;
@@ -148,7 +189,7 @@
 
     h2 {
       font-family: var(--serif);
-      font-size: 1.15rem;      /* slightly bigger (was 0.9rem) */
+      font-size: 1.15rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       margin: 0 0 1.2rem 0;
@@ -159,7 +200,6 @@
       text-transform: uppercase;
     }
 
-    /* ── entries ── */
     .entry {
       margin-bottom: 1.6rem;
       padding-bottom: 1.2rem;
@@ -264,26 +304,26 @@
     /* ── theme toggle ── */
     .theme-toggle {
       position: fixed;
-      top: 1.8rem;
-      right: 2rem;
+      top: 0.6rem;
+      right: 1.5rem;
       background: var(--bg);
       border: 2px solid var(--fg);
       border-radius: 40px;
-      padding: 0.3rem 1rem;
+      padding: 0.2rem 0.8rem;
       cursor: pointer;
       font-family: var(--sans);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.1em;
       color: var(--fg);
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.3rem;
       user-select: none;
       transition: border-color 0.2s, background 0.2s, color 0.2s;
-      z-index: 30;
+      z-index: 50;
       backdrop-filter: blur(4px);
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.8);
       text-transform: uppercase;
     }
     [data-theme="dark"] .theme-toggle {
@@ -300,57 +340,15 @@
       color: #f0b0b0;
     }
     .theme-icon {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .theme-icon svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* ── mobile nav ── */
-    .mobile-nav {
-      display: none;
-      margin-bottom: 1.8rem;
-      font-size: 0.7rem;
-      font-family: var(--sans);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      flex-wrap: wrap;
-      gap: 0.8rem 1.8rem;
-      border-bottom: 1px solid var(--line-soft);
-      padding-bottom: 0.6rem;
-    }
-    .mobile-nav a {
-      color: var(--fg3);
-      text-decoration: none;
-      font-weight: 600;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 0.1rem;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .mobile-nav a:hover {
-      color: var(--fg);
-      border-bottom-color: var(--accent);
-    }
-    [data-theme="dark"] .mobile-nav a {
-      color: #aaa;
-    }
-    [data-theme="dark"] .mobile-nav a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
-    .mobile-nav a.active {
-      color: var(--fg);
-      border-bottom-color: var(--accent);
-      font-weight: 700;
-    }
-    [data-theme="dark"] .mobile-nav a.active {
-      color: #ffffff;
-      border-bottom-color: #ffffff;
+      width: 14px;
+      height: 14px;
     }
 
     /* ── reveal ── */
@@ -364,7 +362,6 @@
       transform: translateY(0);
     }
 
-    /* ── selection ── */
     ::selection {
       background: rgba(178, 34, 52, 0.2);
     }
@@ -372,27 +369,41 @@
       background: rgba(212, 92, 92, 0.25);
     }
 
+    code {
+      font-family: 'Courier New', monospace;
+      background: var(--line-soft);
+      padding: 0.1rem 0.3rem;
+      font-size: 0.85em;
+      border-radius: 0px;
+      color: var(--fg2);
+    }
+    [data-theme="dark"] code {
+      background: rgba(255,255,255,0.06);
+      color: #ddd;
+    }
+
     /* ── responsive ── */
     @media (max-width: 740px) {
       body {
         padding: 1.4rem 1rem;
-        padding-top: 4.5rem;
+        padding-top: 5.5rem;
       }
       .wrap {
         margin: 0 auto;
       }
-      .mobile-nav {
-        display: flex !important;
-      }
       h1 {
         font-size: 2.6rem;
-        padding-left: 0;
       }
       .theme-toggle {
-        top: 1rem;
-        right: 1rem;
-        padding: 0.2rem 0.7rem;
+        top: 0.5rem;
+        right: 0.8rem;
+        padding: 0.15rem 0.6rem;
         font-size: 8px;
+      }
+      .top-nav {
+        padding: 0.6rem 0.8rem;
+        gap: 0.6rem 1.2rem;
+        font-size: 0.6rem;
       }
       .grid-2 {
         gap: 1.6rem;
@@ -412,22 +423,18 @@
         transform: none;
       }
     }
-
-    code {
-      font-family: 'Courier New', monospace;
-      background: var(--line-soft);
-      padding: 0.1rem 0.3rem;
-      font-size: 0.85em;
-      border-radius: 0px;
-      color: var(--fg2);
-    }
-    [data-theme="dark"] code {
-      background: rgba(255,255,255,0.06);
-      color: #ddd;
-    }
   </style>
 </head>
 <body>
+
+<!-- ── TOP NAV (desktop + mobile) ── -->
+<nav class="top-nav" id="topNav">
+  <a href="#publications">Publications</a>
+  <a href="#experience">Experience</a>
+  <a href="#oss">Open Source</a>
+  <a href="#projects">Projects</a>
+  <a href="#blog">Blog</a>
+</nav>
 
 <!-- ── theme toggle ── -->
 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -439,15 +446,6 @@
 </button>
 
 <div class="wrap">
-
-  <!-- mobile nav -->
-  <nav class="mobile-nav" id="mobileNav">
-    <a href="#publications">Publications</a>
-    <a href="#experience">Experience</a>
-    <a href="#oss">Open Source</a>
-    <a href="#projects">Projects</a>
-    <a href="#blog">Blog</a>
-  </nav>
 
   <header class="reveal visible" style="transition-delay:0.02s;">
     <h1>Kartik Sirohi</h1>
@@ -599,20 +597,6 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
   document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
-
-  /* ── active nav ── */
-  const allNavLinks = document.querySelectorAll('.mobile-nav a');
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (window.scrollY >= sectionTop - 120) current = section.getAttribute('id');
-    });
-    allNavLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-    });
-  });
 </script>
 </body>
 </html>
