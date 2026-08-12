@@ -55,7 +55,7 @@
       width: 100%;
     }
 
-    /* ── TOP NAV (desktop + mobile) ── */
+    /* ── TOP NAV ── */
     .top-nav {
       position: fixed;
       top: 0;
@@ -63,12 +63,12 @@
       right: 0;
       background: var(--bg);
       border-bottom: 1px solid var(--line-soft);
-      padding: 0.8rem 1.5rem;
+      padding: 0.6rem 1.5rem;
       z-index: 40;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1.2rem 2rem;
+      gap: 1.5rem 2.5rem;
       flex-wrap: wrap;
       font-family: var(--sans);
       font-size: 0.7rem;
@@ -94,6 +94,66 @@
     [data-theme="dark"] .top-nav a:hover {
       color: #fff;
       border-bottom-color: #fff;
+    }
+
+    /* ── theme toggle (separate from nav, below on mobile) ── */
+    .theme-toggle-wrapper {
+      position: fixed;
+      top: 0.6rem;
+      right: 1.5rem;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+    }
+    .theme-toggle {
+      background: var(--bg);
+      border: 2px solid var(--fg);
+      border-radius: 40px;
+      padding: 0.15rem 0.7rem;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      user-select: none;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      text-transform: uppercase;
+      height: fit-content;
+      width: fit-content;
+      min-width: 50px;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      line-height: 1.4;
+      margin-top:40px;
+    }
+    [data-theme="dark"] .theme-toggle {
+      background: rgba(0, 0, 0, 0.7);
+      border-color: #f0f0f0;
+      color: #f0f0f0;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    [data-theme="dark"] .theme-toggle:hover {
+      border-color: #f0b0b0;
+      color: #f0b0b0;
+    }
+    .theme-icon {
+      width: 12px;
+      height: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .theme-icon svg {
+      width: 12px;
+      height: 12px;
     }
 
     /* ── typography ── */
@@ -301,56 +361,6 @@
       color: #ffffff;
     }
 
-    /* ── theme toggle ── */
-    .theme-toggle {
-      position: fixed;
-      top: 0.6rem;
-      right: 1.5rem;
-      background: var(--bg);
-      border: 2px solid var(--fg);
-      border-radius: 40px;
-      padding: 0.2rem 0.8rem;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--fg);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      user-select: none;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
-      z-index: 50;
-      backdrop-filter: blur(4px);
-      background: rgba(255, 255, 255, 0.8);
-      text-transform: uppercase;
-    }
-    [data-theme="dark"] .theme-toggle {
-      background: rgba(0, 0, 0, 0.7);
-      border-color: #f0f0f0;
-      color: #f0f0f0;
-    }
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    [data-theme="dark"] .theme-toggle:hover {
-      border-color: #f0b0b0;
-      color: #f0b0b0;
-    }
-    .theme-icon {
-      width: 14px;
-      height: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .theme-icon svg {
-      width: 14px;
-      height: 14px;
-    }
-
     /* ── reveal ── */
     .reveal {
       opacity: 0;
@@ -394,16 +404,28 @@
       h1 {
         font-size: 2.6rem;
       }
-      .theme-toggle {
+      .top-nav {
+        padding: 0.5rem 0.8rem;
+        gap: 0.5rem 1.2rem;
+        font-size: 0.6rem;
+        padding-right: 3.5rem; /* make room for toggle */
+      }
+      .theme-toggle-wrapper {
         top: 0.5rem;
         right: 0.8rem;
-        padding: 0.15rem 0.6rem;
-        font-size: 8px;
       }
-      .top-nav {
-        padding: 0.6rem 0.8rem;
-        gap: 0.6rem 1.2rem;
-        font-size: 0.6rem;
+      .theme-toggle {
+        font-size: 7px;
+        padding: 0.1rem 0.5rem;
+        min-width: 40px;
+      }
+      .theme-icon {
+        width: 10px;
+        height: 10px;
+      }
+      .theme-icon svg {
+        width: 10px;
+        height: 10px;
       }
       .grid-2 {
         gap: 1.6rem;
@@ -413,6 +435,31 @@
       }
       section {
         margin-bottom: 2rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .top-nav {
+        padding-right: 3rem;
+        gap: 0.4rem 0.8rem;
+        font-size: 0.55rem;
+      }
+      .theme-toggle-wrapper {
+        top: 0.4rem;
+        right: 0.5rem;
+      }
+      .theme-toggle {
+        font-size: 6px;
+        padding: 0.05rem 0.4rem;
+        min-width: 32px;
+      }
+      .theme-icon {
+        width: 8px;
+        height: 8px;
+      }
+      .theme-icon svg {
+        width: 8px;
+        height: 8px;
       }
     }
 
@@ -427,7 +474,7 @@
 </head>
 <body>
 
-<!-- ── TOP NAV (desktop + mobile) ── -->
+<!-- ── TOP NAV ── -->
 <nav class="top-nav" id="topNav">
   <a href="#publications">Publications</a>
   <a href="#experience">Experience</a>
@@ -436,14 +483,16 @@
   <a href="#blog">Blog</a>
 </nav>
 
-<!-- ── theme toggle ── -->
-<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-  <span class="theme-icon" id="themeIcon">
-    <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-  </span>
-  <span id="toggleLabel">DARK</span>
-</button>
+<!-- ── theme toggle (separate wrapper, positioned top-right) ── -->
+<div class="theme-toggle-wrapper">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span class="theme-icon" id="themeIcon">
+      <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+    <span id="toggleLabel">DARK</span>
+  </button>
+</div>
 
 <div class="wrap">
 
