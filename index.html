@@ -108,42 +108,6 @@
       height: 12px;
     }
 
-    /* ── top nav ── */
-    .top-nav {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem 2.5rem;
-      flex-wrap: wrap;
-      font-family: var(--sans);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 1.8rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid var(--line-soft);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .top-nav a {
-      color: var(--fg3);
-      text-decoration: none;
-      font-weight: 600;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 0.2rem;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .top-nav a:hover {
-      color: var(--fg);
-      border-bottom-color: var(--accent);
-    }
-    [data-theme="dark"] .top-nav a {
-      color: #aaa;
-    }
-    [data-theme="dark"] .top-nav a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
-
     /* ── typography ── */
     a {
       color: var(--accent);
@@ -355,13 +319,10 @@
       color: #ddd;
     }
 
-    /* ── responsive: hide top nav & toggle on mobile ── */
+    /* ── responsive: hide toggle on mobile, keep clean ── */
     @media (max-width: 740px) {
       body {
         padding: 1.4rem 1rem;
-      }
-      .top-nav {
-        display: none !important;
       }
       .theme-toggle-wrapper {
         display: none !important;
@@ -370,8 +331,6 @@
         font-size: 2.6rem;
       }
     }
-
-    /* no animation, no reveal, just clean single scroll */
   </style>
 </head>
 <body>
@@ -386,15 +345,6 @@
     <span id="toggleLabel">DARK</span>
   </button>
 </div>
-
-<!-- ── TOP NAV (desktop) ── -->
-<nav class="top-nav" id="topNav">
-  <a href="#publications">Publications</a>
-  <a href="#experience">Experience</a>
-  <a href="#oss">Open Source</a>
-  <a href="#projects">Projects</a>
-  <a href="#blog">Blog</a>
-</nav>
 
 <div class="wrap">
 
@@ -442,11 +392,11 @@
     </div>
   </section>
 
-  <!-- OPEN SOURCE -->
+  <!-- OPEN SOURCE – both llama.cpp PRs now listed -->
   <section id="oss" class="section-block">
     <h2>Open Source</h2>
     <ul class="plain">
-      <li><a href="https://github.com/ggml-org/llama.cpp" target="_blank">llama.cpp</a> — SIMD vector kernel <a href="https://github.com/ggml-org/llama.cpp/pull/22209" target="_blank">#22209</a></li>
+      <li><a href="https://github.com/ggml-org/llama.cpp" target="_blank">llama.cpp</a> — concat row‑level memcpy <a href="https://github.com/ggml-org/llama.cpp/pull/24575" target="_blank">#24575</a> &amp; SIMD vector kernel <a href="https://github.com/ggml-org/llama.cpp/pull/22209" target="_blank">#22209</a></li>
       <li><a href="https://github.com/pytorch/pytorch" target="_blank">PyTorch</a> — NaN clamp fix <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank">#172200</a></li>
       <li><a href="https://github.com/dspinellis/alexandria3k" target="_blank">alexandria3k</a> — O(n)→O(1) lookup <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank">#63</a></li>
       <li><a href="https://github.com/scipy/scipy" target="_blank">SciPy</a> — Gauss–Jacobi docs <a href="https://github.com/scipy/scipy/pull/23129" target="_blank">#23129</a></li>
