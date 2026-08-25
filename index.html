@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kartik Sirohi · AI researcher</title>
-  <meta name="description" content="Kartik Sirohi – AI researcher, LLM systems, inference optimization, RAG, open source." />
+  <title>Kartik Sirohi · AI Researcher</title>
+  <meta name="description" content="Kartik Sirohi – AI researcher focusing on LLM systems, inference optimization, RAG, and open-source. IT undergrad at NIT Jalandhar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
   <style>
     /* ── reset & base ── */
     * {
@@ -14,98 +17,118 @@
     }
 
     :root {
-      --bg: #ffffff;
-      --fg: #111111;
-      --fg2: #1e1e1e;
-      --fg3: #5a5a5a;
-      --accent: #b22234;
-      --accent-hover: #8b1a1a;
-      --line-soft: rgba(0, 0, 0, 0.08);
-      --serif: 'Times New Roman', 'Charter', 'Georgia', serif;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --bg: #fcf9f5;
+      --fg: #1a1410;
+      --fg2: #2c241e;
+      --fg3: #5a4f47;
+      --fg4: #8a7d72;
+      --accent: #8b2a2a;
+      --accent-hover: #6b1a1a;
+      --line-soft: rgba(26, 20, 16, 0.08);
+      --serif: 'Literata', 'Times New Roman', Georgia, serif;
     }
 
-    [data-theme="dark"] {
-      --bg: #0b0b0b;
-      --fg: #f0f0f0;
-      --fg2: #d9d9d9;
-      --fg3: #a0a0a0;
-      --accent: #d45c5c;
-      --accent-hover: #e87878;
-      --line-soft: rgba(255, 255, 255, 0.08);
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       background: var(--bg);
       color: var(--fg);
       font-family: var(--serif);
-      font-size: 18px;
+      font-size: 21px;
+      font-weight: 500;
       line-height: 1.6;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       min-height: 100vh;
-      transition: background 0.2s, color 0.2s;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .wrap {
-      max-width: 820px;
+      max-width: 1100px;
       margin: 0 auto;
       width: 100%;
     }
 
-    /* ── theme toggle (desktop) ── */
-    .theme-toggle-wrapper {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1.2rem;
+    /* ── main content ── */
+    .main {
+      flex: 1;
+      min-width: 0;
     }
-    .theme-toggle {
-      background: var(--bg);
-      border: 2px solid var(--fg);
-      border-radius: 40px;
-      padding: 0.15rem 0.7rem;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: 9px;
+
+    /* ── sidebar (news) ── */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 2rem;
+      align-self: flex-start;
+    }
+
+    .sidebar-title {
+      font-family: var(--serif);
+      font-size: 0.85rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--fg);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      user-select: none;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      height: fit-content;
-      width: fit-content;
-      min-width: 50px;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(4px);
-      line-height: 1.4;
+      color: var(--fg3);
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.3rem;
+      display: inline-block;
     }
-    [data-theme="dark"] .theme-toggle {
-      background: rgba(0, 0, 0, 0.7);
-      border-color: #f0f0f0;
-      color: #f0f0f0;
-    }
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    [data-theme="dark"] .theme-toggle:hover {
-      border-color: #f0b0b0;
-      color: #f0b0b0;
-    }
-    .theme-icon {
-      width: 12px;
-      height: 12px;
+
+    .sidebar-news {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      gap: 1.2rem;
     }
-    .theme-icon svg {
-      width: 12px;
-      height: 12px;
+
+    .sidebar-news .news-item {
+      font-size: 0.95rem;
+      color: var(--fg2);
+      line-height: 1.5;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 1rem;
+    }
+    .sidebar-news .news-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .sidebar-news .news-item strong {
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .sidebar-news .news-item .date {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--fg4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.15rem;
+      font-weight: 500;
+    }
+
+    /* ── two-column layout ── */
+    .two-col {
+      display: flex;
+      gap: 3.5rem;
+      align-items: flex-start;
+      margin-top: 2rem;
+    }
+
+    .two-col .main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .two-col .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 2rem;
+      align-self: flex-start;
     }
 
     /* ── typography ── */
@@ -115,79 +138,93 @@
       text-underline-offset: 3px;
       text-decoration-thickness: 1.5px;
       transition: color 0.15s, text-decoration-color 0.15s;
+      font-weight: 500;
     }
     a:hover {
       color: var(--fg);
       text-decoration-color: var(--accent);
     }
-    [data-theme="dark"] a {
-      color: #f0b0b0;
-      font-weight: 500;
-    }
-    [data-theme="dark"] a:hover {
-      color: #ffffff;
+
+    /* ── centered intro ── */
+    .intro-wrapper {
+      text-align: center;
+      max-width: 68ch;
+      margin: 0 auto;
     }
 
     h1 {
       font-family: var(--serif);
-      font-size: 3.2rem;
+      font-size: 4rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       margin: 0 0 0.1rem;
       line-height: 1.1;
       color: var(--fg);
     }
 
-    .bio {
-      font-size: 1.05rem;
+    .subhead {
+      font-size: 1.2rem;
       color: var(--fg2);
-      margin: 0.25rem 0 0.1rem;
-      max-width: 70ch;
-      font-family: var(--serif);
-    }
-
-    .bio a {
+      margin: 0.15rem 0 0.1rem;
       font-weight: 500;
     }
 
-    .links-row {
-      margin-top: 1.2rem;
+    .subhead a {
+      font-weight: 500;
+    }
+
+    .about-text {
+      margin: 1rem 0 0.5rem;
+      color: var(--fg2);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .about-text strong {
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    .meta-links {
+      margin-top: 1.5rem;
       font-size: 0.95rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.2rem 1.8rem;
+      justify-content: center;
+      gap: 0.2rem 2rem;
       border-top: 1px solid var(--line-soft);
-      padding-top: 1rem;
+      padding-top: 0.8rem;
     }
-    .links-row a {
+    .meta-links a {
       display: inline-block;
-      font-family: var(--sans);
+      font-family: var(--serif);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--fg3);
       text-decoration: none;
       border-bottom: 2px solid transparent;
       transition: border-color 0.2s, color 0.2s;
     }
-    .links-row a:hover {
+    .meta-links a:hover {
       color: var(--fg);
       border-bottom-color: var(--accent);
     }
 
-    /* ── single scroll sections ── */
+    /* ── sections ── */
     .section-block {
       margin-top: 2.8rem;
     }
 
     .section-block:first-of-type {
-      margin-top: 2.2rem;
+      margin-top: 0;
     }
 
     h2 {
       font-family: var(--serif);
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       margin: 0 0 1.2rem 0;
@@ -199,7 +236,7 @@
     }
 
     .entry {
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.5rem;
       padding-bottom: 1.2rem;
       border-bottom: 1px solid var(--line-soft);
     }
@@ -211,40 +248,87 @@
 
     .entry-line {
       margin: 0 0 0.1rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--fg);
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
     .entry-line .meta {
-      font-weight: 400;
+      font-weight: 500;
       color: var(--fg3);
       font-size: 0.85rem;
-      font-family: var(--sans);
+      font-family: var(--serif);
       letter-spacing: 0.02em;
     }
     .entry-desc {
-      margin: 0.2rem 0 0.2rem;
+      margin: 0.15rem 0 0.2rem;
       color: var(--fg2);
       font-size: 0.95rem;
+      line-height: 1.6;
+      font-weight: 500;
     }
     .entry-links {
-      margin-top: 0.3rem;
+      margin-top: 0.2rem;
       font-size: 0.8rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.1rem 1rem;
-      font-family: var(--sans);
+      font-family: var(--serif);
     }
     .entry-links a {
       color: var(--fg3);
       text-decoration: underline;
       text-underline-offset: 2px;
       text-decoration-thickness: 1px;
+      font-weight: 500;
     }
     .entry-links a:hover {
       color: var(--fg);
     }
 
+    /* blog / news list */
+    .post-item {
+      margin-bottom: 1.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .post-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .post-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--fg);
+    }
+    .post-title a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1.5px;
+      font-weight: 700;
+    }
+    .post-title a:hover {
+      color: var(--accent);
+    }
+    .post-meta {
+      font-size: 0.8rem;
+      color: var(--fg4);
+      font-family: var(--serif);
+      letter-spacing: 0.02em;
+      margin-top: 0.1rem;
+      font-weight: 500;
+    }
+    .post-desc {
+      margin-top: 0.15rem;
+      color: var(--fg2);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* open source list */
     ul.plain {
       list-style: none;
       padding-left: 0;
@@ -255,6 +339,8 @@
       color: var(--fg2);
       padding-left: 0.2rem;
       font-size: 0.95rem;
+      line-height: 1.6;
+      font-weight: 500;
     }
     ul.plain li:last-child {
       margin-bottom: 0;
@@ -268,6 +354,19 @@
       display: inline-block;
       vertical-align: middle;
     }
+    ul.plain li a {
+      font-weight: 500;
+    }
+    ul.plain li .pr-link {
+      font-weight: 500;
+      color: var(--fg3);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+    }
+    ul.plain li .pr-link:hover {
+      color: var(--fg);
+    }
 
     .footer-links {
       margin-top: 3.5rem;
@@ -277,211 +376,262 @@
       color: var(--fg3);
       display: flex;
       flex-wrap: wrap;
-      gap: 0.2rem 1.6rem;
-      font-family: var(--sans);
+      gap: 0.2rem 1.8rem;
+      font-family: var(--serif);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
     }
     .footer-links a {
       color: var(--fg3);
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.15s, color 0.15s;
-    }
-    [data-theme="dark"] .footer-links a {
-      color: #a0a0a0;
+      font-weight: 500;
     }
     .footer-links a:hover {
       color: var(--fg);
       border-bottom-color: var(--accent);
     }
-    [data-theme="dark"] .footer-links a:hover {
-      color: #ffffff;
-    }
 
     ::selection {
-      background: rgba(178, 34, 52, 0.2);
-    }
-    [data-theme="dark"] ::selection {
-      background: rgba(212, 92, 92, 0.25);
+      background: rgba(139, 42, 42, 0.15);
     }
 
     code {
-      font-family: 'Courier New', monospace;
-      background: var(--line-soft);
+      font-family: 'SF Mono', 'Courier New', monospace;
+      background: rgba(0, 0, 0, 0.06);
       padding: 0.1rem 0.3rem;
       font-size: 0.85em;
-      border-radius: 0px;
+      border-radius: 3px;
       color: var(--fg2);
     }
-    [data-theme="dark"] code {
-      background: rgba(255,255,255,0.06);
-      color: #ddd;
+
+    @media (max-width: 820px) {
+      body {
+        font-size: 18px;
+        padding: 1.5rem 1rem;
+      }
+      .two-col {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .two-col .sidebar {
+        width: 100%;
+        position: static;
+        order: -1;
+        border-bottom: 1px solid var(--line-soft);
+        padding-bottom: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .sidebar-news {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.5rem;
+      }
+      .sidebar-news .news-item {
+        flex: 1 1 200px;
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      h1 {
+        font-size: 3.2rem;
+      }
     }
 
-    /* ── responsive: hide toggle on mobile, keep clean ── */
-    @media (max-width: 740px) {
+    @media (max-width: 500px) {
       body {
-        padding: 1.4rem 1rem;
-      }
-      .theme-toggle-wrapper {
-        display: none !important;
+        font-size: 17px;
+        padding: 1.2rem 0.8rem;
       }
       h1 {
         font-size: 2.6rem;
+      }
+      .sidebar-news {
+        flex-direction: column;
+      }
+      .sidebar-news .news-item {
+        flex: 1 1 auto;
+        border-bottom: 1px solid var(--line-soft);
+        padding-bottom: 0.8rem;
+      }
+      .sidebar-news .news-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
       }
     }
   </style>
 </head>
 <body>
-
-<!-- ── theme toggle (desktop) ── -->
-<div class="theme-toggle-wrapper">
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-    <span class="theme-icon" id="themeIcon">
-      <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </span>
-    <span id="toggleLabel">DARK</span>
-  </button>
-</div>
-
 <div class="wrap">
 
-  <!-- header -->
-  <header>
-    <h1>Kartik Sirohi</h1>
-    <p class="bio">IT undergrad at <a href="https://nitj.ac.in/" target="_blank">NIT Jalandhar</a>.</p>
-    <div class="links-row">
-      <a href="mailto:kartik.orion.dev@gmail.com">Email</a>
-      <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
-      <a href="https://linkedin.com/in/kartik-sirohi-b81625325" target="_blank">LinkedIn</a>
-      <a href="https://x.com/sirohikartik_" target="_blank">Twitter</a>
+  <!-- ── CENTERED INTRO ── -->
+  <div class="intro-wrapper">
+    <header>
+      <h1>Kartik Sirohi</h1>
+      <p class="subhead">IT undergrad at <a href="https://nitj.ac.in/" target="_blank">NIT Jalandhar</a> · AI researcher, builder, open source contributor.</p>
+
+      <div class="about-text">
+        I work at the intersection of efficient systems and artificial intelligence. My focus is on <strong>LLM inference optimization</strong>, <strong>RAG pipelines</strong>, and <strong>low-latency AI deployment</strong>. I'm also an active open source contributor with patches in llama.cpp, PyTorch, and SciPy. Always open to collaborations and conversations about AI systems.
+      </div>
+
+      <div class="meta-links">
+        <a href="mailto:kartik.orion.dev@gmail.com">Email</a>
+        <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/kartik-sirohi-b81625325" target="_blank">LinkedIn</a>
+        <a href="https://x.com/sirohikartik_" target="_blank">Twitter</a>
+        <a href="https://sirohikartik.github.io" target="_blank">Blog</a>
+      </div>
+    </header>
+  </div>
+
+  <!-- ── TWO-COLUMN: Main content + Sidebar ── -->
+  <div class="two-col">
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+      <!-- PUBLICATIONS -->
+      <section id="publications" class="section-block">
+        <h2>Publications</h2>
+        <div class="entry">
+          <p class="entry-line"><strong>P<sup>2</sup>INNs: Physio-Psychiatry Informed Neural Networks</strong> <span class="meta">— IEEE Access, 2026</span></p>
+          <p class="entry-desc">A novel architecture for depression risk prediction integrating physiological and psychiatric indicators. Developed during my research internship at the University of Galway.</p>
+          <p class="entry-links">
+            <a href="https://ieeexplore.ieee.org/document/11646573" target="_blank">IEEE Xplore</a>
+            <a href="https://doi.org/10.1109/ACCESS.2026.3722150" target="_blank">DOI</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="section-block">
+        <h2>Experience</h2>
+        <div class="entry">
+          <p class="entry-line"><strong>AI Engineering Intern</strong> <span class="meta">— Horrazon AI · Aug 2026 – present</span></p>
+          <p class="entry-desc">Working on RAG pipelines, inference optimization, and edge deployment.</p>
+        </div>
+        <div class="entry">
+          <p class="entry-line"><strong>Research Intern</strong> <span class="meta">— QWorld · Jul 2026 – Aug 2026</span></p>
+          <p class="entry-desc">Ransomware research using quantum machine learning.</p>
+        </div>
+        <div class="entry" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+          <p class="entry-line"><strong>AI Research Intern</strong> <span class="meta">— Univ. of Galway · Jan–Mar 2026</span></p>
+          <p class="entry-desc">Computational psychiatry research with deep neural networks.</p>
+        </div>
+      </section>
+
+      <!-- OPEN SOURCE -->
+      <section id="oss" class="section-block">
+        <h2>Open Source</h2>
+        <ul class="plain">
+          <li><a href="https://github.com/ggml-org/llama.cpp" target="_blank">llama.cpp</a> — Concat row-level memcpy <a href="https://github.com/ggml-org/llama.cpp/pull/24575" target="_blank" class="pr-link">#24575</a> &amp; SIMD vector kernel <a href="https://github.com/ggml-org/llama.cpp/pull/22209" target="_blank" class="pr-link">#22209</a></li>
+          <li><a href="https://github.com/pytorch/pytorch" target="_blank">PyTorch</a> — NaN clamp fix <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank" class="pr-link">#172200</a></li>
+          <li><a href="https://github.com/dspinellis/alexandria3k" target="_blank">alexandria3k</a> — O(n)→O(1) lookup <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank" class="pr-link">#63</a></li>
+          <li><a href="https://github.com/scipy/scipy" target="_blank">SciPy</a> — Gauss-Jacobi docs <a href="https://github.com/scipy/scipy/pull/23129" target="_blank" class="pr-link">#23129</a></li>
+          <li><a href="https://github.com/Tracer-Cloud/opensre" target="_blank">OpenSRE</a> — Unit tests &amp; validation <a href="https://github.com/Tracer-Cloud/opensre/pull/852" target="_blank" class="pr-link">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917" target="_blank" class="pr-link">#917</a></li>
+        </ul>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects" class="section-block">
+        <h2>Projects</h2>
+
+        <div class="entry">
+          <p class="entry-line"><strong>tinyGPT</strong> <span class="meta">C++ / Python</span></p>
+          <p class="entry-desc">30M-param GPT from scratch with KV caching, NEON/SSE, OpenMP. ~121 tok/s on M1.</p>
+          <p class="entry-links">
+            <a href="https://tinygpt.onrender.com" target="_blank">demo</a>
+            <a href="https://github.com/sirohikartik/tinygpt" target="_blank">GitHub</a>
+            <a href="https://sirohikartik.github.io/tinygpt_blog" target="_blank">write-up</a>
+          </p>
+        </div>
+
+        <div class="entry">
+          <p class="entry-line"><strong>mini-torch</strong> <span class="meta">Python</span></p>
+          <p class="entry-desc">Autograd framework with reverse-mode differentiation, SGD+momentum, Adam.</p>
+          <p class="entry-links"><a href="https://github.com/sirohikartik/mini-torch" target="_blank">GitHub</a> <a href="https://sirohikartik.github.io/mini-torch/docs.html" target="_blank">docs</a></p>
+        </div>
+
+        <div class="entry">
+          <p class="entry-line"><strong>Rocky</strong> <span class="meta">Python / LLM</span></p>
+          <p class="entry-desc">Speech-to-Indian Sign Language: Whisper → vocab resolver → ISL grammar agent.</p>
+          <p class="entry-links"><a href="https://github.com/sirohikartik/rocky" target="_blank">GitHub</a></p>
+        </div>
+
+        <div class="entry">
+          <p class="entry-line"><strong>Athena</strong> <span class="meta">Python / RAG</span></p>
+          <p class="entry-desc">Search agent: web search + BM25 + local LLM reasoning, async pipeline.</p>
+          <p class="entry-links"><a href="https://github.com/sirohikartik/athena" target="_blank">GitHub</a></p>
+        </div>
+
+        <div class="entry" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+          <p class="entry-line"><strong>Linear Algebra Engine</strong> <span class="meta">C++ / pybind11</span></p>
+          <p class="entry-desc">Gaussian elimination, inversion, blocked matmul, determinant.</p>
+          <p class="entry-links"><a href="https://github.com/sirohikartik/linalg" target="_blank">GitHub</a></p>
+        </div>
+      </section>
+
+      <!-- RECENT POSTS -->
+      <section id="blog" class="section-block">
+        <h2>Recent Posts</h2>
+
+        <div class="post-item">
+          <div class="post-title"><a href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a></div>
+          <div class="post-meta">Jan 15, 2026 · Projects</div>
+          <div class="post-desc">Implementing a 30M-parameter GPT from scratch with NEON, SSE, and OpenMP.</div>
+        </div>
+
+        <div class="post-item">
+          <div class="post-title"><a href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a></div>
+          <div class="post-meta">Dec 2, 2025 · Tutorials</div>
+          <div class="post-desc">An intuitive walkthrough of backpropagation — from chain rule to automatic differentiation.</div>
+        </div>
+
+        <div class="post-item">
+          <div class="post-title"><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition behind Neural Networks</a></div>
+          <div class="post-meta">Oct 10, 2025 · Tutorials</div>
+          <div class="post-desc">Understanding neural networks one parameter at a time.</div>
+        </div>
+
+        <div class="post-item" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+          <div class="post-title"><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a></div>
+          <div class="post-meta">Sep 5, 2025 · Research</div>
+          <div class="post-desc">A survey of graph-based retrieval for RAG systems.</div>
+        </div>
+      </section>
+
+      <!-- footer -->
+      <div class="footer-links">
+        <a href="mailto:kartik.orion.dev@gmail.com">kartik.orion.dev@gmail.com</a>
+        <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/kartik-sirohi-b81625325" target="_blank">LinkedIn</a>
+        <a href="https://x.com/sirohikartik_" target="_blank">Twitter</a>
+        <a href="https://sirohikartik.github.io" target="_blank">Blog</a>
+      </div>
+
     </div>
-  </header>
 
-  <!-- single column – all sections in order -->
+    <!-- ── SIDEBAR: What's New ── -->
+    <aside class="sidebar">
+      <div class="sidebar-title">What's New</div>
+      <div class="sidebar-news">
+        <div class="news-item">
+          <span class="date">Aug 2026</span>
+          <strong>Started AI Engineering Internship</strong> at Horrazon AI, working on RAG pipelines and edge inference.
+        </div>
+        <div class="news-item">
+          <span class="date">Aug 2026</span>
+          <strong>First paper published</strong> — P<sup>2</sup>INNs in IEEE Access, from computational psychiatry research at Univ. of Galway.
+        </div>
+        <div class="news-item">
+          <span class="date">Aug 2026</span>
+          <strong>llama.cpp PR merged</strong> — Optimized concat op with row-level memcpy, 83–133× speedup (<a href="https://github.com/ggml-org/llama.cpp/pull/24575" target="_blank" style="color: var(--accent);">#24575</a>).
+        </div>
+      </div>
+    </aside>
 
-  <!-- PUBLICATIONS -->
-  <section id="publications" class="section-block">
-    <h2>Publications</h2>
-    <div class="entry">
-      <p class="entry-line"><strong>P<sup>2</sup>INNs</strong> <span class="meta">— IEEE Access, 2026</span></p>
-      <p class="entry-desc">Physio-Psychiatry Informed Neural Networks for depression risk prediction.</p>
-      <p class="entry-links">
-        <a href="https://ieeexplore.ieee.org/document/11646573" target="_blank">IEEE Xplore</a>
-        <a href="https://doi.org/10.1109/ACCESS.2026.3722150" target="_blank">DOI</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="section-block">
-    <h2>Experience</h2>
-    <div class="entry">
-      <p class="entry-line"><strong>AI Engineering Intern</strong> <span class="meta">— Horrazon AI, Aug 2026 – present</span></p>
-      <p class="entry-desc">Designing and optimizing RAG pipelines, distributed inference caching, and fine‑tuning small‑scale LLMs for low‑latency edge deployment.</p>
-    </div>
-    <div class="entry">
-      <p class="entry-line"><strong>Research Intern</strong> <span class="meta">— QWorld, Jul 2026 – Aug 2026</span></p>
-      <p class="entry-desc">Dataset curation for ransomware classification; QTagger+ quantum ML framework.</p>
-    </div>
-    <div class="entry">
-      <p class="entry-line"><strong>AI Research Intern</strong> <span class="meta">— Univ. of Galway, Jan–Mar 2026</span></p>
-      <p class="entry-desc">Deep neural networks in computational psychiatry (IEEE Access).</p>
-    </div>
-  </section>
-
-  <!-- OPEN SOURCE – both llama.cpp PRs now listed -->
-  <section id="oss" class="section-block">
-    <h2>Open Source</h2>
-    <ul class="plain">
-      <li><a href="https://github.com/ggml-org/llama.cpp" target="_blank">llama.cpp</a> — concat row‑level memcpy <a href="https://github.com/ggml-org/llama.cpp/pull/24575" target="_blank">#24575</a> &amp; SIMD vector kernel <a href="https://github.com/ggml-org/llama.cpp/pull/22209" target="_blank">#22209</a></li>
-      <li><a href="https://github.com/pytorch/pytorch" target="_blank">PyTorch</a> — NaN clamp fix <a href="https://github.com/pytorch/pytorch/pull/172200" target="_blank">#172200</a></li>
-      <li><a href="https://github.com/dspinellis/alexandria3k" target="_blank">alexandria3k</a> — O(n)→O(1) lookup <a href="https://github.com/dspinellis/alexandria3k/pull/63" target="_blank">#63</a></li>
-      <li><a href="https://github.com/scipy/scipy" target="_blank">SciPy</a> — Gauss–Jacobi docs <a href="https://github.com/scipy/scipy/pull/23129" target="_blank">#23129</a></li>
-      <li><a href="https://github.com/Tracer-Cloud/opensre" target="_blank">OpenSRE</a> — unit tests &amp; validation <a href="https://github.com/Tracer-Cloud/opensre/pull/852" target="_blank">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917" target="_blank">#917</a></li>
-    </ul>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="section-block">
-    <h2>Projects</h2>
-
-    <div class="entry">
-      <p class="entry-line"><strong>tinyGPT</strong> <span class="meta">C++ / Python</span></p>
-      <p class="entry-desc">30M-param GPT, native inference: KV cache, NEON+SSE, OpenMP. ~121 tok/s on M1.</p>
-      <p class="entry-links">
-        <a href="https://tinygpt.onrender.com" target="_blank">demo</a>
-        <a href="https://github.com/sirohikartik/tinygpt" target="_blank">GitHub</a>
-        <a href="https://sirohikartik.github.io/tinygpt_blog" target="_blank">write-up</a>
-      </p>
-    </div>
-
-    <div class="entry">
-      <p class="entry-line"><strong>mini-torch</strong> <span class="meta">Python</span></p>
-      <p class="entry-desc">Autograd framework: reverse-mode, SGD+momentum, Adam, MLP training.</p>
-      <p class="entry-links"><a href="https://github.com/sirohikartik/mini-torch" target="_blank">GitHub</a> <a href="https://sirohikartik.github.io/mini-torch/docs.html" target="_blank">docs</a></p>
-    </div>
-
-    <div class="entry">
-      <p class="entry-line"><strong>Rocky</strong> <span class="meta">Python / LLM</span></p>
-      <p class="entry-desc">Speech-to-Indian Sign Language: Whisper → vocab resolver → ISL grammar agent.</p>
-      <p class="entry-links"><a href="https://github.com/sirohikartik/rocky" target="_blank">GitHub</a></p>
-    </div>
-
-    <div class="entry">
-      <p class="entry-line"><strong>Athena</strong> <span class="meta">Python / RAG</span></p>
-      <p class="entry-desc">Search agent: web search + BM25 + local LLM reasoning, async pipeline.</p>
-      <p class="entry-links"><a href="https://github.com/sirohikartik/athena" target="_blank">GitHub</a></p>
-    </div>
-
-    <div class="entry">
-      <p class="entry-line"><strong>Linear Algebra Engine</strong> <span class="meta">C++ / pybind11</span></p>
-      <p class="entry-desc">Gaussian elimination, inversion, blocked matmul, determinant.</p>
-      <p class="entry-links"><a href="https://github.com/sirohikartik/linalg" target="_blank">GitHub</a></p>
-    </div>
-  </section>
-
-  <!-- BLOG -->
-  <section id="blog" class="section-block">
-    <h2>Blog</h2>
-    <ul class="plain">
-      <li><a href="https://sirohikartik.github.io/spec_workflow" target="_blank">Spec‑driven development</a></li>
-      <li><a href="https://sirohikartik.github.io/tinygpt_blog.html" target="_blank">Building tinyGPT in C++</a></li>
-      <li><a href="https://sirohikartik.github.io/backprop.html" target="_blank">Backpropagation</a></li>
-      <li><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/" target="_blank">Graph Retrieval Methods</a></li>
-      <li><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470" target="_blank">Intuition behind Neural Networks</a></li>
-    </ul>
-  </section>
-
-  <!-- footer -->
-  <div class="footer-links">
-    <a href="mailto:kartik.orion.dev@gmail.com">kartik.orion.dev@gmail.com</a>
-    <a href="https://github.com/sirohikartik" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/kartik-sirohi-b81625325" target="_blank">LinkedIn</a>
-    <a href="https://x.com/sirohikartik_" target="_blank">Twitter</a>
   </div>
 
 </div>
-
-<script>
-  /* ── Theme ── */
-  const root = document.documentElement;
-  const toggleLabel = document.getElementById('toggleLabel');
-  const moonIcon = document.getElementById('moonIcon');
-  const sunIcon = document.getElementById('sunIcon');
-  let dark = false;
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark') { dark = true; applyTheme(); }
-
-  function applyTheme() {
-    root.setAttribute('data-theme', dark ? 'dark' : '');
-    toggleLabel.textContent = dark ? 'LIGHT' : 'DARK';
-    if (dark) { moonIcon.style.display = 'none'; sunIcon.style.display = 'block'; }
-    else { moonIcon.style.display = 'block'; sunIcon.style.display = 'none'; }
-  }
-  function toggleTheme() { dark = !dark; applyTheme(); localStorage.setItem('theme', dark ? 'dark' : 'light'); }
-</script>
 </body>
 </html>
