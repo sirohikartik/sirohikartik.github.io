@@ -154,38 +154,6 @@
   .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
   .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
 
-  .metric{
-    margin-top:2.2rem;
-    margin-bottom:2.8rem;
-    display:flex;
-    align-items:center;
-    gap:1.6rem;
-    flex-wrap:wrap;
-  }
-  .metric-figure{font-family:var(--mono);}
-  .metric-figure .num{font-size:1.5rem;font-weight:600;color:var(--ink);}
-  .metric-figure .num .arrow{color:var(--ink-faint);font-weight:400;padding:0 0.2rem;}
-  .metric-figure .label{font-size:0.78rem;color:var(--ink-soft);margin-top:0.2rem;}
-  .metric svg{display:block;}
-  .metric-path{
-    fill:none;
-    stroke:var(--signal);
-    stroke-width:2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    pathLength:1;
-    stroke-dasharray:1;
-    stroke-dashoffset:1;
-    animation:draw 1.5s 0.2s cubic-bezier(.4,0,.2,1) forwards;
-  }
-  .metric-dot{fill:var(--signal);opacity:0;animation:dotin 0.4s 1.5s forwards;}
-  @keyframes draw{to{stroke-dashoffset:0;}}
-  @keyframes dotin{to{opacity:1;}}
-  @media (prefers-reduced-motion:reduce){
-    .metric-path{animation:none;stroke-dashoffset:0;}
-    .metric-dot{animation:none;opacity:1;}
-  }
-
   /* ---- open source: orbit graph ---- */
   .oss-graph-wrap{margin:0 0 2rem;}
   .oss-graph{
@@ -287,8 +255,8 @@
     .js section .hunk{opacity:1;transform:none;transition:none;}
   }
 
-  /* ---- hover: highlight the row like selecting a line in an editor ---- */
-  section .logline{
+  /* ---- hover: highlight for OSS/posts only (NOT experience/publications) ---- */
+  section.hoverable .logline{
     position:relative;
     padding:0.55rem 0.6rem 0.75rem 0.5rem;
     margin-left:-0.5rem;
@@ -296,7 +264,7 @@
     border-radius:2px;
     transition:background-color 0.2s ease;
   }
-  section .logline::after{
+  section.hoverable .logline::after{
     content:"";
     position:absolute;
     left:0;
@@ -308,13 +276,20 @@
     transform-origin:top;
     transition:transform 0.25s cubic-bezier(.4,0,.2,1);
   }
-  section .logline:hover{background:var(--band);}
-  section .logline:hover::after{transform:scaleY(1);}
-  section .logline:hover::before{color:var(--signal);}
-  section .logline:hover .entry-title{color:var(--signal);transition:color 0.15s ease;}
+  section.hoverable .logline:hover{background:var(--band);}
+  section.hoverable .logline:hover::after{transform:scaleY(1);}
+  section.hoverable .logline:hover::before{color:var(--signal);}
+  section.hoverable .logline:hover .entry-title{color:var(--signal);transition:color 0.15s ease;}
   .entry-title{transition:color 0.15s ease;}
 
-  /* ---- experience: git-log branch, one lane, most recent = HEAD ---- */
+  /* non-hoverable sections: still need padding for layout consistency */
+  section:not(.hoverable) .logline{
+    padding:0.55rem 0.6rem 0.75rem 0.5rem;
+    margin-left:-0.5rem;
+    margin-right:-0.6rem;
+  }
+
+  /* ---- experience: git-log branch ---- */
   .commit-log{
     position:relative;
     padding-left:0.2rem;
@@ -429,20 +404,151 @@
     cursor:pointer;
     position:relative;
     will-change:transform;
+    overflow:hidden;
   }
   .proj-tile .tile-icon{
     color:var(--ink-soft);
     line-height:0;
     transition:color 0.3s ease, transform 0.3s ease;
+    position:relative;
+    width:26px;
+    height:26px;
   }
-  .proj-tile .tile-icon svg{width:26px;height:26px;display:block;transition:transform 0.3s ease;}
-  .proj-tile .tile-name{
-    font-family:var(--mono);
-    font-size:0.7rem;
-    color:var(--ink-soft);
-    transition:color 0.3s ease;
-    word-break:break-word;
+  /* SVG animations inside icons — each tile gets a specific animation */
+  .proj-tile .tile-icon svg{
+    width:26px;
+    height:26px;
+    display:block;
+    transition:transform 0.3s ease;
   }
+
+  /* tinyGPT — nodes pulse in sequence */
+  .proj-tile[data-anim="nodes"] .tile-icon circle{
+    animation: nodePulse 2s ease-in-out infinite;
+  }
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(1){animation-delay:0s;}
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(2){animation-delay:0.28s;}
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(3){animation-delay:0.56s;}
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(4){animation-delay:0.84s;}
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(5){animation-delay:1.12s;}
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(6){animation-delay:1.4s;}
+  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(7){animation-delay:1.68s;}
+  @keyframes nodePulse{
+    0%,100%{opacity:0.4;r:1.3;}
+    50%{opacity:1;r:2;}
+  }
+
+  /* mini-torch — wave flows along the path */
+  .proj-tile[data-anim="wave"] .tile-icon path:first-child{
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: waveDash 2.2s linear infinite;
+  }
+  @keyframes waveDash{
+    0%{stroke-dashoffset:60;}
+    100%{stroke-dashoffset:-60;}
+  }
+
+  /* linalg — dots light up row by row */
+  .proj-tile[data-anim="matrix"] .tile-icon circle{
+    animation: matrixOn 2.7s ease-in-out infinite;
+  }
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(1){animation-delay:0s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(2){animation-delay:0.15s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(3){animation-delay:0.3s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(4){animation-delay:0.45s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(5){animation-delay:0.6s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(6){animation-delay:0.75s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(7){animation-delay:0.9s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(8){animation-delay:1.05s;}
+  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(9){animation-delay:1.2s;}
+  @keyframes matrixOn{
+    0%,100%{opacity:0.25;}
+    20%,60%{opacity:1;}
+  }
+
+  /* cuda — GPU chip halo pulses */
+  .proj-tile[data-anim="gpu"] .tile-icon rect:first-child{
+    animation: gpuGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes gpuGlow{
+    0%,100%{stroke-opacity:0.4;}
+    50%{stroke-opacity:1;stroke:#6BAEEF;}
+  }
+
+  /* Rocky — waveform bars animate like audio */
+  .proj-tile[data-anim="audio"] .tile-icon rect{
+    animation: audioBar 1.4s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(1){animation-delay:0s;transform-box:fill-box;}
+  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(2){animation-delay:0.2s;transform-box:fill-box;}
+  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(3){animation-delay:0.4s;transform-box:fill-box;}
+  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(4){animation-delay:0.1s;transform-box:fill-box;}
+  @keyframes audioBar{
+    0%,100%{scaleY:0.5;opacity:0.5;}
+    50%{scaleY:1;opacity:1;}
+  }
+
+  /* Athena — search circle expands */
+  .proj-tile[data-anim="search"] .tile-icon circle{
+    animation: searchScan 2s ease-in-out infinite;
+  }
+  @keyframes searchScan{
+    0%,100%{r:4;opacity:1;}
+    50%{r:5.5;opacity:0.6;}
+  }
+
+  /* maze-runner — dot traces the path */
+  .proj-tile[data-anim="maze"] .tile-icon .maze-dot{
+    animation: mazeMarch 3s linear infinite;
+    offset-path: path("M5 5.5 L12 5.5 L12 12 L19 12");
+    offset-distance: 0%;
+  }
+  @keyframes mazeMarch{
+    0%{offset-distance:0%;opacity:1;}
+    80%{offset-distance:100%;opacity:1;}
+    100%{offset-distance:100%;opacity:0;}
+  }
+
+  /* minimax — X and O flash alternately */
+  .proj-tile[data-anim="game"] .tile-icon .x-mark{
+    animation: xFlash 2s ease-in-out infinite;
+  }
+  .proj-tile[data-anim="game"] .tile-icon .o-mark{
+    animation: oFlash 2s ease-in-out infinite 1s;
+  }
+  @keyframes xFlash{
+    0%,100%{opacity:0.3;}
+    40%,60%{opacity:1;}
+  }
+  @keyframes oFlash{
+    0%,100%{opacity:0.3;}
+    40%,60%{opacity:1;}
+  }
+
+  /* http-server — server rows blink like blinkenlights */
+  .proj-tile[data-anim="server"] .tile-icon circle{
+    animation: blink 1.6s step-end infinite;
+  }
+  .proj-tile[data-anim="server"] .tile-icon circle:nth-child(1){animation-delay:0s;}
+  .proj-tile[data-anim="server"] .tile-icon circle:nth-child(2){animation-delay:0.8s;}
+  @keyframes blink{
+    0%,100%{fill:#6BAEEF;opacity:1;}
+    50%{fill:#565850;opacity:0.4;}
+  }
+
+  /* FileManager — dashes slide in like a tree populating */
+  .proj-tile[data-anim="files"] .tile-icon path.file-lines{
+    stroke-dasharray: 20;
+    animation: lineSlide 2.4s ease-in-out infinite;
+  }
+  @keyframes lineSlide{
+    0%{stroke-dashoffset:20;opacity:0;}
+    30%,70%{stroke-dashoffset:0;opacity:1;}
+    100%{stroke-dashoffset:-20;opacity:0;}
+  }
+
   /* 3D tilt on hover */
   .proj-tile:hover,
   .proj-tile:focus-visible{
@@ -465,7 +571,19 @@
   .proj-tile:focus-visible .tile-name{
     color:#0C0D0A;
   }
-  /* pulse animation on load */
+  .proj-tile .tile-name{
+    font-family:var(--mono);
+    font-size:0.7rem;
+    color:var(--ink-soft);
+    transition:color 0.3s ease;
+    word-break:break-word;
+  }
+  /* pause all animations on hover so the icon doesn't thrash */
+  .proj-tile:hover .tile-icon *,
+  .proj-tile:focus-visible .tile-icon *{
+    animation-play-state:paused !important;
+  }
+  /* pop animation on load */
   .proj-tile {
     animation: tilePop 0.5s cubic-bezier(.34,1.56,.64,1) both;
     animation-delay: calc(var(--tile-index, 0) * 0.06s);
@@ -487,6 +605,7 @@
     section .logline::after{transition:none;}
     .proj-tile{animation:none;opacity:1;transform:none;}
     .proj-tile:hover{transform:none;}
+    .proj-tile .tile-icon *{animation:none !important;}
   }
 
   /* ---- publication with thumbnail ---- */
@@ -534,6 +653,43 @@
   .commit .msg{color:var(--ink);font-family:var(--sans);font-size:0.92rem;}
   .commit .msg strong{font-weight:600;}
 
+  /* ---- blog post thumbnails ---- */
+  .post-with-thumb {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+  .post-thumb {
+    flex: 0 0 80px;
+    width: 80px;
+    height: 80px;
+    background: var(--band);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease, border-color 0.3s ease;
+  }
+  .post-thumb.rendered {
+    opacity: 1;
+  }
+  .post-thumb canvas {
+    width: 80px;
+    height: 80px;
+    display: block;
+  }
+  .post-body {
+    flex: 1;
+    min-width: 0;
+  }
+  @media (max-width: 480px) {
+    .post-thumb { flex: 0 0 60px; width: 60px; height: 60px; }
+    .post-with-thumb { gap: 0.8rem; }
+  }
+
   footer{
     margin-top:4rem;
     padding-top:1.4rem;
@@ -550,6 +706,9 @@
   :focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
   ::selection{background:rgba(107,174,239,0.25);}
 
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes dotin{to{opacity:1;}}
+
   @media (max-width:640px){
     .page{padding:2.4rem 1.1rem 4rem;}
     .logline::before,.hunk::before{width:1.7rem;font-size:0.65rem;}
@@ -557,7 +716,6 @@
     h1{font-size:1.65rem;}
     .filehead{gap:1rem;}
     .frame{width:64px;height:64px;}
-    .metric{gap:1rem;}
     .proj-grid{grid-template-columns:repeat(auto-fill, minmax(78px, 1fr));}
     .proj-tile .tile-icon svg{width:22px;height:22px;}
   }
@@ -579,27 +737,11 @@
     </div>
   </div>
 
-
   <div class="logline links"><span class="content">
     <a href="mailto:kartik.orion.dev@gmail.com">kartik.orion.dev@gmail.com</a>
     <a href="https://github.com/sirohikartik">github</a>
     <a href="https://linkedin.com/in/kartik-sirohi-b81625325">linkedin</a>
     <a href="https://x.com/sirohikartik_">twitter</a>
-  </span></div>
-
-  <div class="logline"><span class="content">
-    <div class="metric">
-      <a href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092" style="text-decoration:none;">
-      <div class="metric-figure">
-        <div class="num">44<span class="arrow">→</span>376 GFLOP/s</div>
-        <div class="label">CUDA matmul kernel optimization, latest post</div>
-      </div>
-      </a>
-      <svg width="180" height="46" viewBox="0 0 180 46" aria-hidden="true">
-        <polyline class="metric-path" pathLength="1" points="2,40 34,37 66,30 98,20 130,10 168,4"></polyline>
-        <circle class="metric-dot" cx="168" cy="4" r="3"></circle>
-      </svg>
-    </div>
   </span></div>
 
   <section id="publications">
@@ -667,7 +809,7 @@
     </div>
   </section>
 
-  <section id="oss">
+  <section id="oss" class="hoverable">
     <div class="hunk"><span class="content">@@ open source @@</span></div>
 
     <div class="oss-graph-wrap" id="oss-graph-wrap">
@@ -763,97 +905,259 @@
     <div class="proj-cat" style="--cat:var(--cat-systems)">
       <div class="proj-cat-label"><span class="dot"></span>systems</div>
       <div class="proj-grid">
-        <a class="proj-tile" href="https://github.com/sirohikartik/tinygpt" data-name="tinyGPT" data-desc="30M-parameter GPT from scratch with KV caching, NEON/SSE, and OpenMP — ~121 tok/s on M1." style="--tile-index:0;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="7" r="1.3" fill="currentColor"/><circle cx="5" cy="17" r="1.3" fill="currentColor"/><circle cx="12" cy="5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="19" r="1.3" fill="currentColor"/><circle cx="19" cy="9" r="1.3" fill="currentColor"/><circle cx="19" cy="15" r="1.3" fill="currentColor"/><path d="M5 7L12 5M5 7L12 12M5 17L12 12M5 17L12 19M12 5L19 9M12 12L19 9M12 12L19 15M12 19L19 15" stroke="currentColor" stroke-width="1"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/tinygpt"
+           data-name="tinyGPT" data-anim="nodes"
+           data-desc="30M-parameter GPT from scratch with KV caching, NEON/SSE, and OpenMP — ~121 tok/s on M1."
+           style="--tile-index:0;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="5" cy="7" r="1.3" fill="currentColor"/>
+              <circle cx="5" cy="17" r="1.3" fill="currentColor"/>
+              <circle cx="12" cy="5" r="1.3" fill="currentColor"/>
+              <circle cx="12" cy="12" r="1.3" fill="currentColor"/>
+              <circle cx="12" cy="19" r="1.3" fill="currentColor"/>
+              <circle cx="19" cy="9" r="1.3" fill="currentColor"/>
+              <circle cx="19" cy="15" r="1.3" fill="currentColor"/>
+              <path d="M5 7L12 5M5 7L12 12M5 17L12 12M5 17L12 19M12 5L19 9M12 12L19 9M12 12L19 15M12 19L19 15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </span>
           <span class="tile-name">tinyGPT</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/mini-torch" data-name="mini-torch" data-desc="Autograd framework with reverse-mode differentiation, SGD+momentum, and Adam." style="--tile-index:1;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 18C7 18 8 6 13 6C17 6 17 14 21 14" stroke="currentColor" stroke-width="1.4"/><circle cx="13" cy="6" r="1.5" fill="currentColor"/><path d="M9 10.5L17 3" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/mini-torch"
+           data-name="mini-torch" data-anim="wave"
+           data-desc="Autograd framework with reverse-mode differentiation, SGD+momentum, and Adam."
+           style="--tile-index:1;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M3 18C7 18 8 6 13 6C17 6 17 14 21 14" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="13" cy="6" r="1.5" fill="currentColor"/>
+              <path d="M9 10.5L17 3" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+            </svg>
+          </span>
           <span class="tile-name">mini-torch</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/linalg" data-name="Linear Algebra Engine" data-desc="Gaussian elimination, matrix inversion, blocked matmul, and determinant computation in C++." style="--tile-index:2;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6.2 4H4V20H6.2" stroke="currentColor" stroke-width="1.2"/><path d="M17.8 4H20V20H17.8" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="8" r="0.9" fill="currentColor"/><circle cx="12" cy="8" r="0.9" fill="currentColor"/><circle cx="15" cy="8" r="0.9" fill="currentColor"/><circle cx="9" cy="12" r="0.9" fill="currentColor"/><circle cx="12" cy="12" r="0.9" fill="currentColor"/><circle cx="15" cy="12" r="0.9" fill="currentColor"/><circle cx="9" cy="16" r="0.9" fill="currentColor"/><circle cx="12" cy="16" r="0.9" fill="currentColor"/><circle cx="15" cy="16" r="0.9" fill="currentColor"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/linalg"
+           data-name="Linear Algebra Engine" data-anim="matrix"
+           data-desc="Gaussian elimination, matrix inversion, blocked matmul, and determinant computation in C++."
+           style="--tile-index:2;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6.2 4H4V20H6.2" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M17.8 4H20V20H17.8" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="9" cy="8" r="0.9" fill="currentColor"/>
+              <circle cx="12" cy="8" r="0.9" fill="currentColor"/>
+              <circle cx="15" cy="8" r="0.9" fill="currentColor"/>
+              <circle cx="9" cy="12" r="0.9" fill="currentColor"/>
+              <circle cx="12" cy="12" r="0.9" fill="currentColor"/>
+              <circle cx="15" cy="12" r="0.9" fill="currentColor"/>
+              <circle cx="9" cy="16" r="0.9" fill="currentColor"/>
+              <circle cx="12" cy="16" r="0.9" fill="currentColor"/>
+              <circle cx="15" cy="16" r="0.9" fill="currentColor"/>
+            </svg>
+          </span>
           <span class="tile-name">linalg</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/cuda" data-name="cuda kernels" data-desc="matmul.cu and softmax.cu — the CUDA kernels behind the 44→376 GFLOP/s optimization notes." style="--tile-index:3;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="7" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M9 7V4M15 7V4M9 20V17M15 20V17M7 9H4M7 15H4M20 9H17M20 15H17" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/cuda"
+           data-name="cuda kernels" data-anim="gpu"
+           data-desc="matmul.cu and softmax.cu — the CUDA kernels behind the 44→376 GFLOP/s optimization notes."
+           style="--tile-index:3;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="7" y="7" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M9 7V4M15 7V4M9 20V17M15 20V17M7 9H4M7 15H4M20 9H17M20 15H17" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
+            </svg>
+          </span>
           <span class="tile-name">cuda kernels</span>
         </a>
+
       </div>
     </div>
 
     <div class="proj-cat" style="--cat:var(--cat-agents)">
       <div class="proj-cat-label"><span class="dot"></span>agents</div>
       <div class="proj-grid">
-        <a class="proj-tile" href="https://github.com/sirohikartik/rocky" data-name="Rocky" data-desc="Speech-to-Indian Sign Language: Whisper → vocab resolver → ISL grammar agent." style="--tile-index:4;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="2.2" y="9" width="1.6" height="6" fill="currentColor"/><rect x="5.4" y="6" width="1.6" height="12" fill="currentColor"/><rect x="8.6" y="10" width="1.6" height="4" fill="currentColor"/><path d="M12 12H15.5" stroke="currentColor" stroke-width="1.3"/><path d="M14 9.3L17 12L14 14.7" stroke="currentColor" stroke-width="1.3"/><rect x="18.5" y="6.5" width="3.5" height="11" rx="0.8" stroke="currentColor" stroke-width="1.2"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/rocky"
+           data-name="Rocky" data-anim="audio"
+           data-desc="Speech-to-Indian Sign Language: Whisper → vocab resolver → ISL grammar agent."
+           style="--tile-index:4;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="2.2" y="9" width="1.6" height="6" fill="currentColor"/>
+              <rect x="5.4" y="6" width="1.6" height="12" fill="currentColor"/>
+              <rect x="8.6" y="10" width="1.6" height="4" fill="currentColor"/>
+              <rect x="18.5" y="6.5" width="3.5" height="11" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <path d="M12 12H15.5" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M14 9.3L17 12L14 14.7" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+          </span>
           <span class="tile-name">Rocky</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/athena" data-name="Athena" data-desc="Search agent combining web search, BM25, and local LLM reasoning in an async pipeline." style="--tile-index:5;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6H12M4 10H10M4 14H8" stroke="currentColor" stroke-width="1.3"/><circle cx="16" cy="14" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M19 17L22 20" stroke="currentColor" stroke-width="1.3"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/athena"
+           data-name="Athena" data-anim="search"
+           data-desc="Search agent combining web search, BM25, and local LLM reasoning in an async pipeline."
+           style="--tile-index:5;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6H12M4 10H10M4 14H8" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="16" cy="14" r="4" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M19 17L22 20" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+          </span>
           <span class="tile-name">Athena</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/maze-runner" data-name="maze-runner" data-desc="A Q-learning agent in PyTorch that navigates a 10×10 maze, visualized live over FastAPI + canvas." style="--tile-index:6;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.2"/><path d="M3 8H10V13H16" stroke="currentColor" stroke-width="1.1"/><path d="M21 16H14V11" stroke="currentColor" stroke-width="1.1" stroke-dasharray="1.6 1.6"/><circle cx="5" cy="5.5" r="1" fill="currentColor"/><rect x="18" y="17.5" width="2" height="2" fill="currentColor"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/maze-runner"
+           data-name="maze-runner" data-anim="maze"
+           data-desc="A Q-learning agent in PyTorch that navigates a 10×10 maze, visualized live over FastAPI + canvas."
+           style="--tile-index:6;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M3 8H10V13H16" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M21 16H14V11" stroke="currentColor" stroke-width="1.1" stroke-dasharray="1.6 1.6"/>
+              <circle class="maze-dot" cx="5" cy="5.5" r="1" fill="currentColor"/>
+              <rect x="18" y="17.5" width="2" height="2" fill="currentColor"/>
+            </svg>
+          </span>
           <span class="tile-name">maze-runner</span>
         </a>
+
       </div>
     </div>
 
     <div class="proj-cat" style="--cat:var(--cat-experiments)">
       <div class="proj-cat-label"><span class="dot"></span>experiments — from <a href="https://github.com/sirohikartik/Fun">Fun</a></div>
       <div class="proj-grid">
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/AI" data-name="minimax tic-tac-toe" data-desc="Tic-tac-toe solved with the minimax algorithm, implemented from scratch." style="--tile-index:7;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M9 4V20M15 4V20M4 9H20M4 15H20" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 5.5L8 8M8 5.5L5.5 8" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="12" r="1.7" stroke="currentColor" stroke-width="1.3"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/AI"
+           data-name="minimax tic-tac-toe" data-anim="game"
+           data-desc="Tic-tac-toe solved with the minimax algorithm, implemented from scratch."
+           style="--tile-index:7;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M9 4V20M15 4V20M4 9H20M4 15H20" stroke="currentColor" stroke-width="1.2"/>
+              <path class="x-mark" d="M5.5 5.5L8 8M8 5.5L5.5 8" stroke="currentColor" stroke-width="1.3"/>
+              <circle class="o-mark" cx="12" cy="12" r="1.7" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+          </span>
           <span class="tile-name">minimax</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/http-server" data-name="http-server" data-desc="A minimal C HTTP server that serves this portfolio off a raw socket, no framework." style="--tile-index:8;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="4" y="10" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="4" y="16" width="16" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="6.5" r="0.6" fill="currentColor"/><circle cx="7" cy="12.5" r="0.6" fill="currentColor"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/http-server"
+           data-name="http-server" data-anim="server"
+           data-desc="A minimal C HTTP server that serves this portfolio off a raw socket, no framework."
+           style="--tile-index:8;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="4" y="4" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="4" y="10" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="4" y="16" width="16" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="7" cy="6.5" r="0.6" fill="currentColor"/>
+              <circle cx="7" cy="12.5" r="0.6" fill="currentColor"/>
+            </svg>
+          </span>
           <span class="tile-name">http-server</span>
         </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/FileManager" data-name="FileManager" data-desc="A small C tool that walks a directory and prints its tree structure." style="--tile-index:9;">
-          <span class="tile-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6H9L11 8H20V18H4V6Z" stroke="currentColor" stroke-width="1.2"/><path d="M8 12H16M8 15H13" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 1.5"/></svg></span>
+
+        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/FileManager"
+           data-name="FileManager" data-anim="files"
+           data-desc="A small C tool that walks a directory and prints its tree structure."
+           style="--tile-index:9;">
+          <span class="tile-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6H9L11 8H20V18H4V6Z" stroke="currentColor" stroke-width="1.2"/>
+              <path class="file-lines" d="M8 12H16M8 15H13" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 1.5"/>
+            </svg>
+          </span>
           <span class="tile-name">FileManager</span>
         </a>
+
       </div>
     </div>
 
     <div class="proj-caption" id="proj-caption">hover or focus a tile for details</div>
   </section>
 
-  <section id="posts">
+  <section id="posts" class="hoverable">
     <div class="hunk"><span class="content">@@ posts @@</span></div>
 
     <div class="logline">
       <span class="content">
-        <a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span>
-        <div class="entry-desc">Notes on writing and tuning CUDA matmul kernels.</div>
+        <div class="post-with-thumb">
+          <div class="post-thumb" data-thumb="matmul">
+            <canvas width="80" height="80"></canvas>
+          </div>
+          <div class="post-body">
+            <a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span>
+            <div class="entry-desc">Notes on writing and tuning CUDA matmul kernels.</div>
+          </div>
+        </div>
       </span>
     </div>
+
     <div class="logline">
       <span class="content">
-        <a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span>
-        <div class="entry-desc">Implementing a 30M-parameter GPT from scratch with NEON, SSE, and OpenMP.</div>
+        <div class="post-with-thumb">
+          <div class="post-thumb" data-thumb="tinygpt">
+            <canvas width="80" height="80"></canvas>
+          </div>
+          <div class="post-body">
+            <a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span>
+            <div class="entry-desc">Implementing a 30M-parameter GPT from scratch with NEON, SSE, and OpenMP.</div>
+          </div>
+        </div>
       </span>
     </div>
+
     <div class="logline">
       <span class="content">
-        <a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span>
-        <div class="entry-desc">An intuitive walkthrough of backpropagation — from chain rule to automatic differentiation.</div>
+        <div class="post-with-thumb">
+          <div class="post-thumb" data-thumb="backprop">
+            <canvas width="80" height="80"></canvas>
+          </div>
+          <div class="post-body">
+            <a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span>
+            <div class="entry-desc">An intuitive walkthrough of backpropagation — from chain rule to automatic differentiation.</div>
+          </div>
+        </div>
       </span>
     </div>
+
     <div class="logline">
       <span class="content">
-        <a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span>
-        <div class="entry-desc">Understanding neural networks one parameter at a time.</div>
+        <div class="post-with-thumb">
+          <div class="post-thumb" data-thumb="neural">
+            <canvas width="80" height="80"></canvas>
+          </div>
+          <div class="post-body">
+            <a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span>
+            <div class="entry-desc">Understanding neural networks one parameter at a time.</div>
+          </div>
+        </div>
       </span>
     </div>
+
     <div class="logline">
       <span class="content">
-        <a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span>
-        <div class="entry-desc">A survey of why graph retrieval methods are useful for retrieving knowledge.</div>
+        <div class="post-with-thumb">
+          <div class="post-thumb" data-thumb="graph">
+            <canvas width="80" height="80"></canvas>
+          </div>
+          <div class="post-body">
+            <a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span>
+            <div class="entry-desc">A survey of why graph retrieval methods are useful for retrieving knowledge.</div>
+          </div>
+        </div>
       </span>
     </div>
+
   </section>
 
   <footer>
@@ -869,6 +1173,7 @@
 
 </div>
 <script>
+/* ---- scroll reveal ---- */
 (function(){
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var targets = document.querySelectorAll('section .logline, section .hunk');
@@ -898,6 +1203,7 @@
   targets.forEach(function(el){ io.observe(el); });
 })();
 
+/* ---- project tile caption ---- */
 (function(){
   var caption = document.getElementById('proj-caption');
   if (!caption) return;
@@ -914,6 +1220,7 @@
   });
 })();
 
+/* ---- OSS orbit graph ---- */
 (function(){
   var wrap = document.getElementById('oss-graph-wrap');
   var caption = document.getElementById('oss-caption');
@@ -952,6 +1259,449 @@
       if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); }
     });
   });
+})();
+
+/* ---- blog post animated thumbnails ---- */
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Palette */
+  var C = {
+    paper:   '#111210',
+    band:    '#1C1E1A',
+    rule:    '#2A2C26',
+    soft:    '#9B9C8F',
+    faint:   '#565850',
+    signal:  '#6BAEEF',
+    good:    '#7FC77A',
+    warm:    '#D9C24E',
+    purple:  '#B7A3F2',
+    teal:    '#57C7B0',
+  };
+
+  /* Each renderer: fn(ctx, w, h, t) where t = elapsed ms */
+  var renderers = {
+
+    /* matmul — animated perf curve + grid heatmap */
+    matmul: function(ctx, w, h, t) {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+
+      /* grid heatmap background */
+      var cols = 8, rows = 8;
+      var cw = w / cols, ch = h / rows;
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          var phase = (r * cols + c) / (cols * rows);
+          var v = 0.15 + 0.55 * (0.5 + 0.5 * Math.sin(t * 0.0015 + phase * Math.PI * 2));
+          /* blue heat */
+          var alpha = v * 0.5;
+          ctx.fillStyle = 'rgba(107,174,239,' + alpha + ')';
+          ctx.fillRect(c * cw + 1, r * ch + 1, cw - 2, ch - 2);
+        }
+      }
+
+      /* performance curve overlay */
+      var pts = [
+        [0.05, 0.85], [0.22, 0.78], [0.40, 0.60], [0.58, 0.38], [0.76, 0.18], [0.95, 0.06]
+      ];
+      /* progress along curve */
+      var progress = Math.min(1, (t % 3200) / 2400);
+      ctx.beginPath();
+      ctx.strokeStyle = C.signal;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      for (var i = 0; i < pts.length - 1; i++) {
+        var seg = i / (pts.length - 1);
+        var segEnd = (i + 1) / (pts.length - 1);
+        if (progress < seg) break;
+        var segProgress = Math.min(1, (progress - seg) / (segEnd - seg));
+        var x0 = pts[i][0] * w, y0 = pts[i][1] * h;
+        var x1 = pts[i][0] * w + (pts[i+1][0] - pts[i][0]) * w * segProgress;
+        var y1 = pts[i][1] * h + (pts[i+1][1] - pts[i][1]) * h * segProgress;
+        if (i === 0) ctx.moveTo(x0, y0);
+        ctx.lineTo(x1, y1);
+      }
+      ctx.stroke();
+
+      /* moving dot */
+      var di = Math.min(pts.length - 2, Math.floor(progress * (pts.length - 1)));
+      var dfrac = progress * (pts.length - 1) - di;
+      var dx = (pts[di][0] + (pts[Math.min(di+1,pts.length-1)][0] - pts[di][0]) * dfrac) * w;
+      var dy = (pts[di][1] + (pts[Math.min(di+1,pts.length-1)][1] - pts[di][1]) * dfrac) * h;
+      ctx.beginPath();
+      ctx.arc(dx, dy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = C.signal;
+      ctx.fill();
+
+      /* labels */
+      ctx.font = '500 8px "IBM Plex Mono", monospace';
+      ctx.fillStyle = C.faint;
+      ctx.fillText('44', 2, h - 4);
+      ctx.fillStyle = C.signal;
+      ctx.fillText('376 GFLOP/s', 2, 10);
+    },
+
+    /* tinyGPT — animated neural net forward pass */
+    tinygpt: function(ctx, w, h, t) {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+
+      var layers = [3, 5, 5, 3];
+      var lx = [0.15, 0.38, 0.62, 0.85];
+      var nodes = [];
+
+      /* build node positions */
+      for (var l = 0; l < layers.length; l++) {
+        var n = layers[l];
+        nodes.push([]);
+        for (var ni = 0; ni < n; ni++) {
+          var nx = lx[l] * w;
+          var ny = (0.5 + (ni - (n-1)/2) * 0.22) * h;
+          nodes[l].push([nx, ny]);
+        }
+      }
+
+      /* activation pulse: travels layer by layer */
+      var cycle = 2800;
+      var phase = (t % cycle) / cycle;
+      var activeLay = phase * (layers.length + 0.5) - 0.5;
+
+      /* draw connections */
+      for (var l = 0; l < layers.length - 1; l++) {
+        for (var a = 0; a < nodes[l].length; a++) {
+          for (var b = 0; b < nodes[l+1].length; b++) {
+            var ax = nodes[l][a][0], ay = nodes[l][a][1];
+            var bx = nodes[l+1][b][0], by = nodes[l+1][b][1];
+            /* edge lights up when signal passes */
+            var edgeLit = activeLay >= l && activeLay < l + 1;
+            var edgeAlpha = edgeLit ? 0.5 + 0.4 * Math.sin(t * 0.01) : 0.08;
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(107,174,239,' + edgeAlpha + ')';
+            ctx.lineWidth = 0.7;
+            ctx.moveTo(ax, ay);
+            ctx.lineTo(bx, by);
+            ctx.stroke();
+          }
+        }
+      }
+
+      /* draw nodes */
+      for (var l = 0; l < layers.length; l++) {
+        for (var ni = 0; ni < nodes[l].length; ni++) {
+          var nx = nodes[l][ni][0], ny = nodes[l][ni][1];
+          var lit = activeLay >= l - 0.3 && activeLay < l + 0.7;
+          var glow = lit ? 0.9 + 0.1 * Math.sin(t * 0.015) : 0.25;
+          ctx.beginPath();
+          ctx.arc(nx, ny, 4, 0, Math.PI * 2);
+          ctx.fillStyle = lit ? C.signal : C.band;
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(107,174,239,' + glow + ')';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      /* label */
+      ctx.font = '500 7px "IBM Plex Mono", monospace';
+      ctx.fillStyle = C.faint;
+      ctx.fillText('fwd pass', 2, h - 4);
+    },
+
+    /* backprop — chain rule flow: forward then backward pass */
+    backprop: function(ctx, w, h, t) {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+
+      var nodes = [
+        { x: 0.12, y: 0.5,  label: 'x' },
+        { x: 0.38, y: 0.3,  label: 'w' },
+        { x: 0.38, y: 0.7,  label: 'b' },
+        { x: 0.62, y: 0.5,  label: 'z' },
+        { x: 0.88, y: 0.5,  label: 'L' },
+      ];
+      var edges = [
+        [0, 3], [1, 3], [2, 3], [3, 4]
+      ];
+
+      var cycle = 3600;
+      var phase = (t % cycle) / cycle;
+      var isBack = phase > 0.5;
+      var subPhase = isBack ? (phase - 0.5) * 2 : phase * 2;
+
+      /* draw edges */
+      edges.forEach(function(e, ei) {
+        var a = nodes[e[0]], b = nodes[e[1]];
+        var ax = a.x * w, ay = a.y * h;
+        var bx = b.x * w, by = b.y * h;
+
+        /* forward: left→right, backward: right→left */
+        var edgeIndex = isBack ? (edges.length - 1 - ei) : ei;
+        var relPos = subPhase * edges.length - edgeIndex;
+        var active = relPos >= 0 && relPos <= 1;
+        var alpha = active ? 0.9 : 0.12;
+        var color = isBack ? C.warm : C.signal;
+
+        ctx.beginPath();
+        ctx.strokeStyle = active ? color : 'rgba(86,88,80,0.4)';
+        ctx.lineWidth = active ? 1.5 : 0.8;
+
+        if (isBack) {
+          ctx.setLineDash([3, 3]);
+          ctx.moveTo(bx, by);
+          ctx.lineTo(ax, ay);
+        } else {
+          ctx.setLineDash([]);
+          ctx.moveTo(ax, ay);
+          ctx.lineTo(bx, by);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        /* moving particle */
+        if (active) {
+          var p = relPos;
+          var px, py;
+          if (isBack) {
+            px = bx + (ax - bx) * p;
+            py = by + (ay - by) * p;
+          } else {
+            px = ax + (bx - ax) * p;
+            py = ay + (by - ay) * p;
+          }
+          ctx.beginPath();
+          ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+        }
+      });
+
+      /* draw nodes */
+      nodes.forEach(function(n) {
+        var nx = n.x * w, ny = n.y * h;
+        ctx.beginPath();
+        ctx.arc(nx, ny, 6, 0, Math.PI * 2);
+        ctx.fillStyle = C.band;
+        ctx.fill();
+        ctx.strokeStyle = C.faint;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.font = '600 8px "IBM Plex Mono", monospace';
+        ctx.fillStyle = C.soft;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(n.label, nx, ny);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+      });
+
+      /* label */
+      ctx.font = '500 7px "IBM Plex Mono", monospace';
+      ctx.fillStyle = isBack ? C.warm : C.signal;
+      ctx.fillText(isBack ? '← backward' : 'forward →', 2, h - 4);
+    },
+
+    /* neural — single neuron with animated weights */
+    neural: function(ctx, w, h, t) {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+
+      var inputs = [0.2, 0.38, 0.56, 0.74];
+      var neuronX = w * 0.65, neuronY = h * 0.5;
+      var outputX = w * 0.9;
+
+      /* draw inputs */
+      inputs.forEach(function(iy, i) {
+        var ix = w * 0.1, ipy = iy * h;
+        var weight = 0.4 + 0.3 * Math.sin(t * 0.001 + i * 1.3);
+        var alpha = 0.2 + 0.6 * weight;
+
+        /* weight line */
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(107,174,239,' + alpha + ')';
+        ctx.lineWidth = 0.8 + weight;
+        ctx.moveTo(ix + 5, ipy);
+        ctx.lineTo(neuronX - 10, neuronY);
+        ctx.stroke();
+
+        /* input dot */
+        ctx.beginPath();
+        ctx.arc(ix, ipy, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = C.band;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(107,174,239,0.5)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        /* weight label */
+        ctx.font = '500 6px "IBM Plex Mono", monospace';
+        ctx.fillStyle = C.faint;
+        ctx.fillText('w' + (i+1), ix - 2, ipy - 5);
+      });
+
+      /* neuron body */
+      ctx.beginPath();
+      ctx.arc(neuronX, neuronY, 10, 0, Math.PI * 2);
+      ctx.fillStyle = C.band;
+      ctx.fill();
+      var glow = 0.6 + 0.4 * Math.sin(t * 0.002);
+      ctx.strokeStyle = 'rgba(107,174,239,' + glow + ')';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      /* sigma symbol */
+      ctx.font = '600 9px serif';
+      ctx.fillStyle = C.signal;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('σ', neuronX, neuronY);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+
+      /* output */
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(107,174,239,0.7)';
+      ctx.lineWidth = 1.5;
+      ctx.moveTo(neuronX + 10, neuronY);
+      ctx.lineTo(outputX - 4, neuronY);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(outputX, neuronY, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = C.signal;
+      ctx.fill();
+
+      ctx.font = '500 7px "IBM Plex Mono", monospace';
+      ctx.fillStyle = C.faint;
+      ctx.fillText('ŷ', outputX - 3, neuronY - 6);
+      ctx.fillText('weights', 2, h - 4);
+    },
+
+    /* graph — knowledge graph with pulsing nodes */
+    graph: function(ctx, w, h, t) {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+
+      var nodes = [
+        { x: 0.5,  y: 0.22, r: 6 },
+        { x: 0.22, y: 0.5,  r: 5 },
+        { x: 0.78, y: 0.5,  r: 5 },
+        { x: 0.35, y: 0.78, r: 4 },
+        { x: 0.65, y: 0.78, r: 4 },
+        { x: 0.5,  y: 0.5,  r: 7 },  /* hub */
+      ];
+      var edges = [
+        [5, 0], [5, 1], [5, 2], [5, 3], [5, 4],
+        [0, 2], [1, 3],
+      ];
+
+      /* draw edges first */
+      var cycle = 4000;
+      var activePair = Math.floor((t % cycle) / (cycle / edges.length));
+      edges.forEach(function(e, ei) {
+        var a = nodes[e[0]], b = nodes[e[1]];
+        var active = ei === activePair;
+        ctx.beginPath();
+        ctx.strokeStyle = active ? C.teal : 'rgba(86,88,80,0.35)';
+        ctx.lineWidth = active ? 1.5 : 0.8;
+        ctx.moveTo(a.x * w, a.y * h);
+        ctx.lineTo(b.x * w, b.y * h);
+        ctx.stroke();
+
+        /* travelling pulse */
+        if (active) {
+          var p = ((t % (cycle / edges.length)) / (cycle / edges.length));
+          var px = (a.x + (b.x - a.x) * p) * w;
+          var py = (a.y + (b.y - a.y) * p) * h;
+          ctx.beginPath();
+          ctx.arc(px, py, 2, 0, Math.PI * 2);
+          ctx.fillStyle = C.teal;
+          ctx.fill();
+        }
+      });
+
+      /* draw nodes */
+      nodes.forEach(function(n, ni) {
+        var nx = n.x * w, ny = n.y * h;
+        var pulse = 0.5 + 0.5 * Math.sin(t * 0.002 + ni * 1.1);
+        var isHub = ni === 5;
+        ctx.beginPath();
+        ctx.arc(nx, ny, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = C.band;
+        ctx.fill();
+        ctx.strokeStyle = isHub ? C.teal : ('rgba(87,199,176,' + (0.4 + 0.4 * pulse) + ')');
+        ctx.lineWidth = isHub ? 2 : 1;
+        ctx.stroke();
+
+        if (isHub) {
+          ctx.font = '500 6px "IBM Plex Mono", monospace';
+          ctx.fillStyle = C.teal;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('hub', nx, ny);
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'alphabetic';
+        }
+      });
+
+      ctx.font = '500 7px "IBM Plex Mono", monospace';
+      ctx.fillStyle = C.faint;
+      ctx.fillText('graph RAG', 2, h - 4);
+    },
+  };
+
+  /* Observe thumbnails and start rendering only when visible */
+  if (!('IntersectionObserver' in window) || reduceMotion) {
+    /* Fallback: render once, static */
+    document.querySelectorAll('.post-thumb').forEach(function(thumb) {
+      var key = thumb.dataset.thumb;
+      var canvas = thumb.querySelector('canvas');
+      if (!canvas || !renderers[key]) return;
+      var ctx = canvas.getContext('2d');
+      renderers[key](ctx, 80, 80, 0);
+      thumb.classList.add('rendered');
+    });
+    return;
+  }
+
+  var activeRafs = new Map();
+
+  var thumbObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var thumb = entry.target;
+      var key = thumb.dataset.thumb;
+      var canvas = thumb.querySelector('canvas');
+      if (!canvas || !renderers[key]) return;
+
+      if (entry.isIntersecting) {
+        if (activeRafs.has(thumb)) return;
+        var ctx = canvas.getContext('2d');
+        var start = null;
+        var raf;
+        function frame(ts) {
+          if (!start) start = ts;
+          var t = ts - start;
+          renderers[key](ctx, 80, 80, t);
+          thumb.classList.add('rendered');
+          raf = requestAnimationFrame(frame);
+          activeRafs.set(thumb, raf);
+        }
+        raf = requestAnimationFrame(frame);
+        activeRafs.set(thumb, raf);
+      } else {
+        if (activeRafs.has(thumb)) {
+          cancelAnimationFrame(activeRafs.get(thumb));
+          activeRafs.delete(thumb);
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px 40px 0px' });
+
+  document.querySelectorAll('.post-thumb').forEach(function(thumb) {
+    thumbObserver.observe(thumb);
+  });
+
 })();
 </script>
 </body>
