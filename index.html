@@ -47,9 +47,7 @@
     padding-bottom:1px;
   }
   a:hover{background-size:100% 1px;}
-  @media (prefers-reduced-motion:reduce){
-    a{transition:none;}
-  }
+  @media (prefers-reduced-motion:reduce){a{transition:none;}}
 
   .page{
     max-width:760px;
@@ -58,13 +56,13 @@
     counter-reset:logline;
   }
 
-  .logline, .hunk{
+  .logline,.hunk{
     display:flex;
     align-items:baseline;
     gap:1rem;
     counter-increment:logline;
   }
-  .logline::before, .hunk::before{
+  .logline::before,.hunk::before{
     content:counter(logline, decimal-leading-zero);
     flex:0 0 auto;
     width:2.4rem;
@@ -102,11 +100,7 @@
   }
   .filehead-left{flex:1;min-width:0;}
 
-  .code-comment{
-    font-family:var(--mono);
-    font-size:0.8rem;
-    color:var(--ink-faint);
-  }
+  .code-comment{font-family:var(--mono);font-size:0.8rem;color:var(--ink-faint);}
   h1{
     font-family:var(--sans);
     font-size:2.05rem;
@@ -115,16 +109,7 @@
     line-height:1.15;
     color:var(--ink);
   }
-  .role{
-    font-size:0.98rem;
-    color:var(--ink-soft);
-  }
-  .bio p{
-    max-width:60ch;
-    color:var(--ink-soft);
-    font-size:0.96rem;
-  }
-  .bio strong{color:var(--ink);font-weight:600;}
+  .role{font-size:0.98rem;color:var(--ink-soft);}
 
   .links .content{
     font-family:var(--mono);
@@ -137,13 +122,10 @@
 
   .frame{
     position:relative;
-    width:84px;
-    height:84px;
+    width:84px;height:84px;
     flex-shrink:0;
     background:var(--band);
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display:flex;align-items:center;justify-content:center;
     margin-top:0.15rem;
   }
   .frame img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -154,76 +136,26 @@
   .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
   .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
 
-  /* ---- open source: orbit graph ---- */
+  /* ---- OSS orbit ---- */
   .oss-graph-wrap{margin:0 0 2rem;}
-  .oss-graph{
-    display:block;
-    width:100%;
-    max-width:340px;
-    height:auto;
-    margin:0 auto;
-  }
+  .oss-graph{display:block;width:100%;max-width:340px;height:auto;margin:0 auto;}
   .orbit-ring{stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4;}
-  .orbit-line{
-    stroke:var(--ink-faint);
-    stroke-width:1.2;
-    stroke-dasharray:1;
-    stroke-dashoffset:1;
-    transition:stroke 0.15s ease;
-  }
+  .orbit-line{stroke:var(--ink-faint);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke 0.15s ease;}
   .js .oss-graph-wrap .orbit-line{animation:draw 0.7s cubic-bezier(.4,0,.2,1) forwards paused;}
   .js .oss-graph-wrap.in-view .orbit-line{animation-play-state:running;}
-
   .orbit-center circle{fill:var(--paper);stroke:var(--signal);stroke-width:1.6;}
-  .orbit-center-label{
-    font-family:var(--mono);font-size:11px;font-weight:600;
-    fill:var(--signal);
-  }
-
-  .orbit-node-group{
-    cursor:pointer;
-    opacity:0;
-  }
-  .js .oss-graph-wrap.in-view .orbit-node-group{
-    animation:dotin 0.4s ease forwards;
-  }
-  .orbit-node{
-    fill:var(--paper);
-    stroke:var(--good);
-    stroke-width:1.6;
-    transition:fill 0.15s ease, stroke 0.15s ease;
-  }
-  .orbit-label{
-    font-family:var(--mono);
-    font-size:10.5px;
-    fill:var(--ink-soft);
-    transition:fill 0.15s ease;
-  }
-  .orbit-count{
-    font-family:var(--mono);
-    font-size:9.5px;
-    font-weight:600;
-    fill:var(--good);
-    transition:fill 0.15s ease;
-  }
-  .orbit-node-group:hover .orbit-node,
-  .orbit-node-group:focus-visible .orbit-node{fill:var(--good);stroke:var(--good);}
-  .orbit-node-group:hover .orbit-count,
-  .orbit-node-group:focus-visible .orbit-count{fill:var(--paper);}
-  .orbit-node-group:hover .orbit-label,
-  .orbit-node-group:focus-visible .orbit-label{fill:var(--ink);}
+  .orbit-center-label{font-family:var(--mono);font-size:11px;font-weight:600;fill:var(--signal);}
+  .orbit-node-group{cursor:pointer;opacity:0;}
+  .js .oss-graph-wrap.in-view .orbit-node-group{animation:dotin 0.4s ease forwards;}
+  .orbit-node{fill:var(--paper);stroke:var(--good);stroke-width:1.6;transition:fill 0.15s ease,stroke 0.15s ease;}
+  .orbit-label{font-family:var(--mono);font-size:10.5px;fill:var(--ink-soft);transition:fill 0.15s ease;}
+  .orbit-count{font-family:var(--mono);font-size:9.5px;font-weight:600;fill:var(--good);transition:fill 0.15s ease;}
+  .orbit-node-group:hover .orbit-node,.orbit-node-group:focus-visible .orbit-node{fill:var(--good);stroke:var(--good);}
+  .orbit-node-group:hover .orbit-count,.orbit-node-group:focus-visible .orbit-count{fill:var(--paper);}
+  .orbit-node-group:hover .orbit-label,.orbit-node-group:focus-visible .orbit-label{fill:var(--ink);}
   .orbit-node-group:focus-visible{outline:none;}
-
-  .oss-caption{
-    margin-top:0.6rem;
-    text-align:center;
-    font-family:var(--mono);
-    font-size:0.78rem;
-    color:var(--ink-soft);
-    min-height:1.3em;
-  }
+  .oss-caption{margin-top:0.6rem;text-align:center;font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);min-height:1.3em;}
   .oss-caption strong{color:var(--ink);font-weight:600;}
-
   @media (prefers-reduced-motion:reduce){
     .js .oss-graph-wrap .orbit-line{animation:none;stroke-dashoffset:0;}
     .js .oss-graph-wrap.in-view .orbit-node-group{animation:none;opacity:1;}
@@ -238,42 +170,29 @@
 
   section .logline{margin-bottom:0.15rem;}
   section .logline:last-child{margin-bottom:0;}
-
   .oss-line .content > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem 0.7rem;}
 
-  /* ---- reveal on scroll: entries arrive the way new lines land in an editor ---- */
-  .js section .logline,
-  .js section .hunk{
-    opacity:0;
-    transform:translateY(10px);
-    transition:opacity 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1);
+  /* ---- scroll reveal ---- */
+  .js section .logline,.js section .hunk{
+    opacity:0;transform:translateY(10px);
+    transition:opacity 0.5s cubic-bezier(.4,0,.2,1),transform 0.5s cubic-bezier(.4,0,.2,1);
   }
-  .js section .logline.in-view,
-  .js section .hunk.in-view{opacity:1;transform:translateY(0);}
+  .js section .logline.in-view,.js section .hunk.in-view{opacity:1;transform:translateY(0);}
   @media (prefers-reduced-motion:reduce){
-    .js section .logline,
-    .js section .hunk{opacity:1;transform:none;transition:none;}
+    .js section .logline,.js section .hunk{opacity:1;transform:none;transition:none;}
   }
 
-  /* ---- hover: highlight for OSS/posts only (NOT experience/publications) ---- */
+  /* ---- hover highlight ---- */
   section.hoverable .logline{
     position:relative;
     padding:0.55rem 0.6rem 0.75rem 0.5rem;
-    margin-left:-0.5rem;
-    margin-right:-0.6rem;
+    margin-left:-0.5rem;margin-right:-0.6rem;
     border-radius:2px;
     transition:background-color 0.2s ease;
   }
   section.hoverable .logline::after{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0.35rem;
-    bottom:0.35rem;
-    width:2px;
-    background:var(--signal);
-    transform:scaleY(0);
-    transform-origin:top;
+    content:"";position:absolute;left:0;top:0.35rem;bottom:0.35rem;width:2px;
+    background:var(--signal);transform:scaleY(0);transform-origin:top;
     transition:transform 0.25s cubic-bezier(.4,0,.2,1);
   }
   section.hoverable .logline:hover{background:var(--band);}
@@ -281,424 +200,122 @@
   section.hoverable .logline:hover::before{color:var(--signal);}
   section.hoverable .logline:hover .entry-title{color:var(--signal);transition:color 0.15s ease;}
   .entry-title{transition:color 0.15s ease;}
+  section:not(.hoverable) .logline{padding:0.55rem 0.6rem 0.75rem 0.5rem;margin-left:-0.5rem;margin-right:-0.6rem;}
 
-  /* non-hoverable sections: still need padding for layout consistency */
-  section:not(.hoverable) .logline{
-    padding:0.55rem 0.6rem 0.75rem 0.5rem;
-    margin-left:-0.5rem;
-    margin-right:-0.6rem;
-  }
-
-  /* ---- experience: git-log branch ---- */
-  .commit-log{
-    position:relative;
-    padding-left:0.2rem;
-  }
+  /* ---- experience git-log ---- */
+  .commit-log{position:relative;padding-left:0.2rem;}
   .commit-log::before{
-    content:"";
-    position:absolute;
-    top:0.55rem;
-    bottom:0.9rem;
-    left:0.75rem;
-    width:1.5px;
-    background:var(--rule);
+    content:"";position:absolute;top:0.55rem;bottom:0.9rem;left:0.75rem;
+    width:1.5px;background:var(--rule);
   }
-  .commit-row{
-    position:relative;
-    display:flex;
-    gap:1.1rem;
-    padding-bottom:1.7rem;
-  }
+  .commit-row{position:relative;display:flex;gap:1.1rem;padding-bottom:1.7rem;}
   .commit-row:last-child{padding-bottom:0;}
-  .commit-rail{
-    flex:0 0 1.5rem;
-    display:flex;
-    justify-content:center;
-    padding-top:0.3rem;
-  }
-  .commit-dot{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:var(--paper);
-    border:1.6px solid var(--ink-faint);
-    position:relative;
-    z-index:1;
-  }
-  .commit-row.is-head .commit-dot{
-    background:var(--signal);
-    border-color:var(--signal);
-    box-shadow:0 0 0 4px var(--signal-band);
-  }
+  .commit-rail{flex:0 0 1.5rem;display:flex;justify-content:center;padding-top:0.3rem;}
+  .commit-dot{width:9px;height:9px;border-radius:50%;background:var(--paper);border:1.6px solid var(--ink-faint);position:relative;z-index:1;}
+  .commit-row.is-head .commit-dot{background:var(--signal);border-color:var(--signal);box-shadow:0 0 0 4px var(--signal-band);}
   .commit-body{flex:1;min-width:0;}
-  .commit-refline{
-    display:flex;
-    align-items:baseline;
-    gap:0.7rem;
-    flex-wrap:wrap;
-    font-family:var(--mono);
-    font-size:0.72rem;
-    color:var(--ink-faint);
-    margin-bottom:0.3rem;
-  }
+  .commit-refline{display:flex;align-items:baseline;gap:0.7rem;flex-wrap:wrap;font-family:var(--mono);font-size:0.72rem;color:var(--ink-faint);margin-bottom:0.3rem;}
   .commit-hash{color:var(--ink-faint);}
-  .commit-head-tag{
-    font-family:var(--mono);
-    font-size:0.62rem;
-    font-weight:600;
-    letter-spacing:0.03em;
-    color:var(--paper);
-    background:var(--signal);
-    padding:0.1rem 0.4rem;
-    border-radius:2px;
-  }
-  .commit-title{
-    font-size:0.98rem;
-    font-weight:600;
-    color:var(--ink);
-  }
-  .commit-org{
-    font-weight:400;
-    color:var(--ink-soft);
-  }
-  .commit-msg{
-    font-size:0.9rem;
-    color:var(--ink-soft);
-    margin-top:0.3rem;
-    max-width:56ch;
-  }
+  .commit-head-tag{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:0.03em;color:var(--paper);background:var(--signal);padding:0.1rem 0.4rem;border-radius:2px;}
+  .commit-title{font-size:0.98rem;font-weight:600;color:var(--ink);}
+  .commit-org{font-weight:400;color:var(--ink-soft);}
 
-  /* ---- projects: icon-grid index with 3D tilt animations ---- */
+  /* ---- projects ---- */
   .proj-index-line{color:var(--ink-faint);font-weight:400;margin-left:auto;padding-left:1rem;}
   .hunk .content{display:flex;align-items:baseline;width:100%;}
-
   .proj-cat{margin-bottom:2.4rem;}
   .proj-cat:last-child{margin-bottom:0;}
-  .proj-cat-label{
-    display:flex;align-items:center;gap:0.55rem;
-    font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);
-    margin-bottom:0.9rem;
-  }
+  .proj-cat-label{display:flex;align-items:center;gap:0.55rem;font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);margin-bottom:0.9rem;}
   .proj-cat-label .dot{width:7px;height:7px;flex-shrink:0;background:var(--cat);}
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(108px, 1fr));gap:12px;}
 
-  .proj-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(104px, 1fr));
-    gap:12px;
-  }
   .proj-tile{
     background:var(--paper);
-    background-image:none;
     color:inherit;
     border:1px solid var(--rule);
     border-radius:3px;
-    padding:1.15rem 0.5rem 1rem;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:0.6rem;
+    padding:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
     text-align:center;
-    transition:all 0.3s cubic-bezier(.4,0,.2,1);
-    transform:perspective(600px) rotateX(0deg) rotateY(0deg) scale(1);
-    cursor:pointer;
-    position:relative;
-    will-change:transform;
+    cursor:pointer;position:relative;
     overflow:hidden;
+    text-decoration:none;
+    background-image:none;
+    transition:border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(.4,0,.2,1);
+    animation:tilePop 0.5s cubic-bezier(.34,1.56,.64,1) both;
+    animation-delay:calc(var(--tile-index,0) * 0.06s);
+    will-change:transform;
   }
-  .proj-tile .tile-icon{
-    color:var(--ink-soft);
-    line-height:0;
-    transition:color 0.3s ease, transform 0.3s ease;
-    position:relative;
-    width:26px;
-    height:26px;
-  }
-  /* SVG animations inside icons — each tile gets a specific animation */
-  .proj-tile .tile-icon svg{
-    width:26px;
-    height:26px;
-    display:block;
-    transition:transform 0.3s ease;
-  }
-
-  /* tinyGPT — nodes pulse in sequence */
-  .proj-tile[data-anim="nodes"] .tile-icon circle{
-    animation: nodePulse 2s ease-in-out infinite;
-  }
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(1){animation-delay:0s;}
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(2){animation-delay:0.28s;}
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(3){animation-delay:0.56s;}
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(4){animation-delay:0.84s;}
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(5){animation-delay:1.12s;}
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(6){animation-delay:1.4s;}
-  .proj-tile[data-anim="nodes"] .tile-icon circle:nth-child(7){animation-delay:1.68s;}
-  @keyframes nodePulse{
-    0%,100%{opacity:0.4;r:1.3;}
-    50%{opacity:1;r:2;}
-  }
-
-  /* mini-torch — wave flows along the path */
-  .proj-tile[data-anim="wave"] .tile-icon path:first-child{
-    stroke-dasharray: 60;
-    stroke-dashoffset: 60;
-    animation: waveDash 2.2s linear infinite;
-  }
-  @keyframes waveDash{
-    0%{stroke-dashoffset:60;}
-    100%{stroke-dashoffset:-60;}
-  }
-
-  /* linalg — dots light up row by row */
-  .proj-tile[data-anim="matrix"] .tile-icon circle{
-    animation: matrixOn 2.7s ease-in-out infinite;
-  }
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(1){animation-delay:0s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(2){animation-delay:0.15s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(3){animation-delay:0.3s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(4){animation-delay:0.45s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(5){animation-delay:0.6s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(6){animation-delay:0.75s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(7){animation-delay:0.9s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(8){animation-delay:1.05s;}
-  .proj-tile[data-anim="matrix"] .tile-icon circle:nth-child(9){animation-delay:1.2s;}
-  @keyframes matrixOn{
-    0%,100%{opacity:0.25;}
-    20%,60%{opacity:1;}
-  }
-
-  /* cuda — GPU chip halo pulses */
-  .proj-tile[data-anim="gpu"] .tile-icon rect:first-child{
-    animation: gpuGlow 1.8s ease-in-out infinite;
-  }
-  @keyframes gpuGlow{
-    0%,100%{stroke-opacity:0.4;}
-    50%{stroke-opacity:1;stroke:#6BAEEF;}
-  }
-
-  /* Rocky — waveform bars animate like audio */
-  .proj-tile[data-anim="audio"] .tile-icon rect{
-    animation: audioBar 1.4s ease-in-out infinite;
-    transform-origin: bottom center;
-  }
-  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(1){animation-delay:0s;transform-box:fill-box;}
-  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(2){animation-delay:0.2s;transform-box:fill-box;}
-  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(3){animation-delay:0.4s;transform-box:fill-box;}
-  .proj-tile[data-anim="audio"] .tile-icon rect:nth-child(4){animation-delay:0.1s;transform-box:fill-box;}
-  @keyframes audioBar{
-    0%,100%{scaleY:0.5;opacity:0.5;}
-    50%{scaleY:1;opacity:1;}
-  }
-
-  /* Athena — search circle expands */
-  .proj-tile[data-anim="search"] .tile-icon circle{
-    animation: searchScan 2s ease-in-out infinite;
-  }
-  @keyframes searchScan{
-    0%,100%{r:4;opacity:1;}
-    50%{r:5.5;opacity:0.6;}
-  }
-
-  /* maze-runner — dot traces the path */
-  .proj-tile[data-anim="maze"] .tile-icon .maze-dot{
-    animation: mazeMarch 3s linear infinite;
-    offset-path: path("M5 5.5 L12 5.5 L12 12 L19 12");
-    offset-distance: 0%;
-  }
-  @keyframes mazeMarch{
-    0%{offset-distance:0%;opacity:1;}
-    80%{offset-distance:100%;opacity:1;}
-    100%{offset-distance:100%;opacity:0;}
-  }
-
-  /* minimax — X and O flash alternately */
-  .proj-tile[data-anim="game"] .tile-icon .x-mark{
-    animation: xFlash 2s ease-in-out infinite;
-  }
-  .proj-tile[data-anim="game"] .tile-icon .o-mark{
-    animation: oFlash 2s ease-in-out infinite 1s;
-  }
-  @keyframes xFlash{
-    0%,100%{opacity:0.3;}
-    40%,60%{opacity:1;}
-  }
-  @keyframes oFlash{
-    0%,100%{opacity:0.3;}
-    40%,60%{opacity:1;}
-  }
-
-  /* http-server — server rows blink like blinkenlights */
-  .proj-tile[data-anim="server"] .tile-icon circle{
-    animation: blink 1.6s step-end infinite;
-  }
-  .proj-tile[data-anim="server"] .tile-icon circle:nth-child(1){animation-delay:0s;}
-  .proj-tile[data-anim="server"] .tile-icon circle:nth-child(2){animation-delay:0.8s;}
-  @keyframes blink{
-    0%,100%{fill:#6BAEEF;opacity:1;}
-    50%{fill:#565850;opacity:0.4;}
-  }
-
-  /* FileManager — dashes slide in like a tree populating */
-  .proj-tile[data-anim="files"] .tile-icon path.file-lines{
-    stroke-dasharray: 20;
-    animation: lineSlide 2.4s ease-in-out infinite;
-  }
-  @keyframes lineSlide{
-    0%{stroke-dashoffset:20;opacity:0;}
-    30%,70%{stroke-dashoffset:0;opacity:1;}
-    100%{stroke-dashoffset:-20;opacity:0;}
-  }
-
-  /* 3D tilt on hover */
-  .proj-tile:hover,
-  .proj-tile:focus-visible{
-    background:var(--cat);
+  .proj-tile:hover,.proj-tile:focus-visible{
     border-color:var(--cat);
-    transform:perspective(600px) rotateX(4deg) rotateY(6deg) scale(1.05);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-    z-index: 2;
+    box-shadow:0 6px 24px rgba(0,0,0,0.5), 0 0 0 1px var(--cat);
+    transform:translateY(-3px) scale(1.03);
+    z-index:2;
   }
-  .proj-tile:hover .tile-icon,
-  .proj-tile:focus-visible .tile-icon{
-    color:#0C0D0A;
-    transform:scale(1.15);
+  .proj-tile:focus-visible{outline:none;}
+
+  /* canvas fills the tile top portion */
+  .tile-canvas-wrap{
+    width:100%;
+    aspect-ratio:1/1;
+    position:relative;
+    overflow:hidden;
+    background:var(--band);
   }
-  .proj-tile:hover .tile-icon svg,
-  .proj-tile:focus-visible .tile-icon svg{
-    transform:rotate(8deg) scale(1.1);
+  .tile-canvas-wrap canvas{
+    display:block;
+    width:100%;height:100%;
   }
-  .proj-tile:hover .tile-name,
-  .proj-tile:focus-visible .tile-name{
-    color:#0C0D0A;
-  }
-  .proj-tile .tile-name{
+  .tile-name{
     font-family:var(--mono);
-    font-size:0.7rem;
+    font-size:0.68rem;
     color:var(--ink-soft);
-    transition:color 0.3s ease;
+    padding:0.45rem 0.4rem 0.5rem;
+    width:100%;
+    transition:color 0.2s ease;
     word-break:break-word;
   }
-  /* pause all animations on hover so the icon doesn't thrash */
-  .proj-tile:hover .tile-icon *,
-  .proj-tile:focus-visible .tile-icon *{
-    animation-play-state:paused !important;
-  }
-  /* pop animation on load */
-  .proj-tile {
-    animation: tilePop 0.5s cubic-bezier(.34,1.56,.64,1) both;
-    animation-delay: calc(var(--tile-index, 0) * 0.06s);
-  }
-  @keyframes tilePop {
-    0% { opacity: 0; transform: scale(0.85) translateY(12px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
-  }
+  .proj-tile:hover .tile-name,.proj-tile:focus-visible .tile-name{color:var(--cat);}
 
-  .proj-caption{
-    margin-top:1.4rem;
-    font-family:var(--mono);
-    font-size:0.8rem;
-    color:var(--ink-soft);
-    min-height:1.3em;
-  }
-  .proj-caption strong{color:var(--ink);font-weight:600;}
+  @keyframes tilePop{0%{opacity:0;transform:scale(0.85) translateY(12px);}100%{opacity:1;transform:scale(1) translateY(0);}}
   @media (prefers-reduced-motion:reduce){
-    section .logline::after{transition:none;}
     .proj-tile{animation:none;opacity:1;transform:none;}
     .proj-tile:hover{transform:none;}
-    .proj-tile .tile-icon *{animation:none !important;}
   }
 
-  /* ---- publication with thumbnail ---- */
-  .pub-with-thumb {
-    display: flex;
-    gap: 1.2rem;
-    align-items: flex-start;
+  .proj-caption{margin-top:1.4rem;font-family:var(--mono);font-size:0.8rem;color:var(--ink-soft);min-height:1.3em;}
+  .proj-caption strong{color:var(--ink);font-weight:600;}
+
+  /* ---- publication ---- */
+  .pub-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
+  .pub-thumb{flex:0 0 80px;width:80px;height:80px;background:var(--band);border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:transform 0.3s ease,border-color 0.3s ease;}
+  .pub-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pub-thumb:hover{transform:scale(1.05);border-color:var(--signal);}
+  .pub-body{flex:1;min-width:0;}
+  @media (max-width:480px){.pub-thumb{flex:0 0 60px;width:60px;height:60px;}.pub-with-thumb{gap:0.8rem;}}
+
+  /* ---- blog post thumbnails ---- */
+  .post-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
+  .post-thumb{
+    flex:0 0 80px;width:80px;height:80px;
+    background:var(--band);border:1px solid var(--rule);border-radius:3px;
+    overflow:hidden;display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity 0.5s ease,border-color 0.3s ease;
   }
-  .pub-thumb {
-    flex: 0 0 80px;
-    width: 80px;
-    height: 80px;
-    background: var(--band);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-  .pub-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .pub-thumb:hover {
-    transform: scale(1.05);
-    border-color: var(--signal);
-  }
-  .pub-body {
-    flex: 1;
-    min-width: 0;
-  }
-  @media (max-width: 480px) {
-    .pub-thumb { flex: 0 0 60px; width: 60px; height: 60px; }
-    .pub-with-thumb { gap: 0.8rem; }
-  }
+  .post-thumb.rendered{opacity:1;}
+  .post-thumb canvas{width:80px;height:80px;display:block;}
+  .post-body{flex:1;min-width:0;}
+  @media (max-width:480px){.post-thumb{flex:0 0 60px;width:60px;height:60px;}.post-with-thumb{gap:0.8rem;}}
 
   /* ---- git-log recents ---- */
   .commit .content{display:flex;flex-wrap:wrap;gap:0 0.9rem;font-family:var(--mono);font-size:0.82rem;align-items:baseline;}
   .commit .hash{color:var(--ink-faint);}
-  .commit .cdate{color:var(--ink-faint);}
   .commit .msg{color:var(--ink);font-family:var(--sans);font-size:0.92rem;}
   .commit .msg strong{font-weight:600;}
 
-  /* ---- blog post thumbnails ---- */
-  .post-with-thumb {
-    display: flex;
-    gap: 1.2rem;
-    align-items: flex-start;
-  }
-  .post-thumb {
-    flex: 0 0 80px;
-    width: 80px;
-    height: 80px;
-    background: var(--band);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.5s ease, border-color 0.3s ease;
-  }
-  .post-thumb.rendered {
-    opacity: 1;
-  }
-  .post-thumb canvas {
-    width: 80px;
-    height: 80px;
-    display: block;
-  }
-  .post-body {
-    flex: 1;
-    min-width: 0;
-  }
-  @media (max-width: 480px) {
-    .post-thumb { flex: 0 0 60px; width: 60px; height: 60px; }
-    .post-with-thumb { gap: 0.8rem; }
-  }
-
   footer{
-    margin-top:4rem;
-    padding-top:1.4rem;
-    border-top:1px solid var(--rule);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:0.6rem 1.4rem;
+    margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.6rem 1.4rem;
   }
   footer .eof{font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);}
   footer .flinks{font-family:var(--mono);font-size:0.78rem;display:flex;gap:1.1rem;flex-wrap:wrap;}
@@ -716,8 +333,7 @@
     h1{font-size:1.65rem;}
     .filehead{gap:1rem;}
     .frame{width:64px;height:64px;}
-    .proj-grid{grid-template-columns:repeat(auto-fill, minmax(78px, 1fr));}
-    .proj-tile .tile-icon svg{width:22px;height:22px;}
+    .proj-grid{grid-template-columns:repeat(auto-fill, minmax(82px, 1fr));}
   }
 </style>
 </head>
@@ -744,9 +360,9 @@
     <a href="https://x.com/sirohikartik_">twitter</a>
   </span></div>
 
+  <!-- PUBLICATIONS -->
   <section id="publications">
     <div class="hunk"><span class="content">@@ publications @@</span></div>
-
     <div class="logline">
       <span class="content">
         <div class="pub-with-thumb">
@@ -763,13 +379,12 @@
     </div>
   </section>
 
+  <!-- EXPERIENCE -->
   <section id="experience">
     <div class="hunk"><span class="content">@@ experience @@</span></div>
-
     <div class="logline">
       <span class="content">
         <div class="commit-log">
-
           <div class="commit-row is-head">
             <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
@@ -781,76 +396,60 @@
               <div class="commit-title">AI Engineering Intern <span class="commit-org">@ Horrazon AI</span></div>
             </div>
           </div>
-
           <div class="commit-row">
             <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
-              <div class="commit-refline">
-                <span class="commit-hash">b7e401d</span>
-                <span>Jul – Aug 2026</span>
-              </div>
+              <div class="commit-refline"><span class="commit-hash">b7e401d</span><span>Jul – Aug 2026</span></div>
               <div class="commit-title">Research Intern <span class="commit-org">@ QWorld</span></div>
             </div>
           </div>
-
           <div class="commit-row">
             <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
-              <div class="commit-refline">
-                <span class="commit-hash">1c88ae4</span>
-                <span>Jan – Mar 2026</span>
-              </div>
+              <div class="commit-refline"><span class="commit-hash">1c88ae4</span><span>Jan – Mar 2026</span></div>
               <div class="commit-title">AI Research Intern <span class="commit-org">@ University of Galway</span></div>
             </div>
           </div>
-
         </div>
       </span>
     </div>
   </section>
 
+  <!-- OPEN SOURCE -->
   <section id="oss" class="hoverable">
     <div class="hunk"><span class="content">@@ open source @@</span></div>
-
     <div class="oss-graph-wrap" id="oss-graph-wrap">
       <svg class="oss-graph" viewBox="0 0 360 360" role="img" aria-label="Diagram of open-source repositories Kartik has contributed merged patches to">
         <circle cx="180" cy="180" r="130" class="orbit-ring" fill="none"/>
-
         <line class="orbit-line" x1="180" y1="180" x2="180" y2="50"  pathLength="1" style="animation-delay:0.05s"/>
         <line class="orbit-line" x1="180" y1="180" x2="303.6" y2="139.8" pathLength="1" style="animation-delay:0.2s"/>
         <line class="orbit-line" x1="180" y1="180" x2="256.4" y2="285.2" pathLength="1" style="animation-delay:0.35s"/>
         <line class="orbit-line" x1="180" y1="180" x2="103.6" y2="285.2" pathLength="1" style="animation-delay:0.5s"/>
         <line class="orbit-line" x1="180" y1="180" x2="56.4"  y2="139.8" pathLength="1" style="animation-delay:0.65s"/>
-
         <g class="orbit-center">
           <circle cx="180" cy="180" r="16"/>
           <text x="180" y="184" text-anchor="middle" class="orbit-center-label">KS</text>
         </g>
-
         <g class="orbit-node-group" tabindex="0" data-name="llama.cpp" data-count="2" data-detail="Concat row-level memcpy (83–133× speedup, #24575) · SIMD vector kernel (#22209)" data-url="https://github.com/ggml-org/llama.cpp" style="animation-delay:0.55s">
           <circle cx="180" cy="50" r="14" class="orbit-node"/>
           <text x="180" y="27" text-anchor="middle" class="orbit-label">llama.cpp</text>
           <text x="180" y="55" text-anchor="middle" class="orbit-count">2</text>
         </g>
-
         <g class="orbit-node-group" tabindex="0" data-name="PyTorch" data-count="1" data-detail="NaN clamp fix (#172200)" data-url="https://github.com/pytorch/pytorch" style="animation-delay:0.7s">
           <circle cx="303.6" cy="139.8" r="11" class="orbit-node"/>
           <text x="303.6" y="119" text-anchor="middle" class="orbit-label">PyTorch</text>
           <text x="303.6" y="144" text-anchor="middle" class="orbit-count">1</text>
         </g>
-
         <g class="orbit-node-group" tabindex="0" data-name="OpenSRE" data-count="3" data-detail="Unit tests &amp; validation (#852, #917) · Tempo service tests (#882)" data-url="https://github.com/Tracer-Cloud/opensre" style="animation-delay:0.85s">
           <circle cx="256.4" cy="285.2" r="15" class="orbit-node"/>
           <text x="256.4" y="311" text-anchor="middle" class="orbit-label">OpenSRE</text>
           <text x="256.4" y="290" text-anchor="middle" class="orbit-count">3</text>
         </g>
-
         <g class="orbit-node-group" tabindex="0" data-name="alexandria3k" data-count="1" data-detail="O(n)→O(1) lookup (#63)" data-url="https://github.com/dspinellis/alexandria3k" style="animation-delay:1s">
           <circle cx="103.6" cy="285.2" r="11" class="orbit-node"/>
           <text x="103.6" y="311" text-anchor="middle" class="orbit-label">alexandria3k</text>
           <text x="103.6" y="290" text-anchor="middle" class="orbit-count">1</text>
         </g>
-
         <g class="orbit-node-group" tabindex="0" data-name="SciPy" data-count="1" data-detail="Gauss-Jacobi docs (#23129)" data-url="https://github.com/scipy/scipy" style="animation-delay:1.15s">
           <circle cx="56.4" cy="139.8" r="11" class="orbit-node"/>
           <text x="56.4" y="119" text-anchor="middle" class="orbit-label">SciPy</text>
@@ -859,241 +458,138 @@
       </svg>
       <div class="oss-caption" id="oss-caption">hover or focus a node — 8 merged patches across 5 repositories</div>
     </div>
-
-    <div class="logline oss-line">
-      <span class="content"><div>
-        <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>
-        <span class="tag-good">merged</span>
-        <span>concat row-level memcpy — <a href="https://github.com/ggml-org/llama.cpp/pull/24575">#24575</a></span>
-        <span>SIMD vector kernel — <a href="https://github.com/ggml-org/llama.cpp/pull/22209">#22209</a></span>
-      </div></span>
-    </div>
-    <div class="logline oss-line">
-      <span class="content"><div>
-        <a href="https://github.com/pytorch/pytorch">PyTorch</a>
-        <span class="tag-good">merged</span>
-        <span>NaN clamp fix — <a href="https://github.com/pytorch/pytorch/pull/172200">#172200</a></span>
-      </div></span>
-    </div>
-    <div class="logline oss-line">
-      <span class="content"><div>
-        <a href="https://github.com/Tracer-Cloud/opensre">OpenSRE</a>
-        <span class="tag-good">merged</span>
-        <span>unit tests &amp; validation — <a href="https://github.com/Tracer-Cloud/opensre/pull/852">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917">#917</a></span>
-        <span>Tempo service tests — <a href="https://github.com/Tracer-Cloud/opensre/pull/882">#882</a></span>
-      </div></span>
-    </div>
-    <div class="logline oss-line">
-      <span class="content"><div>
-        <a href="https://github.com/dspinellis/alexandria3k">alexandria3k</a>
-        <span class="tag-good">merged</span>
-        <span>O(n)→O(1) lookup — <a href="https://github.com/dspinellis/alexandria3k/pull/63">#63</a></span>
-      </div></span>
-    </div>
-    <div class="logline oss-line">
-      <span class="content"><div>
-        <a href="https://github.com/scipy/scipy">SciPy</a>
-        <span class="tag-good">merged</span>
-        <span>Gauss-Jacobi docs — <a href="https://github.com/scipy/scipy/pull/23129">#23129</a></span>
-      </div></span>
-    </div>
+    <div class="logline oss-line"><span class="content"><div>
+      <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>
+      <span class="tag-good">merged</span>
+      <span>concat row-level memcpy — <a href="https://github.com/ggml-org/llama.cpp/pull/24575">#24575</a></span>
+      <span>SIMD vector kernel — <a href="https://github.com/ggml-org/llama.cpp/pull/22209">#22209</a></span>
+    </div></span></div>
+    <div class="logline oss-line"><span class="content"><div>
+      <a href="https://github.com/pytorch/pytorch">PyTorch</a>
+      <span class="tag-good">merged</span>
+      <span>NaN clamp fix — <a href="https://github.com/pytorch/pytorch/pull/172200">#172200</a></span>
+    </div></span></div>
+    <div class="logline oss-line"><span class="content"><div>
+      <a href="https://github.com/Tracer-Cloud/opensre">OpenSRE</a>
+      <span class="tag-good">merged</span>
+      <span>unit tests &amp; validation — <a href="https://github.com/Tracer-Cloud/opensre/pull/852">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917">#917</a></span>
+      <span>Tempo service tests — <a href="https://github.com/Tracer-Cloud/opensre/pull/882">#882</a></span>
+    </div></span></div>
+    <div class="logline oss-line"><span class="content"><div>
+      <a href="https://github.com/dspinellis/alexandria3k">alexandria3k</a>
+      <span class="tag-good">merged</span>
+      <span>O(n)→O(1) lookup — <a href="https://github.com/dspinellis/alexandria3k/pull/63">#63</a></span>
+    </div></span></div>
+    <div class="logline oss-line"><span class="content"><div>
+      <a href="https://github.com/scipy/scipy">SciPy</a>
+      <span class="tag-good">merged</span>
+      <span>Gauss-Jacobi docs — <a href="https://github.com/scipy/scipy/pull/23129">#23129</a></span>
+    </div></span></div>
   </section>
 
+  <!-- PROJECTS -->
   <section id="projects">
     <div class="hunk"><span class="content">@@ projects @@<span class="proj-index-line">index / 01–10</span></span></div>
 
     <div class="proj-cat" style="--cat:var(--cat-systems)">
       <div class="proj-cat-label"><span class="dot"></span>systems</div>
       <div class="proj-grid">
-
         <a class="proj-tile" href="https://github.com/sirohikartik/tinygpt"
            data-name="tinyGPT" data-anim="nodes"
            data-desc="30M-parameter GPT from scratch with KV caching, NEON/SSE, and OpenMP — ~121 tok/s on M1."
            style="--tile-index:0;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="5" cy="7" r="1.3" fill="currentColor"/>
-              <circle cx="5" cy="17" r="1.3" fill="currentColor"/>
-              <circle cx="12" cy="5" r="1.3" fill="currentColor"/>
-              <circle cx="12" cy="12" r="1.3" fill="currentColor"/>
-              <circle cx="12" cy="19" r="1.3" fill="currentColor"/>
-              <circle cx="19" cy="9" r="1.3" fill="currentColor"/>
-              <circle cx="19" cy="15" r="1.3" fill="currentColor"/>
-              <path d="M5 7L12 5M5 7L12 12M5 17L12 12M5 17L12 19M12 5L19 9M12 12L19 9M12 12L19 15M12 19L19 15" stroke="currentColor" stroke-width="1"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">tinyGPT</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/mini-torch"
            data-name="mini-torch" data-anim="wave"
            data-desc="Autograd framework with reverse-mode differentiation, SGD+momentum, and Adam."
            style="--tile-index:1;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M3 18C7 18 8 6 13 6C17 6 17 14 21 14" stroke="currentColor" stroke-width="1.4"/>
-              <circle cx="13" cy="6" r="1.5" fill="currentColor"/>
-              <path d="M9 10.5L17 3" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">mini-torch</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/linalg"
-           data-name="Linear Algebra Engine" data-anim="matrix"
+           data-name="linalg" data-anim="matrix"
            data-desc="Gaussian elimination, matrix inversion, blocked matmul, and determinant computation in C++."
            style="--tile-index:2;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M6.2 4H4V20H6.2" stroke="currentColor" stroke-width="1.2"/>
-              <path d="M17.8 4H20V20H17.8" stroke="currentColor" stroke-width="1.2"/>
-              <circle cx="9" cy="8" r="0.9" fill="currentColor"/>
-              <circle cx="12" cy="8" r="0.9" fill="currentColor"/>
-              <circle cx="15" cy="8" r="0.9" fill="currentColor"/>
-              <circle cx="9" cy="12" r="0.9" fill="currentColor"/>
-              <circle cx="12" cy="12" r="0.9" fill="currentColor"/>
-              <circle cx="15" cy="12" r="0.9" fill="currentColor"/>
-              <circle cx="9" cy="16" r="0.9" fill="currentColor"/>
-              <circle cx="12" cy="16" r="0.9" fill="currentColor"/>
-              <circle cx="15" cy="16" r="0.9" fill="currentColor"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">linalg</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/cuda"
            data-name="cuda kernels" data-anim="gpu"
            data-desc="matmul.cu and softmax.cu — the CUDA kernels behind the 44→376 GFLOP/s optimization notes."
            style="--tile-index:3;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="7" y="7" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/>
-              <path d="M9 7V4M15 7V4M9 20V17M15 20V17M7 9H4M7 15H4M20 9H17M20 15H17" stroke="currentColor" stroke-width="1.2"/>
-              <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">cuda kernels</span>
         </a>
-
       </div>
     </div>
 
     <div class="proj-cat" style="--cat:var(--cat-agents)">
       <div class="proj-cat-label"><span class="dot"></span>agents</div>
       <div class="proj-grid">
-
         <a class="proj-tile" href="https://github.com/sirohikartik/rocky"
            data-name="Rocky" data-anim="audio"
            data-desc="Speech-to-Indian Sign Language: Whisper → vocab resolver → ISL grammar agent."
            style="--tile-index:4;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2.2" y="9" width="1.6" height="6" fill="currentColor"/>
-              <rect x="5.4" y="6" width="1.6" height="12" fill="currentColor"/>
-              <rect x="8.6" y="10" width="1.6" height="4" fill="currentColor"/>
-              <rect x="18.5" y="6.5" width="3.5" height="11" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/>
-              <path d="M12 12H15.5" stroke="currentColor" stroke-width="1.3"/>
-              <path d="M14 9.3L17 12L14 14.7" stroke="currentColor" stroke-width="1.3"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">Rocky</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/athena"
            data-name="Athena" data-anim="search"
            data-desc="Search agent combining web search, BM25, and local LLM reasoning in an async pipeline."
            style="--tile-index:5;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4 6H12M4 10H10M4 14H8" stroke="currentColor" stroke-width="1.3"/>
-              <circle cx="16" cy="14" r="4" stroke="currentColor" stroke-width="1.3"/>
-              <path d="M19 17L22 20" stroke="currentColor" stroke-width="1.3"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">Athena</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/maze-runner"
            data-name="maze-runner" data-anim="maze"
            data-desc="A Q-learning agent in PyTorch that navigates a 10×10 maze, visualized live over FastAPI + canvas."
            style="--tile-index:6;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.2"/>
-              <path d="M3 8H10V13H16" stroke="currentColor" stroke-width="1.1"/>
-              <path d="M21 16H14V11" stroke="currentColor" stroke-width="1.1" stroke-dasharray="1.6 1.6"/>
-              <circle class="maze-dot" cx="5" cy="5.5" r="1" fill="currentColor"/>
-              <rect x="18" y="17.5" width="2" height="2" fill="currentColor"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">maze-runner</span>
         </a>
-
       </div>
     </div>
 
     <div class="proj-cat" style="--cat:var(--cat-experiments)">
       <div class="proj-cat-label"><span class="dot"></span>experiments — from <a href="https://github.com/sirohikartik/Fun">Fun</a></div>
       <div class="proj-grid">
-
         <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/AI"
            data-name="minimax tic-tac-toe" data-anim="game"
            data-desc="Tic-tac-toe solved with the minimax algorithm, implemented from scratch."
            style="--tile-index:7;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M9 4V20M15 4V20M4 9H20M4 15H20" stroke="currentColor" stroke-width="1.2"/>
-              <path class="x-mark" d="M5.5 5.5L8 8M8 5.5L5.5 8" stroke="currentColor" stroke-width="1.3"/>
-              <circle class="o-mark" cx="12" cy="12" r="1.7" stroke="currentColor" stroke-width="1.3"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">minimax</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/http-server"
            data-name="http-server" data-anim="server"
            data-desc="A minimal C HTTP server that serves this portfolio off a raw socket, no framework."
            style="--tile-index:8;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="4" y="4" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
-              <rect x="4" y="10" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
-              <rect x="4" y="16" width="16" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/>
-              <circle cx="7" cy="6.5" r="0.6" fill="currentColor"/>
-              <circle cx="7" cy="12.5" r="0.6" fill="currentColor"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">http-server</span>
         </a>
-
         <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/FileManager"
            data-name="FileManager" data-anim="files"
            data-desc="A small C tool that walks a directory and prints its tree structure."
            style="--tile-index:9;">
-          <span class="tile-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4 6H9L11 8H20V18H4V6Z" stroke="currentColor" stroke-width="1.2"/>
-              <path class="file-lines" d="M8 12H16M8 15H13" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 1.5"/>
-            </svg>
-          </span>
+          <div class="tile-canvas-wrap"><canvas></canvas></div>
           <span class="tile-name">FileManager</span>
         </a>
-
       </div>
     </div>
 
     <div class="proj-caption" id="proj-caption">hover or focus a tile for details</div>
   </section>
 
+  <!-- POSTS -->
   <section id="posts" class="hoverable">
     <div class="hunk"><span class="content">@@ posts @@</span></div>
 
     <div class="logline">
       <span class="content">
         <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="matmul">
-            <canvas width="80" height="80"></canvas>
-          </div>
+          <div class="post-thumb" data-thumb="matmul"><canvas width="160" height="160"></canvas></div>
           <div class="post-body">
             <a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span>
             <div class="entry-desc">Notes on writing and tuning CUDA matmul kernels.</div>
@@ -1105,9 +601,7 @@
     <div class="logline">
       <span class="content">
         <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="tinygpt">
-            <canvas width="80" height="80"></canvas>
-          </div>
+          <div class="post-thumb" data-thumb="tinygpt"><canvas width="160" height="160"></canvas></div>
           <div class="post-body">
             <a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span>
             <div class="entry-desc">Implementing a 30M-parameter GPT from scratch with NEON, SSE, and OpenMP.</div>
@@ -1119,9 +613,7 @@
     <div class="logline">
       <span class="content">
         <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="backprop">
-            <canvas width="80" height="80"></canvas>
-          </div>
+          <div class="post-thumb" data-thumb="backprop"><canvas width="160" height="160"></canvas></div>
           <div class="post-body">
             <a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span>
             <div class="entry-desc">An intuitive walkthrough of backpropagation — from chain rule to automatic differentiation.</div>
@@ -1133,9 +625,7 @@
     <div class="logline">
       <span class="content">
         <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="neural">
-            <canvas width="80" height="80"></canvas>
-          </div>
+          <div class="post-thumb" data-thumb="neural"><canvas width="160" height="160"></canvas></div>
           <div class="post-body">
             <a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span>
             <div class="entry-desc">Understanding neural networks one parameter at a time.</div>
@@ -1147,9 +637,7 @@
     <div class="logline">
       <span class="content">
         <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="graph">
-            <canvas width="80" height="80"></canvas>
-          </div>
+          <div class="post-thumb" data-thumb="graph"><canvas width="160" height="160"></canvas></div>
           <div class="post-body">
             <a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span>
             <div class="entry-desc">A survey of why graph retrieval methods are useful for retrieving knowledge.</div>
@@ -1157,7 +645,6 @@
         </div>
       </span>
     </div>
-
   </section>
 
   <footer>
@@ -1173,534 +660,1040 @@
 
 </div>
 <script>
-/* ---- scroll reveal ---- */
+/* ==================== SCROLL REVEAL ==================== */
 (function(){
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var targets = document.querySelectorAll('section .logline, section .hunk');
-
-  if (reduceMotion || !('IntersectionObserver' in window)){
-    targets.forEach(function(el){ el.classList.add('in-view'); });
+  if(rm || !('IntersectionObserver' in window)){
+    targets.forEach(function(el){el.classList.add('in-view');});
     return;
   }
-
-  document.querySelectorAll('section').forEach(function(section){
-    var i = 0;
-    section.querySelectorAll('.logline, .hunk').forEach(function(el){
-      el.style.transitionDelay = Math.min(i * 45, 220) + 'ms';
-      i++;
+  document.querySelectorAll('section').forEach(function(sec){
+    var i=0;
+    sec.querySelectorAll('.logline,.hunk').forEach(function(el){
+      el.style.transitionDelay = Math.min(i*45,220)+'ms'; i++;
     });
   });
-
   var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-
-  targets.forEach(function(el){ io.observe(el); });
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:0.12});
+  targets.forEach(function(el){io.observe(el);});
 })();
 
-/* ---- project tile caption ---- */
+/* ==================== PROJECT CAPTION ==================== */
 (function(){
-  var caption = document.getElementById('proj-caption');
-  if (!caption) return;
-  var defaultText = caption.textContent;
-  document.querySelectorAll('.proj-tile').forEach(function(tile){
-    var show = function(){
-      caption.innerHTML = '<strong>' + tile.dataset.name + '</strong> — ' + tile.dataset.desc;
-    };
-    var hide = function(){ caption.textContent = defaultText; };
-    tile.addEventListener('mouseenter', show);
-    tile.addEventListener('focus', show);
-    tile.addEventListener('mouseleave', hide);
-    tile.addEventListener('blur', hide);
+  var cap = document.getElementById('proj-caption');
+  if(!cap) return;
+  var def = cap.textContent;
+  document.querySelectorAll('.proj-tile').forEach(function(t){
+    t.addEventListener('mouseenter',function(){cap.innerHTML='<strong>'+t.dataset.name+'</strong> — '+t.dataset.desc;});
+    t.addEventListener('focus',function(){cap.innerHTML='<strong>'+t.dataset.name+'</strong> — '+t.dataset.desc;});
+    t.addEventListener('mouseleave',function(){cap.textContent=def;});
+    t.addEventListener('blur',function(){cap.textContent=def;});
   });
 })();
 
-/* ---- OSS orbit graph ---- */
+/* ==================== OSS ORBIT ==================== */
 (function(){
-  var wrap = document.getElementById('oss-graph-wrap');
-  var caption = document.getElementById('oss-caption');
-  if (!wrap || !caption) return;
-  var defaultText = caption.textContent;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!reduceMotion && 'IntersectionObserver' in window){
-    var gio = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting){
-          wrap.classList.add('in-view');
-          gio.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
+  var wrap=document.getElementById('oss-graph-wrap');
+  var cap=document.getElementById('oss-caption');
+  if(!wrap||!cap) return;
+  var def=cap.textContent;
+  var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!rm&&'IntersectionObserver' in window){
+    var gio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){wrap.classList.add('in-view');gio.unobserve(e.target);}});
+    },{threshold:0.3});
     gio.observe(wrap);
-  } else {
-    wrap.classList.add('in-view');
-  }
-
-  document.querySelectorAll('.orbit-node-group').forEach(function(node){
-    node.setAttribute('role', 'link');
-    node.setAttribute('aria-label', node.dataset.name + ' — ' + node.dataset.detail);
-    var show = function(){
-      caption.innerHTML = '<strong>' + node.dataset.name + '</strong> — ' + node.dataset.detail;
-    };
-    var hide = function(){ caption.textContent = defaultText; };
-    var open = function(){ window.open(node.dataset.url, '_blank'); };
-    node.addEventListener('mouseenter', show);
-    node.addEventListener('focus', show);
-    node.addEventListener('mouseleave', hide);
-    node.addEventListener('blur', hide);
-    node.addEventListener('click', open);
-    node.addEventListener('keydown', function(e){
-      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); }
-    });
+  } else { wrap.classList.add('in-view'); }
+  document.querySelectorAll('.orbit-node-group').forEach(function(n){
+    n.setAttribute('role','link');
+    n.setAttribute('aria-label',n.dataset.name+' — '+n.dataset.detail);
+    n.addEventListener('mouseenter',function(){cap.innerHTML='<strong>'+n.dataset.name+'</strong> — '+n.dataset.detail;});
+    n.addEventListener('focus',function(){cap.innerHTML='<strong>'+n.dataset.name+'</strong> — '+n.dataset.detail;});
+    n.addEventListener('mouseleave',function(){cap.textContent=def;});
+    n.addEventListener('blur',function(){cap.textContent=def;});
+    n.addEventListener('click',function(){window.open(n.dataset.url,'_blank');});
+    n.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();window.open(n.dataset.url,'_blank');}});
   });
 })();
 
-/* ---- blog post animated thumbnails ---- */
+/* ==================== CANVAS ANIMATION ENGINE ==================== */
 (function(){
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Palette */
-  var C = {
-    paper:   '#111210',
-    band:    '#1C1E1A',
-    rule:    '#2A2C26',
-    soft:    '#9B9C8F',
-    faint:   '#565850',
-    signal:  '#6BAEEF',
-    good:    '#7FC77A',
-    warm:    '#D9C24E',
-    purple:  '#B7A3F2',
-    teal:    '#57C7B0',
+  /* Shared palette */
+  var P = {
+    paper:  '#111210',
+    band:   '#1C1E1A',
+    rule:   '#2A2C26',
+    soft:   '#9B9C8F',
+    faint:  '#565850',
+    ink:    '#EDEBE1',
+    blue:   '#6BAEEF',
+    green:  '#7FC77A',
+    teal:   '#57C7B0',
+    purple: '#B7A3F2',
+    amber:  '#D9C24E',
   };
 
-  /* Each renderer: fn(ctx, w, h, t) where t = elapsed ms */
-  var renderers = {
+  /* ---- Helpers ---- */
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function easeInOut(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function sinWave(t,freq,phase){return Math.sin(t*freq+phase);}
 
-    /* matmul — animated perf curve + grid heatmap */
-    matmul: function(ctx, w, h, t) {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+  /* ================================================================
+     PROJECT TILE RENDERERS
+     Each receives (ctx, w, h, t_ms) — canvas already DPR-scaled
+  ================================================================ */
+  var tileRenderers = {
 
-      /* grid heatmap background */
-      var cols = 8, rows = 8;
-      var cw = w / cols, ch = h / rows;
-      for (var r = 0; r < rows; r++) {
-        for (var c = 0; c < cols; c++) {
-          var phase = (r * cols + c) / (cols * rows);
-          var v = 0.15 + 0.55 * (0.5 + 0.5 * Math.sin(t * 0.0015 + phase * Math.PI * 2));
-          /* blue heat */
-          var alpha = v * 0.5;
-          ctx.fillStyle = 'rgba(107,174,239,' + alpha + ')';
-          ctx.fillRect(c * cw + 1, r * ch + 1, cw - 2, ch - 2);
-        }
-      }
+    /* tinyGPT: multi-layer neural net with streaming forward pass */
+    nodes: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      /* performance curve overlay */
-      var pts = [
-        [0.05, 0.85], [0.22, 0.78], [0.40, 0.60], [0.58, 0.38], [0.76, 0.18], [0.95, 0.06]
-      ];
-      /* progress along curve */
-      var progress = Math.min(1, (t % 3200) / 2400);
-      ctx.beginPath();
-      ctx.strokeStyle = C.signal;
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      for (var i = 0; i < pts.length - 1; i++) {
-        var seg = i / (pts.length - 1);
-        var segEnd = (i + 1) / (pts.length - 1);
-        if (progress < seg) break;
-        var segProgress = Math.min(1, (progress - seg) / (segEnd - seg));
-        var x0 = pts[i][0] * w, y0 = pts[i][1] * h;
-        var x1 = pts[i][0] * w + (pts[i+1][0] - pts[i][0]) * w * segProgress;
-        var y1 = pts[i][1] * h + (pts[i+1][1] - pts[i][1]) * h * segProgress;
-        if (i === 0) ctx.moveTo(x0, y0);
-        ctx.lineTo(x1, y1);
-      }
-      ctx.stroke();
+      var layers = [3,4,4,3];
+      var lx = [0.18,0.38,0.62,0.82];
+      var nodes = layers.map(function(n,l){
+        var arr=[];
+        for(var i=0;i<n;i++) arr.push([lx[l]*w,(0.5+(i-(n-1)/2)*0.22)*h]);
+        return arr;
+      });
 
-      /* moving dot */
-      var di = Math.min(pts.length - 2, Math.floor(progress * (pts.length - 1)));
-      var dfrac = progress * (pts.length - 1) - di;
-      var dx = (pts[di][0] + (pts[Math.min(di+1,pts.length-1)][0] - pts[di][0]) * dfrac) * w;
-      var dy = (pts[di][1] + (pts[Math.min(di+1,pts.length-1)][1] - pts[di][1]) * dfrac) * h;
-      ctx.beginPath();
-      ctx.arc(dx, dy, 3, 0, Math.PI * 2);
-      ctx.fillStyle = C.signal;
-      ctx.fill();
-
-      /* labels */
-      ctx.font = '500 8px "IBM Plex Mono", monospace';
-      ctx.fillStyle = C.faint;
-      ctx.fillText('44', 2, h - 4);
-      ctx.fillStyle = C.signal;
-      ctx.fillText('376 GFLOP/s', 2, 10);
-    },
-
-    /* tinyGPT — animated neural net forward pass */
-    tinygpt: function(ctx, w, h, t) {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
-
-      var layers = [3, 5, 5, 3];
-      var lx = [0.15, 0.38, 0.62, 0.85];
-      var nodes = [];
-
-      /* build node positions */
-      for (var l = 0; l < layers.length; l++) {
-        var n = layers[l];
-        nodes.push([]);
-        for (var ni = 0; ni < n; ni++) {
-          var nx = lx[l] * w;
-          var ny = (0.5 + (ni - (n-1)/2) * 0.22) * h;
-          nodes[l].push([nx, ny]);
-        }
-      }
-
-      /* activation pulse: travels layer by layer */
-      var cycle = 2800;
-      var phase = (t % cycle) / cycle;
-      var activeLay = phase * (layers.length + 0.5) - 0.5;
+      var cycle = 2600;
+      var phase = (t%cycle)/cycle;
+      /* signal front travels through layers */
+      var front = phase * (layers.length + 0.5) - 0.5;
 
       /* draw connections */
-      for (var l = 0; l < layers.length - 1; l++) {
-        for (var a = 0; a < nodes[l].length; a++) {
-          for (var b = 0; b < nodes[l+1].length; b++) {
-            var ax = nodes[l][a][0], ay = nodes[l][a][1];
-            var bx = nodes[l+1][b][0], by = nodes[l+1][b][1];
-            /* edge lights up when signal passes */
-            var edgeLit = activeLay >= l && activeLay < l + 1;
-            var edgeAlpha = edgeLit ? 0.5 + 0.4 * Math.sin(t * 0.01) : 0.08;
+      for(var l=0;l<layers.length-1;l++){
+        for(var a=0;a<nodes[l].length;a++){
+          for(var b=0;b<nodes[l+1].length;b++){
+            var ax=nodes[l][a][0], ay=nodes[l][a][1];
+            var bx=nodes[l+1][b][0], by=nodes[l+1][b][1];
+            var lit = front>=l && front<l+1;
+            var edgeFrac = lit ? easeInOut(Math.max(0,Math.min(1,front-l))) : 0;
             ctx.beginPath();
-            ctx.strokeStyle = 'rgba(107,174,239,' + edgeAlpha + ')';
-            ctx.lineWidth = 0.7;
-            ctx.moveTo(ax, ay);
-            ctx.lineTo(bx, by);
+            ctx.strokeStyle = lit
+              ? 'rgba(107,174,239,'+(0.15+0.65*edgeFrac)+')'
+              : 'rgba(86,88,80,0.18)';
+            ctx.lineWidth = lit ? 1.2 : 0.6;
+            ctx.moveTo(ax,ay); ctx.lineTo(bx,by);
             ctx.stroke();
           }
         }
       }
 
       /* draw nodes */
-      for (var l = 0; l < layers.length; l++) {
-        for (var ni = 0; ni < nodes[l].length; ni++) {
-          var nx = nodes[l][ni][0], ny = nodes[l][ni][1];
-          var lit = activeLay >= l - 0.3 && activeLay < l + 0.7;
-          var glow = lit ? 0.9 + 0.1 * Math.sin(t * 0.015) : 0.25;
+      for(var l=0;l<layers.length;l++){
+        for(var ni=0;ni<nodes[l].length;ni++){
+          var nx=nodes[l][ni][0], ny=nodes[l][ni][1];
+          var lit = front>=l-0.4 && front<l+0.8;
+          var glow = lit ? (0.7+0.3*Math.sin(t*0.016)) : 0;
+          var r = lit ? 5.5 : 4;
+          /* glow ring */
+          if(lit){
+            ctx.beginPath();
+            ctx.arc(nx,ny,r+4,0,Math.PI*2);
+            ctx.fillStyle='rgba(107,174,239,0.12)';
+            ctx.fill();
+          }
           ctx.beginPath();
-          ctx.arc(nx, ny, 4, 0, Math.PI * 2);
-          ctx.fillStyle = lit ? C.signal : C.band;
+          ctx.arc(nx,ny,r,0,Math.PI*2);
+          ctx.fillStyle = lit ? P.blue : P.paper;
           ctx.fill();
-          ctx.strokeStyle = 'rgba(107,174,239,' + glow + ')';
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = lit ? P.blue : 'rgba(107,174,239,0.3)';
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         }
       }
 
       /* label */
-      ctx.font = '500 7px "IBM Plex Mono", monospace';
-      ctx.fillStyle = C.faint;
-      ctx.fillText('fwd pass', 2, h - 4);
+      ctx.font = '500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('fwd pass',4,h-5);
+      ctx.fillStyle = P.blue;
+      ctx.fillText(Math.round(front*100/layers.length)+'%', w-26, h-5);
     },
 
-    /* backprop — chain rule flow: forward then backward pass */
-    backprop: function(ctx, w, h, t) {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+    /* mini-torch: autograd computation graph with gradient flow */
+    wave: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var nodes = [
-        { x: 0.12, y: 0.5,  label: 'x' },
-        { x: 0.38, y: 0.3,  label: 'w' },
-        { x: 0.38, y: 0.7,  label: 'b' },
-        { x: 0.62, y: 0.5,  label: 'z' },
-        { x: 0.88, y: 0.5,  label: 'L' },
+      /* nodes: x*w, y*h, label */
+      var ns = [
+        {x:0.15,y:0.35,l:'x'}, {x:0.15,y:0.68,l:'w'},
+        {x:0.5, y:0.5, l:'×'},
+        {x:0.78,y:0.5, l:'L'},
       ];
-      var edges = [
-        [0, 3], [1, 3], [2, 3], [3, 4]
-      ];
+      var edges = [[0,2],[1,2],[2,3]];
 
-      var cycle = 3600;
-      var phase = (t % cycle) / cycle;
-      var isBack = phase > 0.5;
-      var subPhase = isBack ? (phase - 0.5) * 2 : phase * 2;
+      var cycle=2800, ph=(t%cycle)/cycle;
+      var isBack = ph>0.5;
+      var sub = isBack?(ph-0.5)*2:ph*2;
+      var front = sub * (edges.length+0.5) - 0.5;
 
-      /* draw edges */
-      edges.forEach(function(e, ei) {
-        var a = nodes[e[0]], b = nodes[e[1]];
-        var ax = a.x * w, ay = a.y * h;
-        var bx = b.x * w, by = b.y * h;
-
-        /* forward: left→right, backward: right→left */
-        var edgeIndex = isBack ? (edges.length - 1 - ei) : ei;
-        var relPos = subPhase * edges.length - edgeIndex;
-        var active = relPos >= 0 && relPos <= 1;
-        var alpha = active ? 0.9 : 0.12;
-        var color = isBack ? C.warm : C.signal;
+      edges.forEach(function(e,ei){
+        var a=ns[e[0]], b=ns[e[1]];
+        var ax=a.x*w, ay=a.y*h, bx=b.x*w, by=b.y*h;
+        var idx = isBack ? (edges.length-1-ei) : ei;
+        var active = front>=idx && front<idx+1;
+        var frac = active ? easeInOut(Math.max(0,Math.min(1,front-idx))) : 0;
+        var col = isBack ? P.amber : P.blue;
 
         ctx.beginPath();
-        ctx.strokeStyle = active ? color : 'rgba(86,88,80,0.4)';
-        ctx.lineWidth = active ? 1.5 : 0.8;
-
-        if (isBack) {
-          ctx.setLineDash([3, 3]);
-          ctx.moveTo(bx, by);
-          ctx.lineTo(ax, ay);
-        } else {
-          ctx.setLineDash([]);
-          ctx.moveTo(ax, ay);
-          ctx.lineTo(bx, by);
-        }
+        if(isBack) ctx.setLineDash([4,4]);
+        else ctx.setLineDash([]);
+        ctx.strokeStyle = active
+          ? col.replace(')',','+(0.3+0.7*frac)+')')
+                .replace('rgb(','rgba(').replace('#','')
+          : 'rgba(86,88,80,0.25)';
+        /* just use alpha directly */
+        ctx.strokeStyle = active ? col : 'rgba(86,88,80,0.25)';
+        ctx.globalAlpha = active ? (0.3+0.7*frac) : 0.25;
+        ctx.lineWidth = active ? 1.5 : 0.7;
+        if(isBack){ctx.moveTo(bx,by);ctx.lineTo(ax,ay);}
+        else{ctx.moveTo(ax,ay);ctx.lineTo(bx,by);}
         ctx.stroke();
         ctx.setLineDash([]);
+        ctx.globalAlpha=1;
 
-        /* moving particle */
-        if (active) {
-          var p = relPos;
-          var px, py;
-          if (isBack) {
-            px = bx + (ax - bx) * p;
-            py = by + (ay - by) * p;
-          } else {
-            px = ax + (bx - ax) * p;
-            py = ay + (by - ay) * p;
+        /* travelling particle */
+        if(active){
+          var p=easeInOut(Math.max(0,Math.min(1,front-idx)));
+          var px = isBack ? lerp(bx,ax,p) : lerp(ax,bx,p);
+          var py = isBack ? lerp(by,ay,p) : lerp(ay,by,p);
+          ctx.beginPath();
+          ctx.arc(px,py,3,0,Math.PI*2);
+          ctx.fillStyle=col; ctx.fill();
+        }
+      });
+
+      ns.forEach(function(n){
+        var nx=n.x*w, ny=n.y*h;
+        ctx.beginPath(); ctx.arc(nx,ny,9,0,Math.PI*2);
+        ctx.fillStyle=P.paper; ctx.fill();
+        ctx.strokeStyle='rgba(107,174,239,0.5)'; ctx.lineWidth=1;
+        ctx.stroke();
+        ctx.font='600 9px "IBM Plex Mono",monospace';
+        ctx.fillStyle=P.soft; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText(n.l,nx,ny);
+        ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      });
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle = isBack ? P.amber : P.blue;
+      ctx.fillText(isBack?'← grad':'fwd →',4,h-5);
+    },
+
+    /* linalg: matrix fill sweep */
+    matrix: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var N=5, pad=8;
+      var cellW=(w-pad*2)/N, cellH=(h-pad*2-14)/N;
+      var cycle=3200, ph=(t%cycle)/cycle;
+      /* sweep diagonally */
+      var front = ph*(N*2);
+
+      for(var r=0;r<N;r++){
+        for(var c=0;c<N;c++){
+          var diag=r+c;
+          var x=pad+c*cellW, y=pad+r*cellH;
+          var lit = diag<front && front<diag+1.6;
+          var done = diag<front-1;
+          var alpha = done ? 0.55 : (lit ? (0.2+0.7*easeInOut(Math.max(0,front-diag))) : 0.1);
+          /* cell bg */
+          ctx.fillStyle='rgba(107,174,239,'+alpha+')';
+          ctx.fillRect(x+1,y+1,cellW-2,cellH-2);
+          /* border */
+          ctx.strokeStyle='rgba(107,174,239,0.2)';
+          ctx.lineWidth=0.5;
+          ctx.strokeRect(x+0.5,y+0.5,cellW-1,cellH-1);
+        }
+      }
+
+      /* determinant label */
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint;
+      ctx.fillText('det(A)',4,h-5);
+      var val = (Math.sin(t*0.0008)*42+42).toFixed(1);
+      ctx.fillStyle=P.teal;
+      ctx.fillText(val,w-34,h-5);
+    },
+
+    /* cuda kernels: GPU thread grid lighting up */
+    gpu: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var cols=8, rows=7, pad=6;
+      var cw=(w-pad*2)/cols, ch=(h-pad*2-16)/rows;
+      var cycle=2400, ph=(t%cycle)/cycle;
+      var warpSize=4; /* warps light up together */
+
+      /* GFLOPS progress */
+      var gflops = 44 + (376-44)*easeInOut(Math.min(1,(t%8000)/5000));
+
+      for(var r=0;r<rows;r++){
+        for(var c=0;c<cols;c++){
+          var idx=r*cols+c;
+          var total=rows*cols;
+          var warp=Math.floor(idx/warpSize);
+          var totalWarps=Math.ceil(total/warpSize);
+          var warpFront = ph*totalWarps*1.3;
+          var isActive = warp < warpFront && warp >= warpFront-1;
+          var isDone   = warp < warpFront-1;
+          var frac = isActive ? easeInOut(Math.max(0,warpFront-warp)) : (isDone?1:0);
+
+          var x=pad+c*cw, y=pad+r*ch;
+          /* thread block */
+          ctx.fillStyle='rgba(107,174,239,'+(0.08+frac*0.7)+')';
+          ctx.fillRect(x+1,y+1,cw-2,ch-2);
+          if(isActive){
+            ctx.strokeStyle='rgba(107,174,239,0.9)';
+            ctx.lineWidth=0.8;
+            ctx.strokeRect(x+0.5,y+0.5,cw-1,ch-1);
           }
-          ctx.beginPath();
-          ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = color;
-          ctx.fill();
         }
-      });
+      }
 
-      /* draw nodes */
-      nodes.forEach(function(n) {
-        var nx = n.x * w, ny = n.y * h;
-        ctx.beginPath();
-        ctx.arc(nx, ny, 6, 0, Math.PI * 2);
-        ctx.fillStyle = C.band;
-        ctx.fill();
-        ctx.strokeStyle = C.faint;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.font = '600 8px "IBM Plex Mono", monospace';
-        ctx.fillStyle = C.soft;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(n.label, nx, ny);
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'alphabetic';
-      });
-
-      /* label */
-      ctx.font = '500 7px "IBM Plex Mono", monospace';
-      ctx.fillStyle = isBack ? C.warm : C.signal;
-      ctx.fillText(isBack ? '← backward' : 'forward →', 2, h - 4);
+      ctx.font='600 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint;
+      ctx.fillText('GFLOP/s',4,h-5);
+      ctx.fillStyle=P.blue;
+      ctx.fillText(Math.round(gflops),w-26,h-5);
     },
 
-    /* neural — single neuron with animated weights */
-    neural: function(ctx, w, h, t) {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+    /* Rocky: animated waveform → token pipeline */
+    audio: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var inputs = [0.2, 0.38, 0.56, 0.74];
-      var neuronX = w * 0.65, neuronY = h * 0.5;
-      var outputX = w * 0.9;
+      var mid=h*0.46, bars=24, barW=(w-12)/bars, gap=1;
+      /* waveform */
+      for(var i=0;i<bars;i++){
+        var phase = i/bars*Math.PI*3 + t*0.004;
+        var amp = 0.15 + 0.45*Math.abs(Math.sin(phase));
+        var barH = amp*(h*0.42);
+        var x=6+i*(barW+gap);
+        var alpha = 0.4+0.5*amp;
+        ctx.fillStyle='rgba(183,163,242,'+alpha+')';
+        ctx.fillRect(x, mid-barH, barW-gap, barH*2);
+      }
 
-      /* draw inputs */
-      inputs.forEach(function(iy, i) {
-        var ix = w * 0.1, ipy = iy * h;
-        var weight = 0.4 + 0.3 * Math.sin(t * 0.001 + i * 1.3);
-        var alpha = 0.2 + 0.6 * weight;
-
-        /* weight line */
-        ctx.beginPath();
-        ctx.strokeStyle = 'rgba(107,174,239,' + alpha + ')';
-        ctx.lineWidth = 0.8 + weight;
-        ctx.moveTo(ix + 5, ipy);
-        ctx.lineTo(neuronX - 10, neuronY);
-        ctx.stroke();
-
-        /* input dot */
-        ctx.beginPath();
-        ctx.arc(ix, ipy, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = C.band;
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(107,174,239,0.5)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        /* weight label */
-        ctx.font = '500 6px "IBM Plex Mono", monospace';
-        ctx.fillStyle = C.faint;
-        ctx.fillText('w' + (i+1), ix - 2, ipy - 5);
-      });
-
-      /* neuron body */
-      ctx.beginPath();
-      ctx.arc(neuronX, neuronY, 10, 0, Math.PI * 2);
-      ctx.fillStyle = C.band;
-      ctx.fill();
-      var glow = 0.6 + 0.4 * Math.sin(t * 0.002);
-      ctx.strokeStyle = 'rgba(107,174,239,' + glow + ')';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      /* sigma symbol */
-      ctx.font = '600 9px serif';
-      ctx.fillStyle = C.signal;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('σ', neuronX, neuronY);
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'alphabetic';
-
-      /* output */
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(107,174,239,0.7)';
-      ctx.lineWidth = 1.5;
-      ctx.moveTo(neuronX + 10, neuronY);
-      ctx.lineTo(outputX - 4, neuronY);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(outputX, neuronY, 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = C.signal;
-      ctx.fill();
-
-      ctx.font = '500 7px "IBM Plex Mono", monospace';
-      ctx.fillStyle = C.faint;
-      ctx.fillText('ŷ', outputX - 3, neuronY - 6);
-      ctx.fillText('weights', 2, h - 4);
+      /* "→ ISL" label */
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('whisper',4,h-5);
+      ctx.fillStyle=P.purple; ctx.fillText('→ ISL',w-30,h-5);
     },
 
-    /* graph — knowledge graph with pulsing nodes */
-    graph: function(ctx, w, h, t) {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = C.paper; ctx.fillRect(0, 0, w, h);
+    /* Athena: search ping expanding */
+    search: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var nodes = [
-        { x: 0.5,  y: 0.22, r: 6 },
-        { x: 0.22, y: 0.5,  r: 5 },
-        { x: 0.78, y: 0.5,  r: 5 },
-        { x: 0.35, y: 0.78, r: 4 },
-        { x: 0.65, y: 0.78, r: 4 },
-        { x: 0.5,  y: 0.5,  r: 7 },  /* hub */
-      ];
-      var edges = [
-        [5, 0], [5, 1], [5, 2], [5, 3], [5, 4],
-        [0, 2], [1, 3],
-      ];
+      var cx=w*0.5, cy=h*0.46;
+      var cycle=2200, ph=(t%cycle)/cycle;
 
-      /* draw edges first */
-      var cycle = 4000;
-      var activePair = Math.floor((t % cycle) / (cycle / edges.length));
-      edges.forEach(function(e, ei) {
-        var a = nodes[e[0]], b = nodes[e[1]];
-        var active = ei === activePair;
+      /* expanding rings */
+      for(var ring=0;ring<3;ring++){
+        var rph = (ph + ring/3) % 1;
+        var r = rph * Math.min(w,h)*0.46;
+        var alpha = (1-rph)*0.5;
         ctx.beginPath();
-        ctx.strokeStyle = active ? C.teal : 'rgba(86,88,80,0.35)';
-        ctx.lineWidth = active ? 1.5 : 0.8;
-        ctx.moveTo(a.x * w, a.y * h);
-        ctx.lineTo(b.x * w, b.y * h);
+        ctx.arc(cx,cy,r,0,Math.PI*2);
+        ctx.strokeStyle='rgba(107,174,239,'+alpha+')';
+        ctx.lineWidth=1.2;
         ctx.stroke();
+      }
 
-        /* travelling pulse */
-        if (active) {
-          var p = ((t % (cycle / edges.length)) / (cycle / edges.length));
-          var px = (a.x + (b.x - a.x) * p) * w;
-          var py = (a.y + (b.y - a.y) * p) * h;
-          ctx.beginPath();
-          ctx.arc(px, py, 2, 0, Math.PI * 2);
-          ctx.fillStyle = C.teal;
-          ctx.fill();
-        }
-      });
-
-      /* draw nodes */
-      nodes.forEach(function(n, ni) {
-        var nx = n.x * w, ny = n.y * h;
-        var pulse = 0.5 + 0.5 * Math.sin(t * 0.002 + ni * 1.1);
-        var isHub = ni === 5;
+      /* BM25 result dots */
+      var docPos = [
+        {x:0.2,y:0.25},{x:0.8,y:0.2},{x:0.15,y:0.72},
+        {x:0.82,y:0.75},{x:0.5,y:0.18},
+      ];
+      docPos.forEach(function(d,i){
+        var dx=d.x*w, dy=d.y*h;
+        var dist=Math.sqrt((dx-cx)*(dx-cx)+(dy-cy)*(dy-cy));
+        var normDist=dist/Math.min(w,h)*2;
+        var lit = ph > normDist*0.45;
         ctx.beginPath();
-        ctx.arc(nx, ny, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = C.band;
+        ctx.arc(dx,dy, lit?3.5:2.5, 0, Math.PI*2);
+        ctx.fillStyle= lit ? P.blue : 'rgba(107,174,239,0.2)';
         ctx.fill();
-        ctx.strokeStyle = isHub ? C.teal : ('rgba(87,199,176,' + (0.4 + 0.4 * pulse) + ')');
-        ctx.lineWidth = isHub ? 2 : 1;
-        ctx.stroke();
-
-        if (isHub) {
-          ctx.font = '500 6px "IBM Plex Mono", monospace';
-          ctx.fillStyle = C.teal;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('hub', nx, ny);
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
+        if(lit){
+          ctx.beginPath();
+          ctx.moveTo(cx,cy); ctx.lineTo(dx,dy);
+          ctx.strokeStyle='rgba(107,174,239,0.25)';
+          ctx.lineWidth=0.6; ctx.stroke();
         }
       });
 
-      ctx.font = '500 7px "IBM Plex Mono", monospace';
-      ctx.fillStyle = C.faint;
-      ctx.fillText('graph RAG', 2, h - 4);
+      /* center crosshair */
+      ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2);
+      ctx.fillStyle=P.blue; ctx.fill();
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('BM25+LLM',4,h-5);
+    },
+
+    /* maze-runner: Q-learning agent walking the maze */
+    maze: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var N=7, pad=5;
+      var cw=(w-pad*2)/N, ch=(h-pad*2-14)/N;
+
+      /* static walls — hand-picked to look like a maze */
+      var hWalls=[ /* row,col = wall below cell[r][c] */
+        [0,1],[0,3],[0,5],
+        [1,0],[1,2],[1,4],[1,6],
+        [2,1],[2,3],[2,5],
+        [3,0],[3,2],[3,4],
+        [4,1],[4,3],[4,5],
+        [5,0],[5,2],[5,4],[5,6],
+      ];
+      var vWalls=[ /* row,col = wall right of cell[r][c] */
+        [0,0],[0,2],[0,4],
+        [1,1],[1,3],[1,5],
+        [2,0],[2,2],[2,4],[2,6],
+        [3,1],[3,3],[3,5],
+        [4,0],[4,2],[4,4],
+        [5,1],[5,3],[5,5],
+      ];
+
+      /* outer border */
+      ctx.strokeStyle='rgba(86,88,80,0.6)'; ctx.lineWidth=1;
+      ctx.strokeRect(pad,pad,N*cw,N*ch);
+
+      /* walls */
+      ctx.strokeStyle='rgba(86,88,80,0.45)'; ctx.lineWidth=0.8;
+      hWalls.forEach(function(w2){
+        var r=w2[0],c=w2[1];
+        var x=pad+c*cw, y=pad+(r+1)*ch;
+        ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+cw,y); ctx.stroke();
+      });
+      vWalls.forEach(function(w2){
+        var r=w2[0],c=w2[1];
+        var x=pad+(c+1)*cw, y=pad+r*ch;
+        ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y+ch); ctx.stroke();
+      });
+
+      /* goal cell */
+      ctx.fillStyle='rgba(127,199,122,0.18)';
+      ctx.fillRect(pad+(N-1)*cw+1, pad+(N-1)*ch+1, cw-2, ch-2);
+      ctx.fillStyle=P.green; ctx.font='500 8px "IBM Plex Mono",monospace';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText('G', pad+(N-0.5)*cw, pad+(N-0.5)*ch);
+      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+
+      /* agent path: snake through the maze */
+      var path=[
+        [0,0],[0,1],[0,2],[1,2],[2,2],[2,3],[2,4],[3,4],[4,4],[4,5],[4,6],[5,6],[6,6]
+      ];
+      var stepDur=400;
+      var totalDur=path.length*stepDur+600;
+      var elapsed=t%totalDur;
+      var stepF=elapsed/stepDur;
+      var stepI=Math.min(path.length-1, Math.floor(stepF));
+      var stepFrac=stepF-stepI;
+
+      /* draw trail */
+      for(var i=0;i<stepI;i++){
+        var cell=path[i];
+        var alpha=0.12+0.12*(i/stepI);
+        ctx.fillStyle='rgba(107,174,239,'+alpha+')';
+        ctx.fillRect(pad+cell[1]*cw+1, pad+cell[0]*ch+1, cw-2, ch-2);
+      }
+
+      /* draw agent */
+      var cur=path[Math.min(stepI,path.length-1)];
+      var nxt=path[Math.min(stepI+1,path.length-1)];
+      var agentX=pad+(cur[1]+(nxt[1]-cur[1])*easeInOut(stepFrac))*cw+cw/2;
+      var agentY=pad+(cur[0]+(nxt[0]-cur[0])*easeInOut(stepFrac))*ch+ch/2;
+      ctx.beginPath(); ctx.arc(agentX,agentY,Math.min(cw,ch)*0.28,0,Math.PI*2);
+      ctx.fillStyle=P.blue; ctx.fill();
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('Q-agent',4,h-5);
+    },
+
+    /* minimax: tic-tac-toe board with move sequence */
+    game: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var pad=10, brd=Math.min(w,h)-pad*2-12;
+      var ox=(w-brd)/2, oy=(h-brd-12)/2 + 2;
+      var cell=brd/3;
+
+      /* grid lines */
+      ctx.strokeStyle='rgba(86,88,80,0.6)'; ctx.lineWidth=1;
+      for(var i=1;i<3;i++){
+        ctx.beginPath(); ctx.moveTo(ox+i*cell,oy); ctx.lineTo(ox+i*cell,oy+brd); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(ox,oy+i*cell); ctx.lineTo(ox+brd,oy+i*cell); ctx.stroke();
+      }
+
+      /* minimax game sequence */
+      var moves=[
+        {r:1,c:1,p:'X'},{r:0,c:0,p:'O'},{r:0,c:2,p:'X'},
+        {r:2,c:0,p:'O'},{r:0,c:1,p:'X'},{r:2,c:2,p:'O'},
+        {r:2,c:1,p:'X'},
+      ];
+      var moveDur=700, totalDur=moves.length*moveDur+1200;
+      var elapsed=t%totalDur;
+      var visible=Math.min(moves.length, Math.floor(elapsed/moveDur));
+
+      for(var i=0;i<visible;i++){
+        var m=moves[i];
+        var cx=ox+m.c*cell+cell/2, cy=oy+m.r*cell+cell/2;
+        var isNew=(i===visible-1) && elapsed%moveDur < moveDur*0.5;
+        ctx.globalAlpha = isNew ? 0.5+0.5*(elapsed%moveDur)/(moveDur*0.5) : 1;
+        if(m.p==='X'){
+          var s=cell*0.28;
+          ctx.beginPath();
+          ctx.moveTo(cx-s,cy-s); ctx.lineTo(cx+s,cy+s);
+          ctx.moveTo(cx+s,cy-s); ctx.lineTo(cx-s,cy+s);
+          ctx.strokeStyle=P.blue; ctx.lineWidth=2; ctx.stroke();
+        } else {
+          ctx.beginPath(); ctx.arc(cx,cy,cell*0.28,0,Math.PI*2);
+          ctx.strokeStyle=P.amber; ctx.lineWidth=2; ctx.stroke();
+        }
+        ctx.globalAlpha=1;
+      }
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('minimax',4,h-5);
+      ctx.fillStyle=P.amber; ctx.fillText('depth=9',w-38,h-5);
+    },
+
+    /* http-server: HTTP request/response packet animation */
+    server: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      /* server rack */
+      var rackX=w*0.62, rackY=h*0.12, rackW=w*0.3, rackH=h*0.72;
+      ctx.strokeStyle='rgba(86,88,80,0.5)'; ctx.lineWidth=0.8;
+      ctx.strokeRect(rackX,rackY,rackW,rackH);
+      /* rack slots */
+      var slots=4;
+      for(var s=0;s<slots;s++){
+        var sy=rackY+6+(s*(rackH-12)/slots);
+        var sh=(rackH-12)/slots-4;
+        ctx.fillStyle='rgba(86,88,80,0.18)';
+        ctx.fillRect(rackX+4,sy,rackW-8,sh);
+        /* blink lights */
+        var blink = Math.sin(t*0.003+s*1.7)>0;
+        ctx.beginPath();
+        ctx.arc(rackX+rackW-10, sy+sh/2, 2, 0, Math.PI*2);
+        ctx.fillStyle = blink ? P.blue : 'rgba(107,174,239,0.15)';
+        ctx.fill();
+      }
+
+      /* client box */
+      var clientX=w*0.05, clientY=h*0.32, clientW=w*0.22, clientH=h*0.32;
+      ctx.fillStyle='rgba(86,88,80,0.15)'; ctx.fillRect(clientX,clientY,clientW,clientH);
+      ctx.strokeStyle='rgba(86,88,80,0.4)'; ctx.lineWidth=0.8;
+      ctx.strokeRect(clientX,clientY,clientW,clientH);
+      ctx.font='500 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText('client',clientX+clientW/2,clientY+clientH/2);
+      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+
+      /* packet animation */
+      var cycle=2000, ph=(t%cycle)/cycle;
+      var isReq=ph<0.5;
+      var pFrac = isReq ? ph*2 : (ph-0.5)*2;
+      var frac=easeInOut(pFrac);
+      var startX = isReq ? clientX+clientW : rackX;
+      var endX   = isReq ? rackX           : clientX+clientW;
+      var py=h*0.48;
+      var px=lerp(startX,endX,frac);
+
+      /* wire */
+      ctx.beginPath();
+      ctx.setLineDash([3,4]);
+      ctx.strokeStyle='rgba(86,88,80,0.3)'; ctx.lineWidth=0.8;
+      ctx.moveTo(clientX+clientW,py); ctx.lineTo(rackX,py);
+      ctx.stroke(); ctx.setLineDash([]);
+
+      /* packet */
+      var col=isReq?P.blue:P.green;
+      ctx.fillStyle=col;
+      ctx.fillRect(px-8,py-4,16,8);
+      ctx.font='500 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.paper; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(isReq?'GET':'200',px,py);
+      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('raw socket',4,h-5);
+    },
+
+    /* FileManager: directory tree populating */
+    files: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var entries=[
+        {depth:0,name:'/home',type:'dir'},
+        {depth:1,name:'src',type:'dir'},
+        {depth:2,name:'main.c',type:'file'},
+        {depth:2,name:'fs.c',type:'file'},
+        {depth:1,name:'tests',type:'dir'},
+        {depth:2,name:'test.c',type:'file'},
+        {depth:1,name:'Makefile',type:'file'},
+      ];
+
+      var lh=12, startY=8, indent=10, pad=6;
+      var itemDur=320, totalDur=entries.length*itemDur+800;
+      var elapsed=t%totalDur;
+      var visible=Math.min(entries.length,Math.floor(elapsed/itemDur));
+      var partial=(elapsed%itemDur)/itemDur;
+
+      for(var i=0;i<visible;i++){
+        var e=entries[i];
+        var x=pad+e.depth*indent, y=startY+i*lh;
+        var isNew=(i===visible-1);
+        var alpha=isNew?easeInOut(partial):1;
+        ctx.globalAlpha=alpha;
+
+        /* tree connector */
+        if(e.depth>0){
+          ctx.strokeStyle='rgba(86,88,80,0.4)'; ctx.lineWidth=0.6;
+          ctx.beginPath();
+          ctx.moveTo(x-indent/2,y-lh/2); ctx.lineTo(x-indent/2,y+1);
+          ctx.lineTo(x,y+1); ctx.stroke();
+        }
+        ctx.font=(e.type==='dir'?'600':'400')+' 8px "IBM Plex Mono",monospace';
+        ctx.fillStyle=e.type==='dir'?P.amber:P.soft;
+        ctx.fillText((e.type==='dir'?'📁 ':' ▸ ')+e.name, x+2, y+lh*0.7);
+        ctx.globalAlpha=1;
+      }
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('walk()',4,h-5);
     },
   };
 
-  /* Observe thumbnails and start rendering only when visible */
-  if (!('IntersectionObserver' in window) || reduceMotion) {
-    /* Fallback: render once, static */
-    document.querySelectorAll('.post-thumb').forEach(function(thumb) {
-      var key = thumb.dataset.thumb;
-      var canvas = thumb.querySelector('canvas');
-      if (!canvas || !renderers[key]) return;
-      var ctx = canvas.getContext('2d');
-      renderers[key](ctx, 80, 80, 0);
-      thumb.classList.add('rendered');
-    });
-    return;
-  }
+  /* ================================================================
+     BLOG THUMBNAIL RENDERERS — 2× resolution, 160×160 logical
+  ================================================================ */
+  var blogRenderers = {
 
-  var activeRafs = new Map();
+    /* CUDA matmul: heatmap + perf curve */
+    matmul: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
 
-  var thumbObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      var thumb = entry.target;
-      var key = thumb.dataset.thumb;
-      var canvas = thumb.querySelector('canvas');
-      if (!canvas || !renderers[key]) return;
-
-      if (entry.isIntersecting) {
-        if (activeRafs.has(thumb)) return;
-        var ctx = canvas.getContext('2d');
-        var start = null;
-        var raf;
-        function frame(ts) {
-          if (!start) start = ts;
-          var t = ts - start;
-          renderers[key](ctx, 80, 80, t);
-          thumb.classList.add('rendered');
-          raf = requestAnimationFrame(frame);
-          activeRafs.set(thumb, raf);
-        }
-        raf = requestAnimationFrame(frame);
-        activeRafs.set(thumb, raf);
-      } else {
-        if (activeRafs.has(thumb)) {
-          cancelAnimationFrame(activeRafs.get(thumb));
-          activeRafs.delete(thumb);
+      /* heatmap tiles */
+      var cols=10, rows=10;
+      var cw=w/cols, ch=(h-16)/rows;
+      for(var r=0;r<rows;r++){
+        for(var c=0;c<cols;c++){
+          var diag=(r+c)/(cols+rows-2);
+          var wavePh=(t*0.0008)+diag*Math.PI;
+          var v=0.1+0.5*(0.5+0.5*Math.sin(wavePh));
+          ctx.fillStyle='rgba(107,174,239,'+v+')';
+          ctx.fillRect(c*cw+0.5,r*ch+0.5,cw-1,ch-1);
         }
       }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px 40px 0px' });
 
-  document.querySelectorAll('.post-thumb').forEach(function(thumb) {
-    thumbObserver.observe(thumb);
-  });
+      /* axes */
+      var axL=10, axB=h-20, axR=w-6, axT=12;
+      ctx.strokeStyle='rgba(86,88,80,0.6)'; ctx.lineWidth=0.8;
+      ctx.beginPath(); ctx.moveTo(axL,axT); ctx.lineTo(axL,axB); ctx.lineTo(axR,axB); ctx.stroke();
+
+      /* perf curve */
+      var pts=[[0,0.85],[0.18,0.75],[0.38,0.55],[0.58,0.3],[0.82,0.12],[1,0.04]];
+      var progress=Math.min(1,(t%4000)/2800);
+      ctx.beginPath(); ctx.strokeStyle=P.blue; ctx.lineWidth=2.5;
+      ctx.lineCap='round'; ctx.lineJoin='round';
+      var started=false;
+      for(var i=0;i<pts.length-1;i++){
+        var segS=i/(pts.length-1), segE=(i+1)/(pts.length-1);
+        if(progress<segS) break;
+        var sp=Math.min(1,(progress-segS)/(segE-segS));
+        var x0=axL+(axR-axL)*pts[i][0], y0=axT+(axB-axT)*pts[i][1];
+        var x1=axL+(axR-axL)*(pts[i][0]+(pts[i+1][0]-pts[i][0])*sp);
+        var y1=axT+(axB-axT)*(pts[i][1]+(pts[i+1][1]-pts[i][1])*sp);
+        if(!started){ctx.moveTo(x0,y0);started=true;}
+        ctx.lineTo(x1,y1);
+      }
+      ctx.stroke();
+
+      /* dot on curve */
+      var pi=Math.min(pts.length-2,Math.floor(progress*(pts.length-1)));
+      var pf=progress*(pts.length-1)-pi;
+      var dnx=pts[pi][0]+(pts[Math.min(pi+1,pts.length-1)][0]-pts[pi][0])*pf;
+      var dny=pts[pi][1]+(pts[Math.min(pi+1,pts.length-1)][1]-pts[pi][1])*pf;
+      var dx2=axL+(axR-axL)*dnx, dy2=axT+(axB-axT)*dny;
+      ctx.beginPath(); ctx.arc(dx2,dy2,4,0,Math.PI*2);
+      ctx.fillStyle=P.blue; ctx.fill();
+      ctx.beginPath(); ctx.arc(dx2,dy2,7,0,Math.PI*2);
+      ctx.strokeStyle='rgba(107,174,239,0.35)'; ctx.lineWidth=1.5; ctx.stroke();
+
+      /* labels */
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('44',axL+1,axB-2);
+      ctx.fillStyle=P.blue; ctx.fillText('376',axR-20,axT+10);
+      ctx.fillStyle=P.soft; ctx.fillText('GFLOP/s',axL+1,h-4);
+    },
+
+    /* tinyGPT: deep net forward pass */
+    tinygpt: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
+
+      var layers=[3,5,6,5,3];
+      var lx=[0.12,0.3,0.5,0.7,0.88];
+      var nodes=layers.map(function(n,l){
+        var arr=[];
+        for(var i=0;i<n;i++) arr.push([lx[l]*w,(0.5+(i-(n-1)/2)*0.175)*h]);
+        return arr;
+      });
+
+      var cycle=3000, phase=(t%cycle)/cycle;
+      var front=phase*(layers.length+0.5)-0.5;
+
+      /* connections */
+      for(var l=0;l<layers.length-1;l++){
+        for(var a=0;a<nodes[l].length;a++){
+          for(var b=0;b<nodes[l+1].length;b++){
+            var lit=front>=l&&front<l+1;
+            var frac=lit?easeInOut(Math.max(0,Math.min(1,front-l))):0;
+            ctx.beginPath();
+            ctx.strokeStyle=lit?'rgba(107,174,239,'+(0.08+0.55*frac)+')':'rgba(86,88,80,0.12)';
+            ctx.lineWidth=lit?0.9:0.5;
+            ctx.moveTo(nodes[l][a][0],nodes[l][a][1]);
+            ctx.lineTo(nodes[l+1][b][0],nodes[l+1][b][1]);
+            ctx.stroke();
+          }
+        }
+      }
+
+      /* nodes */
+      for(var l=0;l<layers.length;l++){
+        for(var ni=0;ni<nodes[l].length;ni++){
+          var lit=front>=l-0.4&&front<l+0.8;
+          var frac2=lit?easeInOut(Math.max(0,Math.min(1,front-l+0.4))):0;
+          var r=lit?5.5:3.5;
+          if(lit){
+            ctx.beginPath(); ctx.arc(nodes[l][ni][0],nodes[l][ni][1],r+5,0,Math.PI*2);
+            ctx.fillStyle='rgba(107,174,239,0.1)'; ctx.fill();
+          }
+          ctx.beginPath(); ctx.arc(nodes[l][ni][0],nodes[l][ni][1],r,0,Math.PI*2);
+          ctx.fillStyle=lit?P.blue:P.paper; ctx.fill();
+          ctx.strokeStyle=lit?P.blue:'rgba(107,174,239,0.3)'; ctx.lineWidth=1; ctx.stroke();
+        }
+      }
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('30M params · fwd pass',4,h-4);
+    },
+
+    /* Backprop: chain rule flow diagram */
+    backprop: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
+
+      var ns=[
+        {x:0.1, y:0.5, l:'x'},
+        {x:0.35,y:0.28,l:'w'},
+        {x:0.35,y:0.72,l:'b'},
+        {x:0.62,y:0.5, l:'z'},
+        {x:0.88,y:0.5, l:'L'},
+      ];
+      var edges=[[0,3],[1,3],[2,3],[3,4]];
+      var cycle=3800, ph=(t%cycle)/cycle;
+      var isBack=ph>0.5;
+      var sub=isBack?(ph-0.5)*2:ph*2;
+      var front=sub*(edges.length+0.5)-0.5;
+
+      edges.forEach(function(e,ei){
+        var a=ns[e[0]],b=ns[e[1]];
+        var ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h;
+        var idx=isBack?(edges.length-1-ei):ei;
+        var active=front>=idx&&front<idx+1;
+        var frac=active?easeInOut(Math.max(0,Math.min(1,front-idx))):0;
+        var col=isBack?P.amber:P.blue;
+        if(isBack) ctx.setLineDash([4,5]);
+        ctx.beginPath();
+        ctx.globalAlpha=active?(0.25+0.75*frac):0.18;
+        ctx.strokeStyle=active?col:'rgba(86,88,80,0.5)';
+        ctx.lineWidth=active?2:0.8;
+        if(isBack){ctx.moveTo(bx,by);ctx.lineTo(ax,ay);}
+        else{ctx.moveTo(ax,ay);ctx.lineTo(bx,by);}
+        ctx.stroke();
+        ctx.setLineDash([]); ctx.globalAlpha=1;
+        if(active){
+          var p2=easeInOut(Math.max(0,Math.min(1,front-idx)));
+          var ppx=isBack?lerp(bx,ax,p2):lerp(ax,bx,p2);
+          var ppy=isBack?lerp(by,ay,p2):lerp(ay,by,p2);
+          ctx.beginPath(); ctx.arc(ppx,ppy,3.5,0,Math.PI*2);
+          ctx.fillStyle=col; ctx.fill();
+          ctx.beginPath(); ctx.arc(ppx,ppy,6,0,Math.PI*2);
+          ctx.strokeStyle=col; ctx.lineWidth=1; ctx.globalAlpha=0.3; ctx.stroke();
+          ctx.globalAlpha=1;
+        }
+      });
+
+      ns.forEach(function(n){
+        var nx=n.x*w,ny=n.y*h;
+        ctx.beginPath(); ctx.arc(nx,ny,10,0,Math.PI*2);
+        ctx.fillStyle=P.band; ctx.fill();
+        ctx.strokeStyle='rgba(107,174,239,0.4)'; ctx.lineWidth=1; ctx.stroke();
+        ctx.font='600 9px "IBM Plex Mono",monospace';
+        ctx.fillStyle=P.soft; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText(n.l,nx,ny);
+        ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      });
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=isBack?P.amber:P.blue;
+      ctx.fillText(isBack?'← backward pass':'forward pass →',4,h-4);
+    },
+
+    /* neural: animated neuron with weight pulses */
+    neural: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
+
+      var inputs=[0.2,0.36,0.52,0.68];
+      var nx=w*0.62, ny=h*0.48, outX=w*0.88;
+
+      inputs.forEach(function(iy,i){
+        var ix=w*0.1, ipy=iy*h;
+        var w2=0.35+0.4*Math.sin(t*0.0014+i*1.4);
+        var alpha=0.15+0.75*w2;
+        ctx.beginPath();
+        ctx.strokeStyle='rgba(107,174,239,'+alpha+')';
+        ctx.lineWidth=0.8+w2*1.5;
+        ctx.moveTo(ix+5,ipy); ctx.lineTo(nx-12,ny); ctx.stroke();
+        ctx.beginPath(); ctx.arc(ix,ipy,4,0,Math.PI*2);
+        ctx.fillStyle=P.band; ctx.fill();
+        ctx.strokeStyle='rgba(107,174,239,0.5)'; ctx.lineWidth=1; ctx.stroke();
+        ctx.font='500 7px "IBM Plex Mono",monospace';
+        ctx.fillStyle=P.faint;
+        ctx.fillText('x'+i, ix-4,ipy-6);
+      });
+
+      var glow=0.5+0.4*Math.sin(t*0.002);
+      ctx.beginPath(); ctx.arc(nx,ny,13,0,Math.PI*2);
+      ctx.fillStyle='rgba(107,174,239,0.08)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(nx,ny,10,0,Math.PI*2);
+      ctx.fillStyle=P.band; ctx.fill();
+      ctx.strokeStyle='rgba(107,174,239,'+glow+')'; ctx.lineWidth=1.8; ctx.stroke();
+      ctx.font='600 10px serif';
+      ctx.fillStyle=P.blue; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText('σ',nx,ny);
+      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+
+      ctx.beginPath();
+      ctx.strokeStyle='rgba(107,174,239,0.7)'; ctx.lineWidth=1.5;
+      ctx.moveTo(nx+10,ny); ctx.lineTo(outX-5,ny); ctx.stroke();
+      ctx.beginPath(); ctx.arc(outX,ny,4,0,Math.PI*2);
+      ctx.fillStyle=P.blue; ctx.fill();
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('one neuron · one param',4,h-4);
+    },
+
+    /* graph: knowledge graph traversal */
+    graph: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
+
+      var ns=[
+        {x:0.5, y:0.22,r:7,l:'hub'},
+        {x:0.2, y:0.48,r:5},
+        {x:0.8, y:0.48,r:5},
+        {x:0.32,y:0.78,r:4},
+        {x:0.68,y:0.78,r:4},
+        {x:0.5, y:0.56,r:6},
+        {x:0.14,y:0.25,r:3},
+        {x:0.86,y:0.25,r:3},
+      ];
+      var edges=[[0,1],[0,2],[0,5],[1,3],[2,4],[3,5],[4,5],[0,6],[0,7]];
+      var cycle=5000, activeEdge=Math.floor((t%cycle)/(cycle/edges.length));
+
+      edges.forEach(function(e,ei){
+        var a=ns[e[0]],b=ns[e[1]];
+        var active=ei===activeEdge;
+        ctx.beginPath();
+        ctx.strokeStyle=active?P.teal:'rgba(86,88,80,0.3)';
+        ctx.lineWidth=active?1.8:0.7;
+        ctx.moveTo(a.x*w,a.y*h); ctx.lineTo(b.x*w,b.y*h); ctx.stroke();
+        if(active){
+          var p2=(t%( cycle/edges.length))/(cycle/edges.length);
+          ctx.beginPath();
+          ctx.arc(lerp(a.x,b.x,p2)*w, lerp(a.y,b.y,p2)*h, 2.5,0,Math.PI*2);
+          ctx.fillStyle=P.teal; ctx.fill();
+        }
+      });
+
+      ns.forEach(function(n,ni){
+        var px=n.x*w, py=n.y*h;
+        var pulse=0.4+0.4*Math.sin(t*0.002+ni*1.2);
+        var isHub=ni===0;
+        if(isHub){
+          ctx.beginPath(); ctx.arc(px,py,n.r+6,0,Math.PI*2);
+          ctx.fillStyle='rgba(87,199,176,0.1)'; ctx.fill();
+        }
+        ctx.beginPath(); ctx.arc(px,py,n.r,0,Math.PI*2);
+        ctx.fillStyle=P.band; ctx.fill();
+        ctx.strokeStyle=isHub?P.teal:'rgba(87,199,176,'+(0.35+0.35*pulse)+')';
+        ctx.lineWidth=isHub?2:1; ctx.stroke();
+        if(n.l){
+          ctx.font='500 7px "IBM Plex Mono",monospace';
+          ctx.fillStyle=P.teal; ctx.textAlign='center'; ctx.textBaseline='middle';
+          ctx.fillText(n.l,px,py);
+          ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+        }
+      });
+
+      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle=P.faint; ctx.fillText('graph RAG · BFS',4,h-4);
+    },
+  };
+
+  /* ================================================================
+     DPR-AWARE CANVAS SETUP
+  ================================================================ */
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setupCanvas(canvas, logicalW, logicalH) {
+    canvas.width  = logicalW * dpr;
+    canvas.height = logicalH * dpr;
+    canvas.style.width  = logicalW + 'px';
+    canvas.style.height = logicalH + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return ctx;
+  }
+
+  /* ================================================================
+     TILE CANVASES — each tile's canvas fills the tile-canvas-wrap
+  ================================================================ */
+  var tileRafs = new Map();
+
+  function startTile(tile) {
+    if (tileRafs.has(tile)) return;
+    var canvas = tile.querySelector('canvas');
+    if (!canvas) return;
+    var animKey = tile.dataset.anim;
+    var renderer = tileRenderers[animKey];
+    if (!renderer) return;
+
+    /* size the canvas to match the wrapper */
+    var wrap = canvas.parentElement;
+    var side = wrap.clientWidth || 108;
+    var ctx = setupCanvas(canvas, side, side);
+
+    var start = null;
+    function frame(ts) {
+      if (!start) start = ts;
+      renderer(ctx, side, side, ts - start);
+      tileRafs.set(tile, requestAnimationFrame(frame));
+    }
+    tileRafs.set(tile, requestAnimationFrame(frame));
+  }
+
+  function stopTile(tile) {
+    if (tileRafs.has(tile)) {
+      cancelAnimationFrame(tileRafs.get(tile));
+      tileRafs.delete(tile);
+    }
+  }
+
+  if (rm) {
+    /* reduced motion: render one static frame */
+    document.querySelectorAll('.proj-tile').forEach(function(tile) {
+      var canvas = tile.querySelector('canvas');
+      if (!canvas) return;
+      var renderer = tileRenderers[tile.dataset.anim];
+      if (!renderer) return;
+      var wrap = canvas.parentElement;
+      var side = wrap.clientWidth || 108;
+      var ctx = setupCanvas(canvas, side, side);
+      renderer(ctx, side, side, 800);
+    });
+  } else {
+    /* Observe tiles — start animation when visible */
+    if ('IntersectionObserver' in window) {
+      var tileObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) startTile(entry.target);
+          else stopTile(entry.target);
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.proj-tile').forEach(function(tile) {
+        tileObserver.observe(tile);
+      });
+    } else {
+      document.querySelectorAll('.proj-tile').forEach(startTile);
+    }
+  }
+
+  /* ================================================================
+     BLOG THUMBNAIL CANVASES — 160×160 logical, 2× physical
+  ================================================================ */
+  var blogRafs = new Map();
+
+  function startBlog(thumb) {
+    if (blogRafs.has(thumb)) return;
+    var canvas = thumb.querySelector('canvas');
+    if (!canvas) return;
+    var renderer = blogRenderers[thumb.dataset.thumb];
+    if (!renderer) return;
+    var ctx = setupCanvas(canvas, 80, 80);
+
+    var start = null;
+    function frame(ts) {
+      if (!start) start = ts;
+      renderer(ctx, 80, 80, ts - start);
+      thumb.classList.add('rendered');
+      blogRafs.set(thumb, requestAnimationFrame(frame));
+    }
+    blogRafs.set(thumb, requestAnimationFrame(frame));
+  }
+
+  function stopBlog(thumb) {
+    if (blogRafs.has(thumb)) {
+      cancelAnimationFrame(blogRafs.get(thumb));
+      blogRafs.delete(thumb);
+    }
+  }
+
+  if (rm) {
+    document.querySelectorAll('.post-thumb').forEach(function(thumb) {
+      var canvas = thumb.querySelector('canvas');
+      if (!canvas) return;
+      var renderer = blogRenderers[thumb.dataset.thumb];
+      if (!renderer) return;
+      var ctx = setupCanvas(canvas, 80, 80);
+      renderer(ctx, 80, 80, 1000);
+      thumb.classList.add('rendered');
+    });
+  } else if ('IntersectionObserver' in window) {
+    var blogObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) startBlog(entry.target);
+        else stopBlog(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px 40px 0px' });
+    document.querySelectorAll('.post-thumb').forEach(function(thumb) {
+      blogObserver.observe(thumb);
+    });
+  } else {
+    document.querySelectorAll('.post-thumb').forEach(startBlog);
+  }
 
 })();
 </script>
