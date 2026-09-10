@@ -167,6 +167,7 @@
   .entry-desc{font-size:0.9rem;color:var(--ink-soft);margin-top:0.25rem;max-width:58ch;}
   .entry-refs{margin-top:0.4rem;font-family:var(--mono);font-size:0.78rem;display:flex;flex-wrap:wrap;gap:0.3rem 1rem;}
   .tag-good{color:var(--good);font-family:var(--mono);font-size:0.72rem;font-weight:500;}
+  .tag-pending{color:var(--cat-experiments);font-family:var(--mono);font-size:0.72rem;font-weight:500;}
 
   section .logline{margin-bottom:0.15rem;}
   section .logline:last-child{margin-bottom:0;}
@@ -294,6 +295,37 @@
   .pub-body{flex:1;min-width:0;}
   @media (max-width:480px){.pub-thumb{flex:0 0 60px;width:60px;height:60px;}.pub-with-thumb{gap:0.8rem;}}
 
+  /* ---- cert proof link + modal ---- */
+  .cert-link{
+    display:inline-flex;align-items:center;gap:0.35rem;
+    font-family:var(--mono);font-size:0.78rem;color:var(--cat-experiments);
+    background:transparent;border:none;cursor:pointer;padding:0;
+    text-decoration:none;background-image:linear-gradient(currentColor,currentColor);
+    background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;
+    transition:background-size 0.28s cubic-bezier(.4,0,.2,1);
+  }
+  .cert-link:hover{background-size:100% 1px;}
+  .cert-modal-overlay{
+    position:fixed;inset:0;background:rgba(10,11,9,0.82);
+    display:none;align-items:center;justify-content:center;
+    padding:2rem;z-index:100;
+  }
+  .cert-modal-overlay.open{display:flex;}
+  .cert-modal{
+    background:var(--band);border:1px solid var(--rule);border-radius:4px;
+    max-width:min(520px,92vw);width:100%;padding:0.9rem;position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  }
+  .cert-modal img{width:100%;height:auto;display:block;border-radius:2px;background:var(--paper);}
+  .cert-modal-close{
+    position:absolute;top:-0.6rem;right:-0.6rem;width:26px;height:26px;
+    border-radius:50%;background:var(--paper);border:1px solid var(--rule);
+    color:var(--ink-soft);font-family:var(--mono);font-size:0.8rem;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .cert-modal-close:hover{color:var(--ink);border-color:var(--signal);}
+  .cert-modal-caption{margin-top:0.6rem;font-family:var(--mono);font-size:0.72rem;color:var(--ink-faint);text-align:center;}
+
   /* ---- blog post thumbnails ---- */
   .post-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
   .post-thumb{
@@ -360,9 +392,9 @@
     <a href="https://x.com/sirohikartik_">twitter</a>
   </span></div>
 
-  <!-- PUBLICATIONS -->
-  <section id="publications">
-    <div class="hunk"><span class="content">@@ publications @@</span></div>
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="hunk"><span class="content">@@ research @@</span></div>
     <div class="logline">
       <span class="content">
         <div class="pub-with-thumb">
@@ -373,6 +405,23 @@
             <span class="entry-title">P²INNs: Physio-Psychiatry Informed Neural Networks</span><span class="entry-meta">IEEE Access, 2026</span>
             <div class="entry-desc">A novel architecture for depression risk prediction integrating physiological and psychiatric indicators. Developed during a research internship at the University of Galway.</div>
             <div class="entry-refs"><a href="https://ieeexplore.ieee.org/document/11646573">ieee xplore</a><a href="https://doi.org/10.1109/ACCESS.2026.3722150">doi</a></div>
+          </div>
+        </div>
+      </span>
+    </div>
+    <div class="logline">
+      <span class="content">
+        <div class="pub-with-thumb">
+          <div class="pub-thumb">
+            <img src="dice.png" alt="DICE-RoBERTa diagram" onerror="this.style.display='none'; this.parentElement.textContent='📄';" />
+          </div>
+          <div class="pub-body">
+            <span class="entry-title">DICE-RoBERTa: Dense Image Captioning with Entropy and RoBERTa for Efficient Video Classification</span><span class="entry-meta">COMSYS 2026</span>
+            <div class="entry-desc">Accepted &amp; presented at the 7th International Conference on Frontiers in Computing and Systems (COMSYS 2026).</div>
+            <div class="entry-refs">
+              <span class="tag-pending">accepted &amp; presented · not yet published</span>
+              <button type="button" class="cert-link" id="cert-open-btn">view certificate ↗</button>
+            </div>
           </div>
         </div>
       </span>
@@ -659,6 +708,16 @@
   </footer>
 
 </div>
+
+<!-- CERTIFICATE PROOF MODAL -->
+<div class="cert-modal-overlay" id="cert-modal-overlay">
+  <div class="cert-modal">
+    <button type="button" class="cert-modal-close" id="cert-modal-close" aria-label="Close">✕</button>
+    <img src="cert.png" alt="COMSYS 2026 acceptance certificate for DICE-RoBERTa" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<p style=\'font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);text-align:center;padding:1rem 0;\'>cert.png not found — add the file next to this page.</p>');" />
+    <div class="cert-modal-caption">COMSYS 2026 acceptance certificate — DICE-RoBERTa</div>
+  </div>
+</div>
+
 <script>
 /* ==================== SCROLL REVEAL ==================== */
 (function(){
@@ -678,6 +737,33 @@
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}});
   },{rootMargin:'0px 0px -8% 0px',threshold:0.12});
   targets.forEach(function(el){io.observe(el);});
+})();
+
+/* ==================== CERT PROOF MODAL ==================== */
+(function(){
+  var openBtn = document.getElementById('cert-open-btn');
+  var overlay = document.getElementById('cert-modal-overlay');
+  var closeBtn = document.getElementById('cert-modal-close');
+  if(!openBtn || !overlay || !closeBtn) return;
+
+  function openModal(){
+    overlay.classList.add('open');
+    closeBtn.focus();
+    document.addEventListener('keydown', onKeydown);
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    openBtn.focus();
+    document.removeEventListener('keydown', onKeydown);
+  }
+  function onKeydown(e){
+    if(e.key === 'Escape') closeModal();
+  }
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) closeModal();
+  });
 })();
 
 /* ==================== PROJECT CAPTION ==================== */
