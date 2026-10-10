@@ -9,7 +9,9 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <style>
   :root{
     --paper:#111210;
@@ -122,19 +124,38 @@
 
   .frame{
     position:relative;
-    width:84px;height:84px;
+    width:132px;height:132px;
     flex-shrink:0;
     background:var(--band);
     display:flex;align-items:center;justify-content:center;
     margin-top:0.15rem;
+    border-radius:6px;
+    border:1px solid var(--rule);
+    overflow:visible;
+    box-shadow:0 6px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(107,174,239,0.08);
+    transition:transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s ease, border-color 0.3s ease;
   }
-  .frame img{width:100%;height:100%;object-fit:cover;display:block;}
+  .frame:hover{
+    transform:translateY(-3px);
+    border-color:var(--signal);
+    box-shadow:0 12px 36px rgba(0,0,0,0.6), 0 0 0 1px var(--signal-band), 0 0 20px rgba(107,174,239,0.22);
+  }
+  .frame img{
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:center 20%;
+    display:block;
+    border-radius:3px;
+    filter:contrast(1.04) brightness(1.02);
+    image-rendering:-webkit-optimize-contrast;
+  }
   .frame .initials{font-family:var(--mono);font-size:1.4rem;color:var(--ink-faint);}
-  .corner{position:absolute;width:9px;height:9px;border:1.5px solid var(--ink-faint);}
-  .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
-  .corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
-  .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
-  .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+  .corner{position:absolute;width:8px;height:8px;border:1.5px solid var(--signal);opacity:0.6;transition:opacity 0.25s ease, border-color 0.25s ease;}
+  .frame:hover .corner{opacity:1;border-color:var(--signal);}
+  .corner.tl{top:-3px;left:-3px;border-right:none;border-bottom:none;}
+  .corner.tr{top:-3px;right:-3px;border-left:none;border-bottom:none;}
+  .corner.bl{bottom:-3px;left:-3px;border-right:none;border-top:none;}
+  .corner.br{bottom:-3px;right:-3px;border-left:none;border-top:none;}
 
   /* ---- OSS orbit ---- */
   .oss-graph-wrap{margin:0 0 2rem;}
@@ -302,29 +323,64 @@
     background:transparent;border:none;cursor:pointer;padding:0;
     text-decoration:none;background-image:linear-gradient(currentColor,currentColor);
     background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;
-    transition:background-size 0.28s cubic-bezier(.4,0,.2,1);
+    transition:background-size 0.28s cubic-bezier(.4,0,.2,1), color 0.2s ease;
   }
-  .cert-link:hover{background-size:100% 1px;}
+  .cert-link:hover{background-size:100% 1px;color:#f0dc78;}
+  .cert-badge-link{
+    display:inline-flex;align-items:center;gap:0.4rem;
+    font-family:var(--mono);font-size:0.75rem;font-weight:500;
+    color:var(--cat-experiments);
+    background:rgba(217,194,78,0.08);
+    border:1px solid rgba(217,194,78,0.28);
+    padding:0.18rem 0.55rem;
+    border-radius:3px;
+    cursor:pointer;
+    transition:all 0.2s cubic-bezier(.4,0,.2,1);
+    vertical-align:middle;
+  }
+  .cert-badge-link:hover{
+    background:rgba(217,194,78,0.18);
+    border-color:var(--cat-experiments);
+    color:#fff;
+    transform:translateY(-1px);
+    box-shadow:0 3px 12px rgba(217,194,78,0.15);
+  }
+  .cert-badge-link .icon{font-size:0.85rem;}
   .cert-modal-overlay{
-    position:fixed;inset:0;background:rgba(10,11,9,0.82);
+    position:fixed;inset:0;background:rgba(8,9,7,0.85);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     display:none;align-items:center;justify-content:center;
-    padding:2rem;z-index:100;
+    padding:1.5rem;z-index:999;
+    opacity:0;transition:opacity 0.25s ease;
   }
-  .cert-modal-overlay.open{display:flex;}
+  .cert-modal-overlay.open{display:flex;opacity:1;}
   .cert-modal{
-    background:var(--band);border:1px solid var(--rule);border-radius:4px;
-    max-width:min(520px,92vw);width:100%;padding:0.9rem;position:relative;
-    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    background:var(--paper);border:1px solid var(--rule);border-radius:6px;
+    max-width:min(580px,94vw);width:100%;padding:1rem;position:relative;
+    box-shadow:0 24px 70px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+    transform:scale(0.96);transition:transform 0.25s cubic-bezier(.16,1,.3,1);
+    max-height:92vh;display:flex;flex-direction:column;
   }
-  .cert-modal img{width:100%;height:auto;display:block;border-radius:2px;background:var(--paper);}
+  .cert-modal-overlay.open .cert-modal{transform:scale(1);}
+  .cert-modal img{
+    width:100%;height:auto;max-height:76vh;object-fit:contain;
+    display:block;border-radius:3px;background:var(--band);
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow:0 4px 16px rgba(0,0,0,0.4);
+  }
   .cert-modal-close{
-    position:absolute;top:-0.6rem;right:-0.6rem;width:26px;height:26px;
-    border-radius:50%;background:var(--paper);border:1px solid var(--rule);
-    color:var(--ink-soft);font-family:var(--mono);font-size:0.8rem;
+    position:absolute;top:-0.65rem;right:-0.65rem;width:28px;height:28px;
+    border-radius:50%;background:var(--band);border:1px solid var(--rule);
+    color:var(--ink-soft);font-family:var(--mono);font-size:0.85rem;
     display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,0.5);
+    transition:all 0.18s ease;
   }
-  .cert-modal-close:hover{color:var(--ink);border-color:var(--signal);}
-  .cert-modal-caption{margin-top:0.6rem;font-family:var(--mono);font-size:0.72rem;color:var(--ink-faint);text-align:center;}
+  .cert-modal-close:hover{color:var(--ink);border-color:var(--signal);transform:scale(1.08);}
+  .cert-modal-caption{
+    margin-top:0.75rem;font-family:var(--mono);font-size:0.74rem;
+    color:var(--ink-soft);text-align:center;letter-spacing:0.01em;
+  }
 
   /* ---- blog post thumbnails ---- */
   .post-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
@@ -364,19 +420,124 @@
     .logline,.hunk{gap:0.7rem;}
     h1{font-size:1.65rem;}
     .filehead{gap:1rem;}
-    .frame{width:64px;height:64px;}
+    .frame{width:100px;height:100px;}
     .proj-grid{grid-template-columns:repeat(auto-fill, minmax(82px, 1fr));}
+  }
+
+  /* ==================== MODERN ACADEMIC DESIGN (AL-FOLIO INSPIRED) ==================== */
+  #scroll-progress{
+    position:fixed;top:0;left:0;height:2px;width:0%;
+    background:linear-gradient(90deg, var(--signal), var(--cat-systems));
+    z-index:9999;transition:width 0.1s ease-out;
+  }
+  .site-nav{
+    position:sticky;top:0;z-index:100;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:rgba(17,18,16,0.85);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    padding:0.75rem 1.75rem;
+    margin-bottom:1.5rem;
+  }
+  .site-nav-inner{
+    max-width:760px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  }
+  .site-nav-brand{
+    display:flex;align-items:center;gap:0.75rem;
+  }
+  .site-nav-brand a{
+    color:var(--ink-soft);font-size:0.95rem;display:inline-flex;align-items:center;
+    transition:color 0.2s ease, transform 0.2s ease;
+    padding:0.2rem;
+  }
+  .site-nav-brand a:hover{
+    color:var(--signal);transform:translateY(-1px);background-image:none;
+  }
+  .site-nav-links{
+    display:flex;align-items:center;gap:1.3rem;
+  }
+  .site-nav-links a{
+    font-family:var(--sans);font-size:0.88rem;color:var(--ink-soft);
+    text-decoration:none;transition:color 0.2s ease;font-weight:400;
+    padding-bottom:2px;background-size:0% 1px;
+  }
+  .site-nav-links a:hover{
+    color:var(--ink);background-size:100% 1px;
+  }
+  .search-shortcut{
+    font-family:var(--mono);font-size:0.72rem;
+    color:var(--ink-faint);background:var(--band);border:1px solid var(--rule);
+    border-radius:3px;padding:0.15rem 0.45rem;
+  }
+
+  /* Bio & Highlights */
+  .bio-text{
+    font-size:0.96rem;line-height:1.68;color:var(--ink);margin:1.4rem 0 1.2rem;
+  }
+  .bio-text a{color:var(--signal);font-weight:500;}
+  .highlight-box{
+    background:rgba(28,30,26,0.5);border:1px solid var(--rule);
+    border-left:3px solid var(--signal);border-radius:4px;
+    padding:0.85rem 1.1rem;margin:1.3rem 0;
+  }
+  .highlight-box-title{
+    font-size:0.82rem;font-family:var(--mono);color:var(--signal);
+    font-weight:600;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.04em;
+  }
+  .highlight-box ul{list-style:none;margin:0;padding:0;}
+  .highlight-box li{
+    position:relative;padding-left:1.2rem;font-size:0.88rem;color:var(--ink-soft);line-height:1.55;
+    margin-bottom:0.35rem;
+  }
+  .highlight-box li:last-child{margin-bottom:0;}
+  .highlight-box li::before{
+    content:"›";position:absolute;left:0.2rem;top:0;color:var(--signal);font-weight:bold;
+  }
+
+  /* Academic Pill Buttons */
+  .entry-refs a, .entry-refs .tag-btn{
+    display:inline-flex;align-items:center;gap:0.35rem;
+    padding:0.16rem 0.5rem;font-family:var(--mono);font-size:0.72rem;font-weight:500;
+    border:1px solid var(--rule);background:var(--band);color:var(--ink-soft);
+    border-radius:3px;text-decoration:none;background-image:none;
+    transition:all 0.2s cubic-bezier(.4,0,.2,1);
+  }
+  .entry-refs a:hover, .entry-refs .tag-btn:hover{
+    color:var(--ink);border-color:var(--signal);background:var(--signal-band);
+    transform:translateY(-1px);
   }
 </style>
 </head>
 <body>
-<div class="page">
+<div id="scroll-progress"></div>
+
+<!-- STICKY TOP NAVBAR -->
+<nav class="site-nav" role="navigation" aria-label="Main Navigation">
+  <div class="site-nav-inner">
+    <div class="site-nav-brand">
+      <a href="mailto:kartik.orion.dev@gmail.com" title="Email" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://github.com/sirohikartik" title="GitHub" target="_blank"><i class="fa-brands fa-github"></i></a>
+      <a href="https://linkedin.com/in/kartik-sirohi-b81625325" title="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://x.com/sirohikartik_" title="X / Twitter" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://scholar.google.com/citations?user=K5dQIX4AAAAJ&hl=en" title="Google Scholar" target="_blank"><i class="ai ai-google-scholar"></i></a>
+    </div>
+    <div class="site-nav-links">
+      <a href="#research" target="_self">research</a>
+      <a href="#experience" target="_self">experience</a>
+      <a href="#oss" target="_self">open-source</a>
+      <a href="#projects" target="_self">projects</a>
+      <a href="#posts" target="_self">posts</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page" id="about">
 
   <div class="filehead">
     <div class="filehead-left">
-      <div class="logline"><span class="content code-comment">/* profile.kartik-sirohi */</span></div>
-      <div class="logline"><span class="content"><h1>Kartik Sirohi</h1></span></div>
-      <div class="logline"><span class="content role"> IT undergrad at <a href="https://nitj.ac.in/">NIT Jalandhar</a></span></div>
+      <div class="logline"><span class="content code-comment">kartik-sirohi</span></div>
+      <div class="logline"><span class="content"><h1><span style="font-weight:700;">Kartik</span> Sirohi</h1></span></div>
+      <div class="logline"><span class="content role"> IT undergrad at <a href="https://nitj.ac.in/">NIT Jalandhar</a> · AI Systems </span></div>
     </div>
     <div class="frame">
       <img src="pfp.jpg" alt="Kartik Sirohi" onerror="this.style.display='none'; this.parentElement.querySelector('.initials').style.display='block';" />
@@ -386,12 +547,13 @@
   </div>
 
   <div class="logline links"><span class="content">
-    <a href="mailto:kartik.orion.dev@gmail.com">kartik.orion.dev@gmail.com</a>
-    <a href="https://github.com/sirohikartik">github</a>
-    <a href="https://linkedin.com/in/kartik-sirohi-b81625325">linkedin</a>
-    <a href="https://x.com/sirohikartik_">twitter</a>
+    <a href="mailto:kartik.orion.dev@gmail.com"><i class="fa-solid fa-envelope" style="margin-right:4px;"></i>kartik.orion.dev@gmail.com</a>
+    <a href="https://github.com/sirohikartik"><i class="fa-brands fa-github" style="margin-right:4px;"></i>github</a>
+    <a href="https://linkedin.com/in/kartik-sirohi-b81625325"><i class="fa-brands fa-linkedin" style="margin-right:4px;"></i>linkedin</a>
+    <a href="https://x.com/sirohikartik_"><i class="fa-brands fa-x-twitter" style="margin-right:4px;"></i>twitter</a>
   </span></div>
 
+   
   <!-- RESEARCH -->
   <section id="research" style="margin-top:40px">
     <div class="hunk"><span class="content">@@ research @@</span></div>
@@ -404,7 +566,10 @@
           <div class="pub-body">
             <span class="entry-title">P²INNs: Physio-Psychiatry Informed Neural Networks</span><span class="entry-meta">IEEE Access, 2026</span>
             <div class="entry-desc">A novel architecture for depression risk prediction integrating physiological and psychiatric indicators. Developed during a research internship at the University of Galway.</div>
-            <div class="entry-refs"><a href="https://ieeexplore.ieee.org/document/11646573">ieee xplore</a><a href="https://doi.org/10.1109/ACCESS.2026.3722150">doi</a></div>
+            <div class="entry-refs">
+              <a href="https://ieeexplore.ieee.org/document/11646573"><i class="fa-solid fa-file-pdf"></i> ieee xplore</a>
+              <a href="https://doi.org/10.1109/ACCESS.2026.3722150"><i class="fa-solid fa-arrow-up-right-from-square"></i> doi</a>
+            </div>
           </div>
         </div>
       </span>
@@ -419,8 +584,8 @@
             <span class="entry-title">DICE-RoBERTa: Dense Image Captioning with Entropy and RoBERTa for Efficient Video Classification</span><span class="entry-meta">COMSYS 2026</span>
             <div class="entry-desc">Accepted &amp; presented at the 7th International Conference on Frontiers in Computing and Systems (COMSYS 2026).</div>
             <div class="entry-refs">
-              <span class="tag-pending">accepted &amp; presented · not yet published</span>
-              <button type="button" class="cert-link" id="cert-open-btn">view certificate ↗</button>
+              <span class="tag-pending"><i class="fa-solid fa-check"></i> accepted &amp; presented</span>
+              <button type="button" class="cert-link" id="cert-open-btn"><i class="fa-solid fa-certificate"></i> view certificate ↗</button>
             </div>
           </div>
         </div>
@@ -435,12 +600,9 @@
             <img src="accretion_disk.gif" alt="Barnes-Hut Diagram" onerror="this.style.display='none'; this.parentElement.textContent='📄';" />
           </div>
           <div class="pub-body">
-            <span class="entry-title">Learning Relativistic Astrophysical Dynamics with Diffusion Models: Representation Scaling and Failure Diagnosis</span><span class="entry-meta">Github </span>
-
+            <span class="entry-title">Learning Relativistic Astrophysical Dynamics with Diffusion Models: Representation Scaling and Failure Diagnosis</span><span class="entry-meta">Preprint</span>
             <div class="entry-refs">
-            <div class="entry-refs"><a href="https://github.com/sirohikartik/Barnes-Hut">Github</a></div>
-
-
+              <a href="https://github.com/sirohikartik/Barnes-Hut"><i class="fa-brands fa-github"></i> Github </a>
             </div>
           </div>
         </div>
@@ -472,22 +634,27 @@
     </div>
             </div>
           </div>
-         <div class="commit-row">
-  <div class="commit-rail"><span class="commit-dot"></span></div>
-  <div class="commit-body">
-    <div class="commit-refline">
-      <span class="commit-hash">b7e401d</span>
-      <span>Jul – Aug 2026</span>
-    </div>
-    <div class="commit-title">
-      Research Intern <span class="commit-org">@ QWorld</span>
-    </div>
-    <div class="commit-detail">
-      🏆 Best Presentation Award ·
-      <a href="https://github.com/sirohikartik/QTagger" target="_blank">QTagger</a>
-    </div>
-  </div>
-</div>
+          <div class="commit-row">
+            <div class="commit-rail"><span class="commit-dot"></span></div>
+            <div class="commit-body">
+              <div class="commit-refline">
+                <span class="commit-hash">b7e401d</span>
+                <span>Jul – Aug 2026</span>
+              </div>
+              <div class="commit-title">
+                Research Intern <span class="commit-org">@ QWorld</span>
+              </div>
+              <div class="commit-detail" style="display:flex;align-items:center;flex-wrap:wrap;gap:0.45rem 0.8rem;margin-top:0.25rem;">
+                <button type="button" class="cert-badge-link" id="cert-qworld-open-btn" title="View Best Presentation Award Certificate">
+                  <span class="icon">🏆</span>
+                  <span>Best Presentation Award</span>
+                  <span style="opacity:0.75;font-size:0.7rem;margin-left:2px;"></span>
+                </button>
+                <span style="color:var(--ink-faint);">·</span>
+                <a href="https://github.com/sirohikartik/QTagger" target="_blank">QTagger</a>
+              </div>
+            </div>
+          </div>
           <div class="commit-row">
             <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
@@ -748,7 +915,7 @@ Papers accepted at IEEE Access and Comsys 2026
 
 </div>
 
-<!-- CERTIFICATE PROOF MODAL -->
+<!-- CERTIFICATE PROOF MODAL (COMSYS 2026) -->
 <div class="cert-modal-overlay" id="cert-modal-overlay">
   <div class="cert-modal">
     <button type="button" class="cert-modal-close" id="cert-modal-close" aria-label="Close">✕</button>
@@ -757,7 +924,27 @@ Papers accepted at IEEE Access and Comsys 2026
   </div>
 </div>
 
+<!-- CERTIFICATE PROOF MODAL (QWORLD BEST PRESENTATION AWARD) -->
+<div class="cert-modal-overlay" id="cert-qworld-modal-overlay">
+  <div class="cert-modal">
+    <button type="button" class="cert-modal-close" id="cert-qworld-modal-close" aria-label="Close">✕</button>
+    <img src="cert_qworld.jpg" alt="QWorld Best Presentation Award Certificate" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<p style=\'font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);text-align:center;padding:1rem 0;\'>cert_qworld.jpg not found.</p>');" />
+    <div class="cert-modal-caption">🏆 QWorld Internship — Best Presentation Award Certificate</div>
+  </div>
+</div>
+
 <script>
+/* ==================== SCROLL PROGRESS BAR ==================== */
+(function(){
+  var bar = document.getElementById('scroll-progress');
+  if(!bar) return;
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    bar.style.width = pct + '%';
+  }, {passive:true});
+})();
+
 /* ==================== SCROLL REVEAL ==================== */
 (function(){
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -778,31 +965,36 @@ Papers accepted at IEEE Access and Comsys 2026
   targets.forEach(function(el){io.observe(el);});
 })();
 
-/* ==================== CERT PROOF MODAL ==================== */
+/* ==================== CERT PROOF MODALS ==================== */
 (function(){
-  var openBtn = document.getElementById('cert-open-btn');
-  var overlay = document.getElementById('cert-modal-overlay');
-  var closeBtn = document.getElementById('cert-modal-close');
-  if(!openBtn || !overlay || !closeBtn) return;
+  function setupModal(openBtnId, overlayId, closeBtnId){
+    var openBtn = document.getElementById(openBtnId);
+    var overlay = document.getElementById(overlayId);
+    var closeBtn = document.getElementById(closeBtnId);
+    if(!openBtn || !overlay || !closeBtn) return;
 
-  function openModal(){
-    overlay.classList.add('open');
-    closeBtn.focus();
-    document.addEventListener('keydown', onKeydown);
+    function openModal(){
+      overlay.classList.add('open');
+      closeBtn.focus();
+      document.addEventListener('keydown', onKeydown);
+    }
+    function closeModal(){
+      overlay.classList.remove('open');
+      openBtn.focus();
+      document.removeEventListener('keydown', onKeydown);
+    }
+    function onKeydown(e){
+      if(e.key === 'Escape') closeModal();
+    }
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeModal();
+    });
   }
-  function closeModal(){
-    overlay.classList.remove('open');
-    openBtn.focus();
-    document.removeEventListener('keydown', onKeydown);
-  }
-  function onKeydown(e){
-    if(e.key === 'Escape') closeModal();
-  }
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', function(e){
-    if(e.target === overlay) closeModal();
-  });
+
+  setupModal('cert-open-btn', 'cert-modal-overlay', 'cert-modal-close');
+  setupModal('cert-qworld-open-btn', 'cert-qworld-modal-overlay', 'cert-qworld-modal-close');
 })();
 
 /* ==================== PROJECT CAPTION ==================== */
