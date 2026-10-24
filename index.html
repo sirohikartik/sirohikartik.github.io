@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Kartik Sirohi · AI Systems &amp; Performance Engineering</title>
-<meta name="description" content="Kartik Sirohi — AI researcher focused on LLM systems, inference optimization, and open-source. IT undergrad at NIT Jalandhar." />
+<meta name="description" content="Kartik Sirohi — Incoming SWE Intern at HSBC, AI researcher focused on LLM systems, inference optimization, and open-source. IT undergrad at NIT Jalandhar." />
 <base target="_blank">
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,14 +14,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <style>
   :root{
-    --paper:#111210;
-    --band:#1C1E1A;
-    --ink:#EDEBE1;
-    --ink-soft:#9B9C8F;
-    --ink-faint:#565850;
-    --rule:#2A2C26;
+    --paper:#000000;
+    --band:#080809;
+    --ink:#EEEEEE;
+    --ink-soft:#9B9D94;
+    --ink-faint:#4E5049;
+    --rule:#191A18;
     --signal:#6BAEEF;
-    --signal-band:rgba(107,174,239,0.12);
+    --signal-band:rgba(107,174,239,0.08);
     --good:#7FC77A;
     --cat-systems:#57C7B0;
     --cat-agents:#B7A3F2;
@@ -245,17 +245,13 @@
   /* ---- projects ---- */
   .proj-index-line{color:var(--ink-faint);font-weight:400;margin-left:auto;padding-left:1rem;}
   .hunk .content{display:flex;align-items:baseline;width:100%;}
-  .proj-cat{margin-bottom:2.4rem;}
-  .proj-cat:last-child{margin-bottom:0;}
-  .proj-cat-label{display:flex;align-items:center;gap:0.55rem;font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);margin-bottom:0.9rem;}
-  .proj-cat-label .dot{width:7px;height:7px;flex-shrink:0;background:var(--cat);}
-  .proj-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(108px, 1fr));gap:12px;}
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:12px;margin-bottom:0.8rem;}
 
   .proj-tile{
-    background:var(--paper);
+    background:#000000;
     color:inherit;
     border:1px solid var(--rule);
-    border-radius:3px;
+    border-radius:2px;
     padding:0;
     display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
     text-align:center;
@@ -263,41 +259,98 @@
     overflow:hidden;
     text-decoration:none;
     background-image:none;
-    transition:border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(.4,0,.2,1);
-    animation:tilePop 0.5s cubic-bezier(.34,1.56,.64,1) both;
-    animation-delay:calc(var(--tile-index,0) * 0.06s);
+    transition:border-color 0.22s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(.2,.8,.2,1);
+    animation:tilePop 0.45s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:calc(var(--tile-index,0) * 0.045s);
     will-change:transform;
+  }
+  /* Technical corner brackets like lulzx.com */
+  .proj-tile::before,
+  .proj-tile::after{
+    content:"";
+    position:absolute;
+    width:5px;
+    height:5px;
+    pointer-events:none;
+    transition:border-color 0.22s ease, opacity 0.22s ease;
+    z-index:4;
+  }
+  .proj-tile::before{
+    top:2px;
+    left:2px;
+    border-top:1.5px solid rgba(255,255,255,0.18);
+    border-left:1.5px solid rgba(255,255,255,0.18);
+  }
+  .proj-tile::after{
+    bottom:2px;
+    right:2px;
+    border-bottom:1.5px solid rgba(255,255,255,0.18);
+    border-right:1.5px solid rgba(255,255,255,0.18);
   }
   .proj-tile:hover,.proj-tile:focus-visible{
     border-color:var(--cat);
-    box-shadow:0 6px 24px rgba(0,0,0,0.5), 0 0 0 1px var(--cat);
-    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 8px 24px rgba(0,0,0,0.85), 0 0 0 1px var(--cat);
+    transform:translateY(-3px);
     z-index:2;
+  }
+  .proj-tile:hover::before,
+  .proj-tile:hover::after,
+  .proj-tile:focus-visible::before,
+  .proj-tile:focus-visible::after{
+    border-color:var(--cat);
   }
   .proj-tile:focus-visible{outline:none;}
 
-  /* canvas fills the tile top portion */
+  /* canvas fills the tile top portion with subtle dot-matrix graph background */
   .tile-canvas-wrap{
     width:100%;
     aspect-ratio:1/1;
     position:relative;
     overflow:hidden;
-    background:var(--band);
+    background-color:#000000;
+    background-image:radial-gradient(rgba(255,255,255,0.065) 0.75px, transparent 0.75px);
+    background-size:8px 8px;
   }
   .tile-canvas-wrap canvas{
     display:block;
     width:100%;height:100%;
+    transition:transform 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .proj-tile:hover .tile-canvas-wrap canvas,
+  .proj-tile:focus-visible .tile-canvas-wrap canvas{
+    transform:scale(1.02);
   }
   .tile-name{
     font-family:var(--mono);
-    font-size:0.68rem;
+    font-size:0.67rem;
+    font-weight:500;
     color:var(--ink-soft);
-    padding:0.45rem 0.4rem 0.5rem;
+    padding:0.42rem 0.35rem 0.48rem;
     width:100%;
-    transition:color 0.2s ease;
+    border-top:1px solid rgba(255,255,255,0.05);
+    background:#000000;
+    transition:color 0.2s ease, background 0.2s ease;
     word-break:break-word;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.25rem;
   }
-  .proj-tile:hover .tile-name,.proj-tile:focus-visible .tile-name{color:var(--cat);}
+  .tile-name .arrow{
+    font-size:0.65rem;
+    opacity:0;
+    transform:translate(-2px, 2px);
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    color:var(--cat);
+  }
+  .proj-tile:hover .tile-name,.proj-tile:focus-visible .tile-name{
+    color:var(--cat);
+    background:rgba(255,255,255,0.02);
+  }
+  .proj-tile:hover .tile-name .arrow,.proj-tile:focus-visible .tile-name .arrow{
+    opacity:1;
+    transform:translate(0, 0);
+  }
 
   @keyframes tilePop{0%{opacity:0;transform:scale(0.85) translateY(12px);}100%{opacity:1;transform:scale(1) translateY(0);}}
   @media (prefers-reduced-motion:reduce){
@@ -346,8 +399,120 @@
     box-shadow:0 3px 12px rgba(217,194,78,0.15);
   }
   .cert-badge-link .icon{font-size:0.85rem;}
+
+  /* ---- Project Detail Modal (lulzx placard style) ---- */
+  .proj-modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.92);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    display:none;align-items:center;justify-content:center;
+    padding:1.5rem;z-index:1000;
+    opacity:0;transition:opacity 0.22s ease;
+  }
+  .proj-modal-overlay.open{display:flex;opacity:1;}
+  .proj-modal-card{
+    background:#000000;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    max-width:min(540px,94vw);width:100%;
+    position:relative;
+    box-shadow:0 30px 90px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.06);
+    transform:scale(0.96) translateY(8px);
+    transition:transform 0.25s cubic-bezier(.16,1,.3,1);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .proj-modal-overlay.open .proj-modal-card{transform:scale(1) translateY(0);}
+
+  /* Technical corner brackets on modal */
+  .proj-modal-card::before,
+  .proj-modal-card::after{
+    content:"";position:absolute;width:8px;height:8px;pointer-events:none;z-index:5;
+  }
+  .proj-modal-card::before{
+    top:3px;left:3px;border-top:1.5px solid rgba(255,255,255,0.25);border-left:1.5px solid rgba(255,255,255,0.25);
+  }
+  .proj-modal-card::after{
+    bottom:3px;right:3px;border-bottom:1.5px solid rgba(255,255,255,0.25);border-right:1.5px solid rgba(255,255,255,0.25);
+  }
+
+  .proj-modal-top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0.65rem 1rem;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    background:#060607;
+  }
+  .proj-modal-meta{
+    font-family:var(--mono);font-size:0.72rem;letter-spacing:0.04em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .proj-modal-meta span{color:var(--signal);font-weight:600;}
+  .proj-modal-close{
+    background:transparent;border:1px solid var(--rule);border-radius:2px;
+    color:var(--ink-soft);font-family:var(--mono);font-size:0.75rem;
+    padding:0.18rem 0.55rem;cursor:pointer;line-height:1;
+    transition:all 0.18s ease;
+  }
+  .proj-modal-close:hover{color:var(--ink);border-color:var(--signal);background:rgba(255,255,255,0.04);}
+
+  /* Large Specimen Container */
+  .proj-modal-specimen{
+    width:100%;height:220px;
+    background-color:#000000;
+    background-image:radial-gradient(rgba(255,255,255,0.08) 0.8px, transparent 0.8px);
+    background-size:10px 10px;
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .proj-modal-specimen canvas{
+    display:block;width:220px;height:220px;
+  }
+
+  .proj-modal-body{
+    padding:1.3rem 1.35rem 1.25rem;
+  }
+  .proj-modal-title-row{
+    display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:0.45rem;
+  }
+  .proj-modal-title{
+    font-family:var(--mono);font-size:1.25rem;font-weight:600;color:var(--ink);letter-spacing:-0.01em;
+  }
+  .proj-modal-tag{
+    font-family:var(--mono);font-size:0.68rem;color:var(--ink-faint);letter-spacing:0.03em;
+  }
+  .proj-modal-desc{
+    font-size:0.92rem;line-height:1.68;color:var(--ink-soft);margin-bottom:1.3rem;
+  }
+  .proj-modal-actions{
+    display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;
+  }
+  .proj-modal-btn-gh{
+    display:inline-flex;align-items:center;gap:0.45rem;
+    font-family:var(--mono);font-size:0.78rem;font-weight:600;
+    color:#000000;background:var(--ink);
+    padding:0.45rem 0.95rem;border-radius:2px;
+    text-decoration:none;background-image:none;
+    transition:all 0.2s cubic-bezier(.2,.8,.2,1);
+  }
+  .proj-modal-btn-gh:hover{
+    background:#ffffff;transform:translateY(-1px);
+    box-shadow:0 4px 16px rgba(255,255,255,0.2);
+  }
+  .proj-modal-btn-sec{
+    display:inline-flex;align-items:center;gap:0.4rem;
+    font-family:var(--mono);font-size:0.75rem;font-weight:500;
+    color:var(--signal);background:rgba(107,174,239,0.08);
+    border:1px solid rgba(107,174,239,0.3);
+    padding:0.42rem 0.85rem;border-radius:2px;
+    text-decoration:none;background-image:none;
+    transition:all 0.2s ease;
+  }
+  .proj-modal-btn-sec:hover{
+    background:rgba(107,174,239,0.18);border-color:var(--signal);
+    transform:translateY(-1px);
+  }
   .cert-modal-overlay{
-    position:fixed;inset:0;background:rgba(8,9,7,0.85);
+    position:fixed;inset:0;background:rgba(0,0,0,0.92);
     backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     display:none;align-items:center;justify-content:center;
     padding:1.5rem;z-index:999;
@@ -448,7 +613,7 @@
   .site-nav{
     position:sticky;top:0;z-index:100;
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-    background:rgba(17,18,16,0.85);
+    background:rgba(0,0,0,0.88);
     border-bottom:1px solid rgba(255,255,255,0.06);
     padding:0.75rem 1.75rem;
     margin-bottom:1.5rem;
@@ -491,7 +656,7 @@
   }
   .bio-text a{color:var(--signal);font-weight:500;}
   .highlight-box{
-    background:rgba(28,30,26,0.5);border:1px solid var(--rule);
+    background:rgba(12,13,12,0.8);border:1px solid var(--rule);
     border-left:3px solid var(--signal);border-radius:4px;
     padding:0.85rem 1.1rem;margin:1.3rem 0;
   }
@@ -552,7 +717,7 @@
     <div class="filehead-left">
       <div class="logline"><span class="content code-comment">kartik-sirohi</span></div>
       <div class="logline"><span class="content"><h1><span style="font-weight:700;">Kartik</span> Sirohi</h1></span></div>
-      <div class="logline"><span class="content role"> IT undergrad at <a href="https://nitj.ac.in/">NIT Jalandhar</a> · AI Systems </span></div>
+      <div class="logline"><span class="content role"> IT undergrad at <a href="https://nitj.ac.in/">NIT Jalandhar</a> · Incoming SWE Intern <span class="commit-org">@ HSBC</span> · AI Systems </span></div>
     </div>
     <div class="frame">
       <img src="pfp.jpg" alt="Kartik Sirohi" onerror="this.style.display='none'; this.parentElement.querySelector('.initials').style.display='block';" />
@@ -636,6 +801,20 @@
       <span class="content">
         <div class="commit-log">
           <div class="commit-row is-head">
+            <div class="commit-rail"><span class="commit-dot" style="background:var(--good);border-color:var(--good);box-shadow:0 0 0 4px rgba(127,199,122,0.18);"></span></div>
+            <div class="commit-body">
+              <div class="commit-refline">
+                <span class="commit-hash">e8b2104</span>
+                <span>Summer 2027</span>
+                <span class="commit-head-tag" style="background:var(--good);color:#000;">UPCOMING</span>
+              </div>
+              <div class="commit-title">Software Engineering Intern <span class="commit-org">@ HSBC</span></div>
+              <div class="commit-detail">
+                Incoming SWE Intern for Summer 2027.
+              </div>
+            </div>
+          </div>
+          <div class="commit-row">
             <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
               <div class="commit-refline">
@@ -644,9 +823,9 @@
                 <span class="commit-head-tag">HEAD</span>
               </div>
               <div class="commit-title">AI Engineering Intern <span class="commit-org">@ Horrazon AI</span></div>
-                <div class="commit-detail">
-        Reduced Agent Latency by more than 4x
-    </div>
+              <div class="commit-detail">
+                Reduced Agent Latency by more than 4x
+              </div>
             </div>
           </div>
           <div class="commit-row">
@@ -759,97 +938,126 @@ Papers accepted at IEEE Access and Comsys 2026
 
   <!-- PROJECTS -->
   <section id="projects">
-    <div class="hunk"><span class="content">@@ projects @@<span class="proj-index-line">index / 01–10</span></span></div>
+    <div class="hunk"><span class="content">@@ projects @@<span class="proj-index-line">index / 01–14</span></span></div>
 
-    <div class="proj-cat" style="--cat:var(--cat-systems)">
-      <div class="proj-cat-label"><span class="dot"></span>systems</div>
-      <div class="proj-grid">
-        <a class="proj-tile" href="https://github.com/sirohikartik/tinygpt"
-           data-name="tinyGPT" data-anim="nodes"
-           data-desc="30M-parameter GPT from scratch with KV caching, NEON/SSE, and OpenMP — ~121 tok/s on M1."
-           style="--tile-index:0;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">tinyGPT</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/mini-torch"
-           data-name="mini-torch" data-anim="wave"
-           data-desc="Autograd framework with reverse-mode differentiation, SGD+momentum, and Adam."
-           style="--tile-index:1;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">mini-torch</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/linalg"
-           data-name="linalg" data-anim="matrix"
-           data-desc="Gaussian elimination, matrix inversion, blocked matmul, and determinant computation in C++."
-           style="--tile-index:2;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">linalg</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/cuda"
-           data-name="cuda kernels" data-anim="gpu"
-           data-desc="matmul.cu and softmax.cu — the CUDA kernels behind the 44→376 GFLOP/s optimization notes."
-           style="--tile-index:3;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">cuda kernels</span>
-        </a>
-      </div>
+    <div class="proj-grid">
+      <a class="proj-tile" href="https://github.com/sirohikartik/tinygpt"
+         data-name="tinyGPT" data-anim="nodes"
+         data-tag="Systems · C++ · SIMD · OpenMP"
+         data-desc="A 30M-parameter GPT language model built from scratch in pure C++ with custom KV caching, manual SIMD (ARM NEON & SSE) vector intrinsics, and OpenMP multi-threaded parallelization. Delivers ~121 tokens/sec on Apple M1 with zero Python runtime dependency at inference."
+         style="--cat:var(--cat-systems); --tile-index:0;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">tinyGPT<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/mini-torch"
+         data-name="mini-torch" data-anim="wave"
+         data-tag="Deep Learning · Autograd · Python"
+         data-desc="An autograd and neural network engine developed from first principles. Features reverse-mode automatic differentiation over dynamic computation graphs, custom backpropagation engines, SGD with momentum, and Adam optimizers with full computational parity to PyTorch."
+         style="--cat:var(--cat-systems); --tile-index:1;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">mini-torch<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/linalg"
+         data-name="linalg" data-anim="matrix"
+         data-tag="Math · HPC · C++"
+         data-desc="A high-performance linear algebra library in C++ implementing Gaussian elimination with partial pivoting, blocked matrix multiplication (GEMM) for cache locality, matrix inversion via LU decomposition, and numerical determinant computation."
+         style="--cat:var(--cat-systems); --tile-index:2;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">linalg<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/cuda"
+         data-name="cuda kernels" data-anim="gpu"
+         data-tag="GPU Acceleration · CUDA · SIMT"
+         data-desc="High-throughput CUDA kernels (matmul.cu and softmax.cu) reaching up to 376 GFLOP/s using shared memory tiling, thread-coarsening, warp shuffle primitives, and register-pressure tuning. Accompanies deep research notes on memory bandwidth and occupancy."
+         data-article="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092"
+         data-article-label="Read Research Article ↗"
+         style="--cat:var(--cat-systems); --tile-index:3;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">cuda kernels<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Onyx"
+         data-name="Onyx" data-anim="onyx"
+         data-tag="Desktop App · Rust · Tauri v2 · Ollama"
+         data-desc="A pitch-black OLED Obsidian-style note-taking app crafted in native Rust and Tauri v2. Features multi-tab Markdown workspaces, embedded browser with CORS proxy fallback, instant clipboard image pasting, native Git SSH sync, and Ollama AI assistant (gemma:31b)."
+         style="--cat:var(--cat-systems); --tile-index:4;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">Onyx<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Barnes-Hut"
+         data-name="Barnes-Hut" data-anim="barneshut"
+         data-tag="Astrophysics · N-Body · Quadtree / Octree · C++"
+         data-desc="An O(N log N) gravitational N-body galactic simulator written in C++ and Python. Constructs recursive spatial quadtree/octree partitions to cluster distant celestial bodies into center-of-mass multipole approximations using acceptance criterion θ = 0.5."
+         style="--cat:var(--cat-systems); --tile-index:5;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">Barnes-Hut<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/rocky"
+         data-name="Rocky" data-anim="audio"
+         data-tag="Multimodal Agents · Speech-to-Sign · Whisper"
+         data-desc="An end-to-end multimodal speech-to-Indian Sign Language (ISL) assistive pipeline. Streams live audio into Whisper, resolves phonemes against custom ISL gloss vocabularies, and translates grammar into animated 2D/3D skeletal gesture vectors."
+         style="--cat:var(--cat-agents); --tile-index:6;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">Rocky<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/athena"
+         data-name="Athena" data-anim="search"
+         data-tag="Information Retrieval · RAG · Python"
+         data-desc="An asynchronous hybrid search agent coupling web indexing with BM25 keyword matching and dense local vector embeddings. Employs speculative query reformulation and multi-stage re-ranking for reliable contextual grounding."
+         style="--cat:var(--cat-agents); --tile-index:7;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">Athena<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/maze-runner"
+         data-name="maze-runner" data-anim="maze"
+         data-tag="Reinforcement Learning · PyTorch · FastAPI"
+         data-desc="A deep Q-learning reinforcement learning agent in PyTorch trained to navigate complex dynamic mazes. Features live WebSocket telemetry streaming to an interactive HTML5 canvas dashboard displaying real-time policy distributions and reward gradients."
+         style="--cat:var(--cat-agents); --tile-index:8;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">maze-runner<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Cortex"
+         data-name="Cortex" data-anim="cortex"
+         data-tag="ML & DL Foundations · PyTorch · NumPy"
+         data-desc="From-scratch, first-principles implementations of fundamental ML and DL algorithms in PyTorch and NumPy: Scaled Dot-Product Attention, Causal Autoregressive Masking (torch.tril), Multi-Head Attention, KD-Tree spatial indexing, and closed-form Ridge Normal Equations."
+         style="--cat:var(--cat-agents); --tile-index:9;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">Cortex<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/AI"
+         data-name="minimax tic-tac-toe" data-anim="game"
+         data-tag="Game Theory · Alpha-Beta Pruning · C"
+         data-desc="A zero-sum game-theoretic Tic-Tac-Toe engine in C using recursive minimax search with Alpha-Beta pruning and transposition memoization for mathematically optimal depth-9 play."
+         style="--cat:var(--cat-experiments); --tile-index:10;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">minimax<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/http-server"
+         data-name="http-server" data-anim="server"
+         data-tag="Systems Programming · Sockets · C"
+         data-desc="A minimal, dependency-free HTTP/1.1 web server in raw C using Berkeley sockets and non-blocking I/O. Parses HTTP protocols, handles concurrent connections, and serves static files off raw file descriptors."
+         style="--cat:var(--cat-experiments); --tile-index:11;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">http-server<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/FileManager"
+         data-name="FileManager" data-anim="files"
+         data-tag="CLI Utility · Filesystem Inodes · C"
+         data-desc="A lightning-fast command-line directory tree analyzer in C. Recursively walks POSIX filesystem inodes via opendir/readdir, computing file sizes, permissions, and directory structures with minimal overhead."
+         style="--cat:var(--cat-experiments); --tile-index:12;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">FileManager<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/Q-Toe"
+         data-name="Q-Toe" data-anim="qtoe"
+         data-tag="Reinforcement Learning · Apple MPS · PyTorch"
+         data-desc="An adversarial Deep Q-Network (DQN) platform trained on Apple Silicon GPU (mps) unified memory. Uses 18-dim dual-channel canonical state representations with curriculum learning against Minimax adversaries across 6,000 episodes."
+         style="--cat:var(--cat-experiments); --tile-index:13;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">Q-Toe<span class="arrow">↗</span></span>
+      </a>
     </div>
 
-    <div class="proj-cat" style="--cat:var(--cat-agents)">
-      <div class="proj-cat-label"><span class="dot"></span>agents</div>
-      <div class="proj-grid">
-        <a class="proj-tile" href="https://github.com/sirohikartik/rocky"
-           data-name="Rocky" data-anim="audio"
-           data-desc="Speech-to-Indian Sign Language: Whisper → vocab resolver → ISL grammar agent."
-           style="--tile-index:4;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">Rocky</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/athena"
-           data-name="Athena" data-anim="search"
-           data-desc="Search agent combining web search, BM25, and local LLM reasoning in an async pipeline."
-           style="--tile-index:5;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">Athena</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/maze-runner"
-           data-name="maze-runner" data-anim="maze"
-           data-desc="A Q-learning agent in PyTorch that navigates a 10×10 maze, visualized live over FastAPI + canvas."
-           style="--tile-index:6;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">maze-runner</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="proj-cat" style="--cat:var(--cat-experiments)">
-      <div class="proj-cat-label"><span class="dot"></span>experiments — from <a href="https://github.com/sirohikartik/Fun">Fun</a></div>
-      <div class="proj-grid">
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/AI"
-           data-name="minimax tic-tac-toe" data-anim="game"
-           data-desc="Tic-tac-toe solved with the minimax algorithm, implemented from scratch."
-           style="--tile-index:7;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">minimax</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/http-server"
-           data-name="http-server" data-anim="server"
-           data-desc="A minimal C HTTP server that serves this portfolio off a raw socket, no framework."
-           style="--tile-index:8;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">http-server</span>
-        </a>
-        <a class="proj-tile" href="https://github.com/sirohikartik/Fun/tree/main/FileManager"
-           data-name="FileManager" data-anim="files"
-           data-desc="A small C tool that walks a directory and prints its tree structure."
-           style="--tile-index:9;">
-          <div class="tile-canvas-wrap"><canvas></canvas></div>
-          <span class="tile-name">FileManager</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="proj-caption" id="proj-caption">hover or focus a tile for details</div>
+    <div class="proj-caption" id="proj-caption">click any project for an interactive overview · or hover for quick preview</div>
   </section>
 
   <!-- POSTS -->
@@ -928,6 +1136,33 @@ Papers accepted at IEEE Access and Comsys 2026
     </span>
   </footer>
 
+</div>
+
+<!-- PROJECT DETAIL MODAL (LARGE SPECIMEN + EXPLANATION) -->
+<div class="proj-modal-overlay" id="proj-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title">
+  <div class="proj-modal-card">
+    <div class="proj-modal-top">
+      <div class="proj-modal-meta"><span id="proj-modal-serial">PROJ / 01</span> · <span id="proj-modal-tag">SYSTEMS</span></div>
+      <button class="proj-modal-close" id="proj-modal-close" aria-label="Close modal">ESC ×</button>
+    </div>
+    <div class="proj-modal-specimen">
+      <canvas id="proj-modal-canvas" width="220" height="220"></canvas>
+    </div>
+    <div class="proj-modal-body">
+      <div class="proj-modal-title-row">
+        <h2 class="proj-modal-title" id="proj-modal-title">Project Name</h2>
+      </div>
+      <p class="proj-modal-desc" id="proj-modal-desc">Project description.</p>
+      <div class="proj-modal-actions">
+        <a class="proj-modal-btn-gh" id="proj-modal-gh-link" href="#" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> View on GitHub ↗
+        </a>
+        <a class="proj-modal-btn-sec" id="proj-modal-sec-link" href="#" target="_blank" rel="noopener" style="display:none;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> <span id="proj-modal-sec-text">Read Notes ↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- CERTIFICATE PROOF MODAL (COMSYS 2026) -->
@@ -1056,12 +1291,12 @@ Papers accepted at IEEE Access and Comsys 2026
 
   /* Shared palette */
   var P = {
-    paper:  '#111210',
-    band:   '#1C1E1A',
-    rule:   '#2A2C26',
-    soft:   '#9B9C8F',
-    faint:  '#565850',
-    ink:    '#EDEBE1',
+    paper:  '#000000',
+    band:   '#080809',
+    rule:   '#191A18',
+    soft:   '#9B9D94',
+    faint:  '#4E5049',
+    ink:    '#EEEEEE',
     blue:   '#6BAEEF',
     green:  '#7FC77A',
     teal:   '#57C7B0',
@@ -1095,7 +1330,6 @@ Papers accepted at IEEE Access and Comsys 2026
 
       var cycle = 2600;
       var phase = (t%cycle)/cycle;
-      /* signal front travels through layers */
       var front = phase * (layers.length + 0.5) - 0.5;
 
       /* draw connections */
@@ -1108,9 +1342,9 @@ Papers accepted at IEEE Access and Comsys 2026
             var edgeFrac = lit ? easeInOut(Math.max(0,Math.min(1,front-l))) : 0;
             ctx.beginPath();
             ctx.strokeStyle = lit
-              ? 'rgba(107,174,239,'+(0.15+0.65*edgeFrac)+')'
-              : 'rgba(86,88,80,0.18)';
-            ctx.lineWidth = lit ? 1.2 : 0.6;
+              ? 'rgba(107,174,239,'+(0.15+0.75*edgeFrac)+')'
+              : 'rgba(78,80,73,0.22)';
+            ctx.lineWidth = lit ? 1.3 : 0.6;
             ctx.moveTo(ax,ay); ctx.lineTo(bx,by);
             ctx.stroke();
           }
@@ -1122,31 +1356,31 @@ Papers accepted at IEEE Access and Comsys 2026
         for(var ni=0;ni<nodes[l].length;ni++){
           var nx=nodes[l][ni][0], ny=nodes[l][ni][1];
           var lit = front>=l-0.4 && front<l+0.8;
-          var glow = lit ? (0.7+0.3*Math.sin(t*0.016)) : 0;
-          var r = lit ? 5.5 : 4;
-          /* glow ring */
+          var r = lit ? 5.5 : 3.8;
           if(lit){
             ctx.beginPath();
             ctx.arc(nx,ny,r+4,0,Math.PI*2);
-            ctx.fillStyle='rgba(107,174,239,0.12)';
+            ctx.fillStyle='rgba(107,174,239,0.18)';
             ctx.fill();
           }
           ctx.beginPath();
           ctx.arc(nx,ny,r,0,Math.PI*2);
           ctx.fillStyle = lit ? P.blue : P.paper;
           ctx.fill();
-          ctx.strokeStyle = lit ? P.blue : 'rgba(107,174,239,0.3)';
+          ctx.strokeStyle = lit ? P.blue : 'rgba(107,174,239,0.35)';
           ctx.lineWidth = 1.2;
           ctx.stroke();
         }
       }
 
-      /* label */
-      ctx.font = '500 9px "IBM Plex Mono",monospace';
+      /* technical instrument readouts */
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
       ctx.fillStyle = P.faint;
-      ctx.fillText('fwd pass',4,h-5);
+      ctx.fillText('fwd pass', 5, h - 5);
       ctx.fillStyle = P.blue;
-      ctx.fillText(Math.round(front*100/layers.length)+'%', w-26, h-5);
+      ctx.fillText('121 tok/s', w - 48, h - 5);
+      ctx.fillStyle = 'rgba(107,174,239,0.6)';
+      ctx.fillText('KV 88%', w - 38, 12);
     },
 
     /* mini-torch: autograd computation graph with gradient flow */
@@ -1154,70 +1388,66 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      /* nodes: x*w, y*h, label */
       var ns = [
-        {x:0.15,y:0.35,l:'x'}, {x:0.15,y:0.68,l:'w'},
-        {x:0.5, y:0.5, l:'×'},
-        {x:0.78,y:0.5, l:'L'},
+        {x:0.16,y:0.35,l:'x'}, {x:0.16,y:0.67,l:'w'},
+        {x:0.50,y:0.50,l:'×'},
+        {x:0.80,y:0.50,l:'L'},
       ];
       var edges = [[0,2],[1,2],[2,3]];
 
-      var cycle=2800, ph=(t%cycle)/cycle;
-      var isBack = ph>0.5;
-      var sub = isBack?(ph-0.5)*2:ph*2;
-      var front = sub * (edges.length+0.5) - 0.5;
+      var cycle = 2800, ph = (t%cycle)/cycle;
+      var isBack = ph > 0.5;
+      var sub = isBack ? (ph - 0.5) * 2 : ph * 2;
+      var front = sub * (edges.length + 0.5) - 0.5;
 
-      edges.forEach(function(e,ei){
-        var a=ns[e[0]], b=ns[e[1]];
-        var ax=a.x*w, ay=a.y*h, bx=b.x*w, by=b.y*h;
-        var idx = isBack ? (edges.length-1-ei) : ei;
-        var active = front>=idx && front<idx+1;
-        var frac = active ? easeInOut(Math.max(0,Math.min(1,front-idx))) : 0;
+      edges.forEach(function(e, ei){
+        var a = ns[e[0]], b = ns[e[1]];
+        var ax = a.x*w, ay = a.y*h, bx = b.x*w, by = b.y*h;
+        var idx = isBack ? (edges.length - 1 - ei) : ei;
+        var active = front >= idx && front < idx + 1;
+        var frac = active ? easeInOut(Math.max(0, Math.min(1, front - idx))) : 0;
         var col = isBack ? P.amber : P.blue;
 
         ctx.beginPath();
-        if(isBack) ctx.setLineDash([4,4]);
+        if(isBack) ctx.setLineDash([3,3]);
         else ctx.setLineDash([]);
-        ctx.strokeStyle = active
-          ? col.replace(')',','+(0.3+0.7*frac)+')')
-                .replace('rgb(','rgba(').replace('#','')
-          : 'rgba(86,88,80,0.25)';
-        /* just use alpha directly */
-        ctx.strokeStyle = active ? col : 'rgba(86,88,80,0.25)';
-        ctx.globalAlpha = active ? (0.3+0.7*frac) : 0.25;
-        ctx.lineWidth = active ? 1.5 : 0.7;
-        if(isBack){ctx.moveTo(bx,by);ctx.lineTo(ax,ay);}
-        else{ctx.moveTo(ax,ay);ctx.lineTo(bx,by);}
+        ctx.strokeStyle = active ? col : 'rgba(78,80,73,0.3)';
+        ctx.globalAlpha = active ? (0.35 + 0.65 * frac) : 0.25;
+        ctx.lineWidth = active ? 1.6 : 0.8;
+        if(isBack){ ctx.moveTo(bx,by); ctx.lineTo(ax,ay); }
+        else{ ctx.moveTo(ax,ay); ctx.lineTo(bx,by); }
         ctx.stroke();
         ctx.setLineDash([]);
-        ctx.globalAlpha=1;
+        ctx.globalAlpha = 1;
 
-        /* travelling particle */
         if(active){
-          var p=easeInOut(Math.max(0,Math.min(1,front-idx)));
+          var p = easeInOut(Math.max(0, Math.min(1, front - idx)));
           var px = isBack ? lerp(bx,ax,p) : lerp(ax,bx,p);
           var py = isBack ? lerp(by,ay,p) : lerp(ay,by,p);
           ctx.beginPath();
           ctx.arc(px,py,3,0,Math.PI*2);
-          ctx.fillStyle=col; ctx.fill();
+          ctx.fillStyle = col; ctx.fill();
         }
       });
 
       ns.forEach(function(n){
-        var nx=n.x*w, ny=n.y*h;
+        var nx = n.x*w, ny = n.y*h;
         ctx.beginPath(); ctx.arc(nx,ny,9,0,Math.PI*2);
-        ctx.fillStyle=P.paper; ctx.fill();
-        ctx.strokeStyle='rgba(107,174,239,0.5)'; ctx.lineWidth=1;
+        ctx.fillStyle = P.paper; ctx.fill();
+        ctx.strokeStyle = 'rgba(107,174,239,0.55)'; ctx.lineWidth = 1;
         ctx.stroke();
-        ctx.font='600 9px "IBM Plex Mono",monospace';
-        ctx.fillStyle=P.soft; ctx.textAlign='center'; ctx.textBaseline='middle';
-        ctx.fillText(n.l,nx,ny);
-        ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+        ctx.font = '600 8.5px "IBM Plex Mono",monospace';
+        ctx.fillStyle = P.soft; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(n.l, nx, ny);
+        ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       });
 
-      ctx.font='500 9px "IBM Plex Mono",monospace';
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
       ctx.fillStyle = isBack ? P.amber : P.blue;
-      ctx.fillText(isBack?'← grad':'fwd →',4,h-5);
+      ctx.fillText(isBack ? '← grad' : 'fwd →', 5, h - 5);
+      var loss = (0.04 + 0.02 * Math.sin(t * 0.003)).toFixed(2);
+      ctx.fillStyle = P.soft;
+      ctx.fillText('L=' + loss, w - 34, h - 5);
     },
 
     /* linalg: matrix fill sweep */
@@ -1225,36 +1455,43 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var N=5, pad=8;
-      var cellW=(w-pad*2)/N, cellH=(h-pad*2-14)/N;
-      var cycle=3200, ph=(t%cycle)/cycle;
-      /* sweep diagonally */
-      var front = ph*(N*2);
+      var N = 5, pad = 8;
+      var cellW = (w - pad*2) / N, cellH = (h - pad*2 - 14) / N;
+      var cycle = 3000, ph = (t%cycle)/cycle;
+      var front = ph * (N * 2);
+
+      /* bracket lines */
+      ctx.strokeStyle = 'rgba(87,199,176,0.4)'; ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(pad - 3, pad); ctx.lineTo(pad - 5, pad);
+      ctx.lineTo(pad - 5, pad + N*cellH); ctx.lineTo(pad - 3, pad + N*cellH);
+      ctx.moveTo(w - pad + 3, pad); ctx.lineTo(w - pad + 5, pad);
+      ctx.lineTo(w - pad + 5, pad + N*cellH); ctx.lineTo(w - pad + 3, pad + N*cellH);
+      ctx.stroke();
 
       for(var r=0;r<N;r++){
         for(var c=0;c<N;c++){
-          var diag=r+c;
-          var x=pad+c*cellW, y=pad+r*cellH;
-          var lit = diag<front && front<diag+1.6;
-          var done = diag<front-1;
-          var alpha = done ? 0.55 : (lit ? (0.2+0.7*easeInOut(Math.max(0,front-diag))) : 0.1);
-          /* cell bg */
-          ctx.fillStyle='rgba(107,174,239,'+alpha+')';
-          ctx.fillRect(x+1,y+1,cellW-2,cellH-2);
-          /* border */
-          ctx.strokeStyle='rgba(107,174,239,0.2)';
-          ctx.lineWidth=0.5;
-          ctx.strokeRect(x+0.5,y+0.5,cellW-1,cellH-1);
+          var diag = r + c;
+          var x = pad + c*cellW, y = pad + r*cellH;
+          var isPivot = (r === c);
+          var lit = diag < front && front < diag + 1.5;
+          var done = diag < front - 1;
+          var alpha = done ? 0.45 : (lit ? (0.2 + 0.7 * easeInOut(Math.max(0, front - diag))) : 0.08);
+
+          ctx.fillStyle = isPivot ? 'rgba(87,199,176,' + (alpha * 1.3) + ')' : 'rgba(107,174,239,' + alpha + ')';
+          ctx.fillRect(x + 1, y + 1, cellW - 2, cellH - 2);
+
+          ctx.strokeStyle = isPivot ? 'rgba(87,199,176,0.45)' : 'rgba(107,174,239,0.18)';
+          ctx.lineWidth = 0.5;
+          ctx.strokeRect(x + 0.5, y + 0.5, cellW - 1, cellH - 1);
         }
       }
 
-      /* determinant label */
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint;
-      ctx.fillText('det(A)',4,h-5);
-      var val = (Math.sin(t*0.0008)*42+42).toFixed(1);
-      ctx.fillStyle=P.teal;
-      ctx.fillText(val,w-34,h-5);
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('det(A)', 5, h - 5);
+      ctx.fillStyle = P.teal;
+      ctx.fillText('rank 5', w - 36, h - 5);
     },
 
     /* cuda kernels: GPU thread grid lighting up */
@@ -1262,42 +1499,199 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var cols=8, rows=7, pad=6;
-      var cw=(w-pad*2)/cols, ch=(h-pad*2-16)/rows;
-      var cycle=2400, ph=(t%cycle)/cycle;
-      var warpSize=4; /* warps light up together */
-
-      /* GFLOPS progress */
-      var gflops = 44 + (376-44)*easeInOut(Math.min(1,(t%8000)/5000));
+      var cols = 8, rows = 7, pad = 6;
+      var cw = (w - pad*2) / cols, ch = (h - pad*2 - 16) / rows;
+      var cycle = 2400, ph = (t%cycle)/cycle;
+      var warpSize = 4;
+      var gflops = 44 + (376 - 44) * easeInOut(Math.min(1, (t % 8000) / 5000));
 
       for(var r=0;r<rows;r++){
         for(var c=0;c<cols;c++){
-          var idx=r*cols+c;
-          var total=rows*cols;
-          var warp=Math.floor(idx/warpSize);
-          var totalWarps=Math.ceil(total/warpSize);
-          var warpFront = ph*totalWarps*1.3;
-          var isActive = warp < warpFront && warp >= warpFront-1;
-          var isDone   = warp < warpFront-1;
-          var frac = isActive ? easeInOut(Math.max(0,warpFront-warp)) : (isDone?1:0);
+          var idx = r*cols + c;
+          var warp = Math.floor(idx / warpSize);
+          var totalWarps = Math.ceil((rows*cols) / warpSize);
+          var warpFront = ph * totalWarps * 1.3;
+          var isActive = warp < warpFront && warp >= warpFront - 1;
+          var isDone = warp < warpFront - 1;
+          var frac = isActive ? easeInOut(Math.max(0, warpFront - warp)) : (isDone ? 1 : 0);
 
-          var x=pad+c*cw, y=pad+r*ch;
-          /* thread block */
-          ctx.fillStyle='rgba(107,174,239,'+(0.08+frac*0.7)+')';
-          ctx.fillRect(x+1,y+1,cw-2,ch-2);
+          var x = pad + c*cw, y = pad + r*ch;
+          ctx.fillStyle = 'rgba(107,174,239,' + (0.07 + frac * 0.72) + ')';
+          ctx.fillRect(x + 1, y + 1, cw - 2, ch - 2);
           if(isActive){
-            ctx.strokeStyle='rgba(107,174,239,0.9)';
-            ctx.lineWidth=0.8;
-            ctx.strokeRect(x+0.5,y+0.5,cw-1,ch-1);
+            ctx.strokeStyle = 'rgba(107,174,239,0.95)';
+            ctx.lineWidth = 0.8;
+            ctx.strokeRect(x + 0.5, y + 0.5, cw - 1, ch - 1);
           }
         }
       }
 
-      ctx.font='600 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint;
-      ctx.fillText('GFLOP/s',4,h-5);
-      ctx.fillStyle=P.blue;
-      ctx.fillText(Math.round(gflops),w-26,h-5);
+      /* Coalesced memory bus line */
+      ctx.fillStyle = 'rgba(107,174,239,0.3)';
+      ctx.fillRect(pad, pad + rows*ch + 2, w - pad*2, 2);
+
+      ctx.font = '600 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('GFLOP/s', 5, h - 5);
+      ctx.fillStyle = P.blue;
+      ctx.fillText(Math.round(gflops), w - 26, h - 5);
+    },
+
+    /* Onyx: Pitch-black Rust note editor with Ollama AI streaming */
+    onyx: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = '#020202'; ctx.fillRect(0,0,w,h);
+
+      /* Top tab bar */
+      ctx.fillStyle = '#0a0a0c';
+      ctx.fillRect(4, 4, w - 8, 14);
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(4.5, 4.5, w - 9, 13);
+
+      /* Active tab with violet dot */
+      ctx.fillStyle = '#141418';
+      ctx.fillRect(6, 5, 46, 12);
+      ctx.fillStyle = '#8b5cf6';
+      ctx.beginPath(); ctx.arc(12, 11, 2, 0, Math.PI*2); ctx.fill();
+      ctx.font = '500 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle = '#EDEBE1';
+      ctx.fillText('note.md', 18, 13.5);
+
+      /* Inactive tab */
+      ctx.fillStyle = '#4E5049';
+      ctx.fillText('web ↗', 58, 13.5);
+
+      /* Editor pane (left 65%) and AI pane (right 35%) */
+      var splitX = Math.round(w * 0.65);
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.beginPath(); ctx.moveTo(splitX, 22); ctx.lineTo(splitX, h - 16); ctx.stroke();
+
+      /* Editor Markdown lines */
+      var lines = [
+        { y: 28, w: 28, color: '#8b5cf6' }, // # heading
+        { y: 38, w: 42, color: '#7FC77A' }, // - [x] task
+        { y: 48, w: 34, color: '#9B9D94' }, // body
+        { y: 58, w: 38, color: '#6BAEEF' }, // link
+      ];
+
+      lines.forEach(function(l, i){
+        ctx.fillStyle = l.color;
+        ctx.fillRect(8, l.y, l.w, 4);
+      });
+
+      /* Blinking typing cursor */
+      var blink = Math.sin(t * 0.008) > 0;
+      if (blink) {
+        ctx.fillStyle = '#EDEBE1';
+        ctx.fillRect(48, 56, 1.5, 7);
+      }
+
+      /* Right AI sidebar - Ollama token particle stream */
+      var aiCycle = 1800, aiPh = (t % aiCycle) / aiCycle;
+      ctx.fillStyle = 'rgba(139,92,246,0.12)';
+      ctx.fillRect(splitX + 2, 22, w - splitX - 6, h - 38);
+
+      /* AI spark / antenna icon */
+      ctx.beginPath();
+      ctx.arc(splitX + (w - splitX)/2, 28, 3.5, 0, Math.PI*2);
+      ctx.fillStyle = '#8b5cf6'; ctx.fill();
+
+      /* Streaming token particles */
+      for(var p=0; p<3; p++){
+        var pProgress = (aiPh + p/3) % 1;
+        var py = 36 + pProgress * (h - 58);
+        var pAlpha = Math.sin(pProgress * Math.PI);
+        ctx.fillStyle = 'rgba(139,92,246,' + pAlpha + ')';
+        ctx.fillRect(splitX + 6, py, (w - splitX - 12) * (0.4 + 0.5 * Math.sin(p*1.7)), 3);
+      }
+
+      /* Readout */
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('Rust · #000', 5, h - 5);
+      ctx.fillStyle = '#8b5cf6';
+      ctx.fillText('Ollama', w - 36, h - 5);
+    },
+
+    /* Barnes-Hut: N-body gravitational galaxy simulation with quadtrees */
+    barneshut: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var cx = w * 0.5, cy = (h - 14) * 0.5 + 2;
+      var boxSize = Math.min(w, h - 14) * 0.44;
+
+      /* Outer Quadtree bounding box */
+      ctx.strokeStyle = 'rgba(87,199,176,0.3)';
+      ctx.lineWidth = 0.8;
+      ctx.strokeRect(cx - boxSize, cy - boxSize, boxSize*2, boxSize*2);
+
+      /* Recursive Quadtree subdivisions */
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - boxSize); ctx.lineTo(cx, cy + boxSize);
+      ctx.moveTo(cx - boxSize, cy); ctx.lineTo(cx + boxSize, cy);
+      ctx.strokeStyle = 'rgba(87,199,176,0.2)';
+      ctx.stroke();
+
+      /* Sub-box in the dense center */
+      var sub = boxSize * 0.5;
+      ctx.strokeStyle = 'rgba(87,199,176,0.15)';
+      ctx.strokeRect(cx - sub, cy - sub, sub, sub);
+      ctx.strokeRect(cx, cy, sub, sub);
+
+      /* Star particles orbiting with Keplerian differential speeds */
+      var stars = [
+        { r: boxSize * 0.22, speed: 0.0022, phase: 0.2 },
+        { r: boxSize * 0.38, speed: 0.0016, phase: 1.4 },
+        { r: boxSize * 0.52, speed: 0.0012, phase: 2.8 },
+        { r: boxSize * 0.68, speed: 0.0009, phase: 4.1 },
+        { r: boxSize * 0.84, speed: 0.0007, phase: 0.8 },
+        { r: boxSize * 0.32, speed: 0.0018, phase: 3.5 },
+        { r: boxSize * 0.60, speed: 0.0011, phase: 5.2 },
+        { r: boxSize * 0.78, speed: 0.0008, phase: 2.1 },
+      ];
+
+      stars.forEach(function(s, idx){
+        var ang = t * s.speed + s.phase;
+        var sx = cx + Math.cos(ang) * s.r;
+        var sy = cy + Math.sin(ang) * (s.r * 0.75); // tilted disk
+
+        /* star trail */
+        var prevAng = ang - 0.25;
+        var px = cx + Math.cos(prevAng) * s.r;
+        var py = cy + Math.sin(prevAng) * (s.r * 0.75);
+        ctx.beginPath();
+        ctx.moveTo(px, py); ctx.lineTo(sx, sy);
+        ctx.strokeStyle = 'rgba(107,174,239,0.3)';
+        ctx.lineWidth = 0.6; ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(sx, sy, idx % 2 === 0 ? 2 : 1.5, 0, Math.PI*2);
+        ctx.fillStyle = idx % 3 === 0 ? P.teal : P.blue;
+        ctx.fill();
+      });
+
+      /* Central galactic core & barycenter crosshair */
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3.5, 0, Math.PI*2);
+      ctx.fillStyle = P.teal; ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cx, cy, 6.5, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(87,199,176,0.35)'; ctx.lineWidth = 1; ctx.stroke();
+
+      /* Crosshair ticks */
+      ctx.strokeStyle = 'rgba(87,199,176,0.7)'; ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(cx - 5, cy); ctx.lineTo(cx + 5, cy);
+      ctx.moveTo(cx, cy - 5); ctx.lineTo(cx, cy + 5);
+      ctx.stroke();
+
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('quadtree', 5, h - 5);
+      ctx.fillStyle = P.teal;
+      ctx.fillText('O(NlogN)', w - 46, h - 5);
     },
 
     /* Rocky: animated waveform → token pipeline */
@@ -1305,22 +1699,61 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var mid=h*0.46, bars=24, barW=(w-12)/bars, gap=1;
-      /* waveform */
+      var mid = (h - 16) * 0.48;
+      var bars = 14, barW = (w * 0.45) / bars, gap = 1.2;
+
+      /* Waveform FFT bars on the left */
       for(var i=0;i<bars;i++){
-        var phase = i/bars*Math.PI*3 + t*0.004;
-        var amp = 0.15 + 0.45*Math.abs(Math.sin(phase));
-        var barH = amp*(h*0.42);
-        var x=6+i*(barW+gap);
-        var alpha = 0.4+0.5*amp;
-        ctx.fillStyle='rgba(183,163,242,'+alpha+')';
-        ctx.fillRect(x, mid-barH, barW-gap, barH*2);
+        var phase = i/bars * Math.PI * 3 + t * 0.005;
+        var amp = 0.18 + 0.65 * Math.abs(Math.sin(phase));
+        var barH = amp * (mid * 0.8);
+        var x = 6 + i * (barW + gap);
+        var alpha = 0.4 + 0.5 * amp;
+        ctx.fillStyle = 'rgba(183,163,242,' + alpha + ')';
+        ctx.fillRect(x, mid - barH, barW, barH * 2);
       }
 
-      /* "→ ISL" label */
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('whisper',4,h-5);
-      ctx.fillStyle=P.purple; ctx.fillText('→ ISL',w-30,h-5);
+      /* Center Whisper arrow node */
+      ctx.strokeStyle = 'rgba(183,163,242,0.5)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.50, mid); ctx.lineTo(w * 0.58, mid);
+      ctx.lineTo(w * 0.55, mid - 3);
+      ctx.moveTo(w * 0.58, mid); ctx.lineTo(w * 0.55, mid + 3);
+      ctx.stroke();
+
+      /* Vector sign hand keypoint skeleton on the right */
+      var hx = w * 0.78, hy = mid;
+      var fAngle = Math.sin(t * 0.004) * 0.4;
+      var joints = [
+        [hx, hy + 12], // wrist
+        [hx - 2, hy + 2],  // palm
+        [hx - 10 + Math.cos(fAngle)*4, hy - 4 + Math.sin(fAngle)*4], // thumb
+        [hx - 4, hy - 10 + Math.sin(fAngle)*3], // index
+        [hx + 2, hy - 11 + Math.sin(fAngle + 0.2)*3], // middle
+        [hx + 8, hy - 8 + Math.sin(fAngle + 0.4)*3], // ring
+      ];
+
+      /* Connect wrist to fingers */
+      ctx.strokeStyle = 'rgba(183,163,242,0.7)';
+      ctx.lineWidth = 1.2;
+      for(var j=2; j<joints.length; j++){
+        ctx.beginPath();
+        ctx.moveTo(joints[0][0], joints[0][1]);
+        ctx.lineTo(joints[1][0], joints[1][1]);
+        ctx.lineTo(joints[j][0], joints[j][1]);
+        ctx.stroke();
+      }
+
+      /* Joint dots */
+      joints.forEach(function(pt){
+        ctx.beginPath(); ctx.arc(pt[0], pt[1], 2, 0, Math.PI*2);
+        ctx.fillStyle = P.purple; ctx.fill();
+      });
+
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('whisper', 5, h - 5);
+      ctx.fillStyle = P.purple; ctx.fillText('→ ISL', w - 30, h - 5);
     },
 
     /* Athena: search ping expanding */
@@ -1328,49 +1761,58 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var cx=w*0.5, cy=h*0.46;
-      var cycle=2200, ph=(t%cycle)/cycle;
+      var cx = w * 0.5, cy = (h - 14) * 0.48;
+      var cycle = 2200, ph = (t % cycle) / cycle;
 
-      /* expanding rings */
-      for(var ring=0;ring<3;ring++){
+      /* expanding radar rings */
+      for(var ring=0; ring<3; ring++){
         var rph = (ph + ring/3) % 1;
-        var r = rph * Math.min(w,h)*0.46;
-        var alpha = (1-rph)*0.5;
+        var r = rph * Math.min(w,h) * 0.46;
+        var alpha = (1 - rph) * 0.55;
         ctx.beginPath();
-        ctx.arc(cx,cy,r,0,Math.PI*2);
-        ctx.strokeStyle='rgba(107,174,239,'+alpha+')';
-        ctx.lineWidth=1.2;
+        ctx.arc(cx, cy, r, 0, Math.PI*2);
+        ctx.strokeStyle = 'rgba(107,174,239,' + alpha + ')';
+        ctx.lineWidth = 1;
         ctx.stroke();
       }
 
-      /* BM25 result dots */
+      /* rotating sweep cone */
+      var sweepAng = (t * 0.003) % (Math.PI * 2);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, Math.min(w,h)*0.45, sweepAng, sweepAng + 0.35);
+      ctx.fillStyle = 'rgba(107,174,239,0.1)';
+      ctx.fill();
+
+      /* BM25 candidate documents */
       var docPos = [
-        {x:0.2,y:0.25},{x:0.8,y:0.2},{x:0.15,y:0.72},
-        {x:0.82,y:0.75},{x:0.5,y:0.18},
+        {x:0.22, y:0.25}, {x:0.78, y:0.22}, {x:0.18, y:0.68},
+        {x:0.80, y:0.72}, {x:0.52, y:0.18},
       ];
-      docPos.forEach(function(d,i){
-        var dx=d.x*w, dy=d.y*h;
-        var dist=Math.sqrt((dx-cx)*(dx-cx)+(dy-cy)*(dy-cy));
-        var normDist=dist/Math.min(w,h)*2;
-        var lit = ph > normDist*0.45;
+      docPos.forEach(function(d){
+        var dx = d.x*w, dy = d.y*(h-14);
+        var dist = Math.sqrt((dx-cx)*(dx-cx) + (dy-cy)*(dy-cy));
+        var normDist = dist / (Math.min(w,h) * 0.45);
+        var lit = ph > normDist * 0.5;
         ctx.beginPath();
-        ctx.arc(dx,dy, lit?3.5:2.5, 0, Math.PI*2);
-        ctx.fillStyle= lit ? P.blue : 'rgba(107,174,239,0.2)';
+        ctx.arc(dx, dy, lit ? 3.5 : 2, 0, Math.PI*2);
+        ctx.fillStyle = lit ? P.blue : 'rgba(107,174,239,0.25)';
         ctx.fill();
         if(lit){
           ctx.beginPath();
           ctx.moveTo(cx,cy); ctx.lineTo(dx,dy);
-          ctx.strokeStyle='rgba(107,174,239,0.25)';
-          ctx.lineWidth=0.6; ctx.stroke();
+          ctx.strokeStyle = 'rgba(107,174,239,0.3)';
+          ctx.lineWidth = 0.6; ctx.stroke();
         }
       });
 
-      /* center crosshair */
-      ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2);
-      ctx.fillStyle=P.blue; ctx.fill();
+      /* center point */
+      ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI*2);
+      ctx.fillStyle = P.blue; ctx.fill();
 
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('BM25+LLM',4,h-5);
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('BM25+LLM', 5, h - 5);
+      ctx.fillStyle = P.blue; ctx.fillText('k=5', w - 24, h - 5);
     },
 
     /* maze-runner: Q-learning agent walking the maze */
@@ -1378,11 +1820,10 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var N=7, pad=5;
-      var cw=(w-pad*2)/N, ch=(h-pad*2-14)/N;
+      var N = 7, pad = 5;
+      var cw = (w - pad*2) / N, ch = (h - pad*2 - 14) / N;
 
-      /* static walls — hand-picked to look like a maze */
-      var hWalls=[ /* row,col = wall below cell[r][c] */
+      var hWalls = [
         [0,1],[0,3],[0,5],
         [1,0],[1,2],[1,4],[1,6],
         [2,1],[2,3],[2,5],
@@ -1390,7 +1831,7 @@ Papers accepted at IEEE Access and Comsys 2026
         [4,1],[4,3],[4,5],
         [5,0],[5,2],[5,4],[5,6],
       ];
-      var vWalls=[ /* row,col = wall right of cell[r][c] */
+      var vWalls = [
         [0,0],[0,2],[0,4],
         [1,1],[1,3],[1,5],
         [2,0],[2,2],[2,4],[2,6],
@@ -1399,60 +1840,120 @@ Papers accepted at IEEE Access and Comsys 2026
         [5,1],[5,3],[5,5],
       ];
 
-      /* outer border */
-      ctx.strokeStyle='rgba(86,88,80,0.6)'; ctx.lineWidth=1;
-      ctx.strokeRect(pad,pad,N*cw,N*ch);
+      ctx.strokeStyle = 'rgba(78,80,73,0.55)'; ctx.lineWidth = 1;
+      ctx.strokeRect(pad, pad, N*cw, N*ch);
 
-      /* walls */
-      ctx.strokeStyle='rgba(86,88,80,0.45)'; ctx.lineWidth=0.8;
+      ctx.strokeStyle = 'rgba(78,80,73,0.4)'; ctx.lineWidth = 0.8;
       hWalls.forEach(function(w2){
-        var r=w2[0],c=w2[1];
-        var x=pad+c*cw, y=pad+(r+1)*ch;
+        var x = pad + w2[1]*cw, y = pad + (w2[0]+1)*ch;
         ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+cw,y); ctx.stroke();
       });
       vWalls.forEach(function(w2){
-        var r=w2[0],c=w2[1];
-        var x=pad+(c+1)*cw, y=pad+r*ch;
+        var x = pad + (w2[1]+1)*cw, y = pad + w2[0]*ch;
         ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y+ch); ctx.stroke();
       });
 
-      /* goal cell */
-      ctx.fillStyle='rgba(127,199,122,0.18)';
-      ctx.fillRect(pad+(N-1)*cw+1, pad+(N-1)*ch+1, cw-2, ch-2);
-      ctx.fillStyle=P.green; ctx.font='500 8px "IBM Plex Mono",monospace';
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText('G', pad+(N-0.5)*cw, pad+(N-0.5)*ch);
-      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      /* goal cell with radiant green pulse */
+      var goalGlow = 0.2 + 0.15 * Math.sin(t * 0.005);
+      ctx.fillStyle = 'rgba(127,199,122,' + goalGlow + ')';
+      ctx.fillRect(pad + (N-1)*cw + 1, pad + (N-1)*ch + 1, cw - 2, ch - 2);
+      ctx.fillStyle = P.green; ctx.font = '600 8px "IBM Plex Mono",monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('G', pad + (N-0.5)*cw, pad + (N-0.5)*ch);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 
-      /* agent path: snake through the maze */
-      var path=[
+      var path = [
         [0,0],[0,1],[0,2],[1,2],[2,2],[2,3],[2,4],[3,4],[4,4],[4,5],[4,6],[5,6],[6,6]
       ];
-      var stepDur=400;
-      var totalDur=path.length*stepDur+600;
-      var elapsed=t%totalDur;
-      var stepF=elapsed/stepDur;
-      var stepI=Math.min(path.length-1, Math.floor(stepF));
-      var stepFrac=stepF-stepI;
+      var stepDur = 380;
+      var totalDur = path.length * stepDur + 700;
+      var elapsed = t % totalDur;
+      var stepF = elapsed / stepDur;
+      var stepI = Math.min(path.length - 1, Math.floor(stepF));
+      var stepFrac = stepF - stepI;
 
-      /* draw trail */
-      for(var i=0;i<stepI;i++){
-        var cell=path[i];
-        var alpha=0.12+0.12*(i/stepI);
-        ctx.fillStyle='rgba(107,174,239,'+alpha+')';
-        ctx.fillRect(pad+cell[1]*cw+1, pad+cell[0]*ch+1, cw-2, ch-2);
+      for(var i=0; i<stepI; i++){
+        var cell = path[i];
+        var alpha = 0.12 + 0.14 * (i / stepI);
+        ctx.fillStyle = 'rgba(107,174,239,' + alpha + ')';
+        ctx.fillRect(pad + cell[1]*cw + 1, pad + cell[0]*ch + 1, cw - 2, ch - 2);
       }
 
-      /* draw agent */
-      var cur=path[Math.min(stepI,path.length-1)];
-      var nxt=path[Math.min(stepI+1,path.length-1)];
-      var agentX=pad+(cur[1]+(nxt[1]-cur[1])*easeInOut(stepFrac))*cw+cw/2;
-      var agentY=pad+(cur[0]+(nxt[0]-cur[0])*easeInOut(stepFrac))*ch+ch/2;
-      ctx.beginPath(); ctx.arc(agentX,agentY,Math.min(cw,ch)*0.28,0,Math.PI*2);
-      ctx.fillStyle=P.blue; ctx.fill();
+      var cur = path[Math.min(stepI, path.length - 1)];
+      var nxt = path[Math.min(stepI + 1, path.length - 1)];
+      var agentX = pad + (cur[1] + (nxt[1] - cur[1]) * easeInOut(stepFrac)) * cw + cw/2;
+      var agentY = pad + (cur[0] + (nxt[0] - cur[0]) * easeInOut(stepFrac)) * ch + ch/2;
+      ctx.beginPath(); ctx.arc(agentX, agentY, Math.min(cw,ch) * 0.28, 0, Math.PI*2);
+      ctx.fillStyle = P.blue; ctx.fill();
 
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('Q-agent',4,h-5);
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('Q-agent', 5, h - 5);
+      ctx.fillStyle = P.green; ctx.fillText('+1.0', w - 24, h - 5);
+    },
+
+    /* Cortex: Scaled Dot-Product Attention & Causal Masking from scratch */
+    cortex: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var pad = 8, M = 5;
+      var gridW = w - pad*2 - 20, gridH = h - pad*2 - 16;
+      var cw = gridW / M, ch = gridH / M;
+      var ox = pad + 18, oy = pad;
+
+      /* Q and K token vectors entering on top and left */
+      var cycle = 3000, ph = (t % cycle) / cycle;
+      var activeToken = Math.min(M - 1, Math.floor(ph * M));
+
+      ctx.font = '500 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      for(var i=0; i<M; i++){
+        var active = (i === activeToken);
+        ctx.fillStyle = active ? P.purple : 'rgba(183,163,242,0.4)';
+        ctx.fillText('q' + i, 4, oy + (i + 0.7) * ch);
+        ctx.fillText('k' + i, ox + (i + 0.2) * cw, oy - 2);
+      }
+
+      /* 5x5 Attention Score Matrix with Causal Mask (Lower Triangular) */
+      for(var r=0; r<M; r++){
+        for(var c=0; c<M; c++){
+          var x = ox + c * cw, y = oy + r * ch;
+          var isCausalMasked = (c > r); // future tokens masked to -inf
+          var isCurrent = (r === activeToken && c <= r);
+
+          if (isCausalMasked) {
+            // Masked cell (faint crosshatch)
+            ctx.fillStyle = 'rgba(0,0,0,0.6)';
+            ctx.fillRect(x + 1, y + 1, cw - 2, ch - 2);
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath(); ctx.moveTo(x + 2, y + 2); ctx.lineTo(x + cw - 2, y + ch - 2); ctx.stroke();
+          } else {
+            // Valid causal attention weight cell
+            var weight = (0.2 + 0.7 * Math.abs(Math.sin((r*M + c) * 0.9 + t * 0.003)));
+            if (isCurrent) weight = 0.6 + 0.4 * Math.sin(t * 0.008);
+            ctx.fillStyle = 'rgba(183,163,242,' + (0.15 + 0.7 * weight) + ')';
+            ctx.fillRect(x + 1, y + 1, cw - 2, ch - 2);
+
+            ctx.strokeStyle = isCurrent ? P.purple : 'rgba(183,163,242,0.2)';
+            ctx.lineWidth = isCurrent ? 1 : 0.5;
+            ctx.strokeRect(x + 0.5, y + 0.5, cw - 1, ch - 1);
+          }
+        }
+      }
+
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('Attn(Q,K,V)', 5, h - 5);
+      ctx.fillStyle = P.purple;
+      ctx.fillText('causal', w - 38, h - 5);
+    },
+
+    /* graph: knowledge graph traversal (fallback / alias) */
+    graph: function(ctx, w, h, t) {
+      if (tileRenderers.cortex) {
+        tileRenderers.cortex(ctx, w, h, t);
+      }
     },
 
     /* minimax: tic-tac-toe board with move sequence */
@@ -1460,48 +1961,102 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var pad=10, brd=Math.min(w,h)-pad*2-12;
-      var ox=(w-brd)/2, oy=(h-brd-12)/2 + 2;
-      var cell=brd/3;
+      var pad = 10, brd = Math.min(w,h) - pad*2 - 12;
+      var ox = (w - brd) / 2, oy = (h - brd - 12) / 2 + 2;
+      var cell = brd / 3;
 
-      /* grid lines */
-      ctx.strokeStyle='rgba(86,88,80,0.6)'; ctx.lineWidth=1;
-      for(var i=1;i<3;i++){
-        ctx.beginPath(); ctx.moveTo(ox+i*cell,oy); ctx.lineTo(ox+i*cell,oy+brd); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(ox,oy+i*cell); ctx.lineTo(ox+brd,oy+i*cell); ctx.stroke();
+      ctx.strokeStyle = 'rgba(78,80,73,0.6)'; ctx.lineWidth = 1;
+      for(var i=1; i<3; i++){
+        ctx.beginPath(); ctx.moveTo(ox + i*cell, oy); ctx.lineTo(ox + i*cell, oy + brd); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(ox, oy + i*cell); ctx.lineTo(ox + brd, oy + i*cell); ctx.stroke();
       }
 
-      /* minimax game sequence */
-      var moves=[
-        {r:1,c:1,p:'X'},{r:0,c:0,p:'O'},{r:0,c:2,p:'X'},
-        {r:2,c:0,p:'O'},{r:0,c:1,p:'X'},{r:2,c:2,p:'O'},
+      var moves = [
+        {r:1,c:1,p:'X'}, {r:0,c:0,p:'O'}, {r:0,c:2,p:'X'},
+        {r:2,c:0,p:'O'}, {r:0,c:1,p:'X'}, {r:2,c:2,p:'O'},
         {r:2,c:1,p:'X'},
       ];
-      var moveDur=700, totalDur=moves.length*moveDur+1200;
-      var elapsed=t%totalDur;
-      var visible=Math.min(moves.length, Math.floor(elapsed/moveDur));
+      var moveDur = 650, totalDur = moves.length * moveDur + 1100;
+      var elapsed = t % totalDur;
+      var visible = Math.min(moves.length, Math.floor(elapsed / moveDur));
 
-      for(var i=0;i<visible;i++){
-        var m=moves[i];
-        var cx=ox+m.c*cell+cell/2, cy=oy+m.r*cell+cell/2;
-        var isNew=(i===visible-1) && elapsed%moveDur < moveDur*0.5;
-        ctx.globalAlpha = isNew ? 0.5+0.5*(elapsed%moveDur)/(moveDur*0.5) : 1;
-        if(m.p==='X'){
-          var s=cell*0.28;
+      for(var i=0; i<visible; i++){
+        var m = moves[i];
+        var cx = ox + m.c*cell + cell/2, cy = oy + m.r*cell + cell/2;
+        var isNew = (i === visible - 1) && elapsed % moveDur < moveDur * 0.5;
+        ctx.globalAlpha = isNew ? 0.5 + 0.5 * (elapsed % moveDur) / (moveDur * 0.5) : 1;
+        if(m.p === 'X'){
+          var s = cell * 0.28;
           ctx.beginPath();
-          ctx.moveTo(cx-s,cy-s); ctx.lineTo(cx+s,cy+s);
-          ctx.moveTo(cx+s,cy-s); ctx.lineTo(cx-s,cy+s);
-          ctx.strokeStyle=P.blue; ctx.lineWidth=2; ctx.stroke();
+          ctx.moveTo(cx - s, cy - s); ctx.lineTo(cx + s, cy + s);
+          ctx.moveTo(cx + s, cy - s); ctx.lineTo(cx - s, cy + s);
+          ctx.strokeStyle = P.blue; ctx.lineWidth = 2; ctx.stroke();
         } else {
-          ctx.beginPath(); ctx.arc(cx,cy,cell*0.28,0,Math.PI*2);
-          ctx.strokeStyle=P.amber; ctx.lineWidth=2; ctx.stroke();
+          ctx.beginPath(); ctx.arc(cx, cy, cell * 0.28, 0, Math.PI*2);
+          ctx.strokeStyle = P.amber; ctx.lineWidth = 2; ctx.stroke();
         }
-        ctx.globalAlpha=1;
+        ctx.globalAlpha = 1;
       }
 
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('minimax',4,h-5);
-      ctx.fillStyle=P.amber; ctx.fillText('depth=9',w-38,h-5);
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('minimax', 5, h - 5);
+      ctx.fillStyle = P.amber; ctx.fillText('depth=9', w - 42, h - 5);
+    },
+
+    /* Q-Toe: Deep Q-Learning (DQN) with Apple Silicon MPS */
+    qtoe: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      /* Left: Mini 3x3 board */
+      var bSize = 34, bx = 8, by = 16, bCell = bSize / 3;
+      ctx.strokeStyle = 'rgba(78,80,73,0.6)'; ctx.lineWidth = 0.8;
+      for(var i=1; i<3; i++){
+        ctx.beginPath(); ctx.moveTo(bx + i*bCell, by); ctx.lineTo(bx + i*bCell, by + bSize); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(bx, by + i*bCell); ctx.lineTo(bx + bSize, by + i*bCell); ctx.stroke();
+      }
+
+      /* Board tokens */
+      ctx.font = '600 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.blue;
+      ctx.fillText('X', bx + 3, by + 9);
+      ctx.fillText('X', bx + bCell + 3, by + bCell + 9);
+      ctx.fillStyle = P.amber;
+      ctx.fillText('O', bx + bCell*2 + 3, by + 9);
+
+      /* Center arrow: 18-dim tensor feed */
+      ctx.strokeStyle = 'rgba(217,194,78,0.4)';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(bx + bSize + 4, by + bSize/2);
+      ctx.lineTo(bx + bSize + 14, by + bSize/2);
+      ctx.stroke();
+
+      /* Right: 9 Action Q-Values Bar Graph */
+      var gx = bx + bSize + 18, gw = w - gx - 8;
+      var barH = 3.2, barGap = 1.2;
+      var qCycle = 2600, qPh = (t % qCycle) / qCycle;
+      var bestAction = Math.floor(qPh * 9);
+
+      for(var a=0; a<9; a++){
+        var qVal = 0.2 + 0.75 * Math.abs(Math.sin(a * 1.3 + t * 0.003));
+        var isBest = (a === bestAction);
+        var curH = by + a * (barH + barGap);
+        var curW = gw * (isBest ? 0.95 : qVal);
+
+        ctx.fillStyle = isBest ? P.green : 'rgba(217,194,78,0.35)';
+        ctx.fillRect(gx, curH, curW, barH);
+
+        if (isBest) {
+          ctx.beginPath();
+          ctx.arc(gx + curW + 3, curH + barH/2, 1.8, 0, Math.PI*2);
+          ctx.fillStyle = P.green; ctx.fill();
+        }
+      }
+
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('DQN · MPS', 5, h - 5);
+      ctx.fillStyle = P.green; ctx.fillText('Q(s,a*)', w - 42, h - 5);
     },
 
     /* http-server: HTTP request/response packet animation */
@@ -1509,63 +2064,59 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      /* server rack */
-      var rackX=w*0.62, rackY=h*0.12, rackW=w*0.3, rackH=h*0.72;
-      ctx.strokeStyle='rgba(86,88,80,0.5)'; ctx.lineWidth=0.8;
-      ctx.strokeRect(rackX,rackY,rackW,rackH);
-      /* rack slots */
-      var slots=4;
-      for(var s=0;s<slots;s++){
-        var sy=rackY+6+(s*(rackH-12)/slots);
-        var sh=(rackH-12)/slots-4;
-        ctx.fillStyle='rgba(86,88,80,0.18)';
-        ctx.fillRect(rackX+4,sy,rackW-8,sh);
-        /* blink lights */
-        var blink = Math.sin(t*0.003+s*1.7)>0;
+      var rackX = w*0.62, rackY = h*0.12, rackW = w*0.3, rackH = h*0.70;
+      ctx.strokeStyle = 'rgba(78,80,73,0.5)'; ctx.lineWidth = 0.8;
+      ctx.strokeRect(rackX, rackY, rackW, rackH);
+
+      var slots = 4;
+      for(var s=0; s<slots; s++){
+        var sy = rackY + 5 + (s * (rackH - 10) / slots);
+        var sh = (rackH - 10) / slots - 3;
+        ctx.fillStyle = 'rgba(78,80,73,0.18)';
+        ctx.fillRect(rackX + 3, sy, rackW - 6, sh);
+
+        var blink = Math.sin(t * 0.004 + s * 1.7) > 0;
         ctx.beginPath();
-        ctx.arc(rackX+rackW-10, sy+sh/2, 2, 0, Math.PI*2);
+        ctx.arc(rackX + rackW - 8, sy + sh/2, 2, 0, Math.PI*2);
         ctx.fillStyle = blink ? P.blue : 'rgba(107,174,239,0.15)';
         ctx.fill();
       }
 
-      /* client box */
-      var clientX=w*0.05, clientY=h*0.32, clientW=w*0.22, clientH=h*0.32;
-      ctx.fillStyle='rgba(86,88,80,0.15)'; ctx.fillRect(clientX,clientY,clientW,clientH);
-      ctx.strokeStyle='rgba(86,88,80,0.4)'; ctx.lineWidth=0.8;
-      ctx.strokeRect(clientX,clientY,clientW,clientH);
-      ctx.font='500 7px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText('client',clientX+clientW/2,clientY+clientH/2);
-      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      var clientX = w*0.06, clientY = h*0.32, clientW = w*0.22, clientH = h*0.30;
+      ctx.fillStyle = 'rgba(78,80,73,0.15)'; ctx.fillRect(clientX, clientY, clientW, clientH);
+      ctx.strokeStyle = 'rgba(78,80,73,0.4)'; ctx.lineWidth = 0.8;
+      ctx.strokeRect(clientX, clientY, clientW, clientH);
+      ctx.font = '500 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('cli', clientX + clientW/2, clientY + clientH/2);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 
-      /* packet animation */
-      var cycle=2000, ph=(t%cycle)/cycle;
-      var isReq=ph<0.5;
-      var pFrac = isReq ? ph*2 : (ph-0.5)*2;
-      var frac=easeInOut(pFrac);
-      var startX = isReq ? clientX+clientW : rackX;
-      var endX   = isReq ? rackX           : clientX+clientW;
-      var py=h*0.48;
-      var px=lerp(startX,endX,frac);
+      var cycle = 2000, ph = (t % cycle) / cycle;
+      var isReq = ph < 0.5;
+      var pFrac = isReq ? ph * 2 : (ph - 0.5) * 2;
+      var frac = easeInOut(pFrac);
+      var startX = isReq ? clientX + clientW : rackX;
+      var endX   = isReq ? rackX : clientX + clientW;
+      var py = h * 0.48;
+      var px = lerp(startX, endX, frac);
 
-      /* wire */
       ctx.beginPath();
-      ctx.setLineDash([3,4]);
-      ctx.strokeStyle='rgba(86,88,80,0.3)'; ctx.lineWidth=0.8;
-      ctx.moveTo(clientX+clientW,py); ctx.lineTo(rackX,py);
+      ctx.setLineDash([3,3]);
+      ctx.strokeStyle = 'rgba(78,80,73,0.35)'; ctx.lineWidth = 0.8;
+      ctx.moveTo(clientX + clientW, py); ctx.lineTo(rackX, py);
       ctx.stroke(); ctx.setLineDash([]);
 
-      /* packet */
-      var col=isReq?P.blue:P.green;
-      ctx.fillStyle=col;
-      ctx.fillRect(px-8,py-4,16,8);
-      ctx.font='500 7px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.paper; ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText(isReq?'GET':'200',px,py);
-      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      var col = isReq ? P.blue : P.green;
+      ctx.fillStyle = col;
+      ctx.fillRect(px - 8, py - 4, 16, 8);
+      ctx.font = '600 6.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = '#000000'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(isReq ? 'GET' : '200', px, py);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('raw socket',4,h-5);
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('raw socket', 5, h - 5);
+      ctx.fillStyle = P.green; ctx.fillText('epoll', w - 30, h - 5);
     },
 
     /* FileManager: directory tree populating */
@@ -1573,44 +2124,44 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.clearRect(0,0,w,h);
       ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
 
-      var entries=[
-        {depth:0,name:'/home',type:'dir'},
-        {depth:1,name:'src',type:'dir'},
-        {depth:2,name:'main.c',type:'file'},
-        {depth:2,name:'fs.c',type:'file'},
-        {depth:1,name:'tests',type:'dir'},
-        {depth:2,name:'test.c',type:'file'},
-        {depth:1,name:'Makefile',type:'file'},
+      var entries = [
+        {depth:0, name:'/root', type:'dir'},
+        {depth:1, name:'src', type:'dir'},
+        {depth:2, name:'main.c', type:'file'},
+        {depth:2, name:'fs.c', type:'file'},
+        {depth:1, name:'tests', type:'dir'},
+        {depth:2, name:'test.c', type:'file'},
+        {depth:1, name:'Makefile', type:'file'},
       ];
 
-      var lh=12, startY=8, indent=10, pad=6;
-      var itemDur=320, totalDur=entries.length*itemDur+800;
-      var elapsed=t%totalDur;
-      var visible=Math.min(entries.length,Math.floor(elapsed/itemDur));
-      var partial=(elapsed%itemDur)/itemDur;
+      var lh = 11.5, startY = 8, indent = 9, pad = 6;
+      var itemDur = 300, totalDur = entries.length * itemDur + 800;
+      var elapsed = t % totalDur;
+      var visible = Math.min(entries.length, Math.floor(elapsed / itemDur));
+      var partial = (elapsed % itemDur) / itemDur;
 
-      for(var i=0;i<visible;i++){
-        var e=entries[i];
-        var x=pad+e.depth*indent, y=startY+i*lh;
-        var isNew=(i===visible-1);
-        var alpha=isNew?easeInOut(partial):1;
-        ctx.globalAlpha=alpha;
+      for(var i=0; i<visible; i++){
+        var e = entries[i];
+        var x = pad + e.depth * indent, y = startY + i * lh;
+        var isNew = (i === visible - 1);
+        var alpha = isNew ? easeInOut(partial) : 1;
+        ctx.globalAlpha = alpha;
 
-        /* tree connector */
-        if(e.depth>0){
-          ctx.strokeStyle='rgba(86,88,80,0.4)'; ctx.lineWidth=0.6;
+        if(e.depth > 0){
+          ctx.strokeStyle = 'rgba(78,80,73,0.45)'; ctx.lineWidth = 0.6;
           ctx.beginPath();
-          ctx.moveTo(x-indent/2,y-lh/2); ctx.lineTo(x-indent/2,y+1);
-          ctx.lineTo(x,y+1); ctx.stroke();
+          ctx.moveTo(x - indent/2, y - lh/2); ctx.lineTo(x - indent/2, y + 1);
+          ctx.lineTo(x, y + 1); ctx.stroke();
         }
-        ctx.font=(e.type==='dir'?'600':'400')+' 8px "IBM Plex Mono",monospace';
-        ctx.fillStyle=e.type==='dir'?P.amber:P.soft;
-        ctx.fillText((e.type==='dir'?'📁 ':' ▸ ')+e.name, x+2, y+lh*0.7);
-        ctx.globalAlpha=1;
+        ctx.font = (e.type === 'dir' ? '600' : '400') + ' 7.5px "IBM Plex Mono",monospace';
+        ctx.fillStyle = e.type === 'dir' ? P.amber : P.soft;
+        ctx.fillText((e.type === 'dir' ? '📁 ' : ' ▸ ') + e.name, x + 1, y + lh * 0.7);
+        ctx.globalAlpha = 1;
       }
 
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('walk()',4,h-5);
+      ctx.font = '500 8.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint; ctx.fillText('walk()', 5, h - 5);
+      ctx.fillStyle = P.amber; ctx.fillText('inode', w - 30, h - 5);
     },
   };
 
@@ -2026,6 +2577,109 @@ Papers accepted at IEEE Access and Comsys 2026
   } else {
     document.querySelectorAll('.post-thumb').forEach(startBlog);
   }
+
+  /* ================================================================
+     INTERACTIVE PROJECT DETAIL MODAL (LARGE SPECIMEN + EXPLANATION)
+  ================================================================ */
+  var projOverlay   = document.getElementById('proj-modal-overlay');
+  var projCloseBtn  = document.getElementById('proj-modal-close');
+  var projCanvas    = document.getElementById('proj-modal-canvas');
+  var projTitle     = document.getElementById('proj-modal-title');
+  var projTag       = document.getElementById('proj-modal-tag');
+  var projSerial    = document.getElementById('proj-modal-serial');
+  var projDesc      = document.getElementById('proj-modal-desc');
+  var projGhLink    = document.getElementById('proj-modal-gh-link');
+  var projSecLink   = document.getElementById('proj-modal-sec-link');
+  var projSecText   = document.getElementById('proj-modal-sec-text');
+
+  var modalRaf = null;
+  var modalSide = 220;
+
+  function stopModalAnim() {
+    if (modalRaf) {
+      cancelAnimationFrame(modalRaf);
+      modalRaf = null;
+    }
+  }
+
+  function startModalAnim(animKey) {
+    stopModalAnim();
+    if (!projCanvas) return;
+    var renderer = tileRenderers[animKey];
+    if (!renderer) return;
+
+    var ctx = setupCanvas(projCanvas, modalSide, modalSide);
+    if (rm) {
+      renderer(ctx, modalSide, modalSide, 800);
+      return;
+    }
+    var start = null;
+    function frame(ts) {
+      if (!start) start = ts;
+      renderer(ctx, modalSide, modalSide, ts - start);
+      modalRaf = requestAnimationFrame(frame);
+    }
+    modalRaf = requestAnimationFrame(frame);
+  }
+
+  function openProjectModal(tile) {
+    if (!projOverlay) return;
+    var name = tile.dataset.name || '';
+    var anim = tile.dataset.anim || '';
+    var desc = tile.dataset.desc || '';
+    var tag  = tile.dataset.tag  || 'PROJECT';
+    var href = tile.getAttribute('href') || '#';
+    var article = tile.dataset.article;
+    var articleLabel = tile.dataset.articleLabel;
+
+    var tileIdx = parseInt(tile.style.getPropertyValue('--tile-index') || '0', 10) + 1;
+    if (projSerial) projSerial.textContent = 'PROJ / ' + (tileIdx < 10 ? '0' + tileIdx : tileIdx);
+    if (projTitle) projTitle.textContent = name;
+    if (projTag) projTag.textContent = tag;
+    if (projDesc) projDesc.textContent = desc;
+    if (projGhLink) projGhLink.href = href;
+
+    if (projSecLink) {
+      if (article) {
+        projSecLink.href = article;
+        if (projSecText) projSecText.textContent = articleLabel || 'Read Research Notes ↗';
+        projSecLink.style.display = 'inline-flex';
+      } else {
+        projSecLink.style.display = 'none';
+      }
+    }
+
+    projOverlay.classList.add('open');
+    startModalAnim(anim);
+    if (projCloseBtn) projCloseBtn.focus();
+    document.addEventListener('keydown', onProjKeydown);
+  }
+
+  function closeProjectModal() {
+    if (!projOverlay) return;
+    projOverlay.classList.remove('open');
+    stopModalAnim();
+    document.removeEventListener('keydown', onProjKeydown);
+  }
+
+  function onProjKeydown(e) {
+    if (e.key === 'Escape') closeProjectModal();
+  }
+
+  if (projCloseBtn) projCloseBtn.addEventListener('click', closeProjectModal);
+  if (projOverlay) {
+    projOverlay.addEventListener('click', function(e) {
+      if (e.target === projOverlay) closeProjectModal();
+    });
+  }
+
+  document.querySelectorAll('.proj-tile').forEach(function(tile) {
+    tile.addEventListener('click', function(e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      openProjectModal(tile);
+    });
+  });
 
 })();
 </script>
