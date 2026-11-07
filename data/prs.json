@@ -1,0 +1,186 @@
+[
+  {
+    "number": 496,
+    "repo": "apple/coreai-models",
+    "title": "Add SmolLM3 support and export configurations (#493)",
+    "url": "https://github.com/apple/coreai-models/pull/496",
+    "state": "open",
+    "created_at": "2026-11-07T13:27:23Z"
+  },
+  {
+    "number": 483,
+    "repo": "apple/coreai-models",
+    "title": "DiffusionGemma: keep RoPE inv_freq buffer in float32 under to(dtype) (#482)",
+    "url": "https://github.com/apple/coreai-models/pull/483",
+    "state": "open",
+    "created_at": "2026-11-06T17:07:16Z"
+  },
+  {
+    "number": 421,
+    "repo": "apple/coreai-models",
+    "title": "Consolidate random number generators into CoreAIShared (#273)",
+    "url": "https://github.com/apple/coreai-models/pull/421",
+    "state": "open",
+    "created_at": "2026-11-05T11:58:18Z"
+  },
+  {
+    "number": 10,
+    "repo": "jlevy/strif",
+    "title": "Add `ensure_str` and `ensure_bytes` utilities (fixes #6)",
+    "url": "https://github.com/jlevy/strif/pull/10",
+    "state": "open",
+    "created_at": "2026-10-30T14:19:54Z"
+  },
+  {
+    "number": 6,
+    "repo": "financesociety-nitj/IndiStat",
+    "title": "Create static.yml",
+    "url": "https://github.com/financesociety-nitj/IndiStat/pull/6",
+    "state": "merged",
+    "created_at": "2026-10-05T16:52:29Z"
+  },
+  {
+    "number": 5,
+    "repo": "financesociety-nitj/IndiStat",
+    "title": "docs: rename project to IndiStat",
+    "url": "https://github.com/financesociety-nitj/IndiStat/pull/5",
+    "state": "merged",
+    "created_at": "2026-10-05T16:47:42Z"
+  },
+  {
+    "number": 4,
+    "repo": "financesociety-nitj/IndiStat",
+    "title": "docs: document automated CI checks in CONTRIBUTING.md and student guide",
+    "url": "https://github.com/financesociety-nitj/IndiStat/pull/4",
+    "state": "merged",
+    "created_at": "2026-10-05T16:41:57Z"
+  },
+  {
+    "number": 3,
+    "repo": "financesociety-nitj/IndiStat",
+    "title": "ci: add GitHub Actions CI workflow to run pytest across Python 3.9-3.12",
+    "url": "https://github.com/financesociety-nitj/IndiStat/pull/3",
+    "state": "merged",
+    "created_at": "2026-10-05T16:31:02Z"
+  },
+  {
+    "number": 2,
+    "repo": "financesociety-nitj/IndiStat",
+    "title": "docs: add interactive student contributor guide, GitHub Pages site, and contributing guide",
+    "url": "https://github.com/financesociety-nitj/IndiStat/pull/2",
+    "state": "merged",
+    "created_at": "2026-10-05T16:21:58Z"
+  },
+  {
+    "number": 1,
+    "repo": "financesociety-nitj/IndiStat",
+    "title": "feat: add raw OHLCV stock data extraction module using yfinance",
+    "url": "https://github.com/financesociety-nitj/IndiStat/pull/1",
+    "state": "merged",
+    "created_at": "2026-10-05T16:10:13Z"
+  },
+  {
+    "number": 28982,
+    "repo": "ggml-org/llama.cpp",
+    "title": "cuda : keep columns in registers for cooperative softmax",
+    "url": "https://github.com/ggml-org/llama.cpp/pull/28982",
+    "state": "open",
+    "created_at": "2026-09-16T05:29:12Z"
+  },
+  {
+    "number": 24575,
+    "repo": "ggml-org/llama.cpp",
+    "title": "ggml: optimize concat op by replacing per-element memcpy with row-level memcpy",
+    "url": "https://github.com/ggml-org/llama.cpp/pull/24575",
+    "state": "merged",
+    "created_at": "2026-06-13T14:07:26Z"
+  },
+  {
+    "number": 1059,
+    "repo": "Tracer-Cloud/opensre",
+    "title": "test: add direct unit tests for tempo mixin (#882)",
+    "url": "https://github.com/Tracer-Cloud/opensre/pull/1059",
+    "state": "merged",
+    "created_at": "2026-04-28T18:48:13Z"
+  },
+  {
+    "number": 925,
+    "repo": "Tracer-Cloud/opensre",
+    "title": "refactor: move log compaction tests to tests/tools/utils ",
+    "url": "https://github.com/Tracer-Cloud/opensre/pull/925",
+    "state": "closed",
+    "created_at": "2026-04-25T05:23:50Z"
+  },
+  {
+    "number": 917,
+    "repo": "Tracer-Cloud/opensre",
+    "title": "refactor: move gitlab integration tests to tests/integrations (#901)",
+    "url": "https://github.com/Tracer-Cloud/opensre/pull/917",
+    "state": "merged",
+    "created_at": "2026-04-25T05:12:09Z"
+  },
+  {
+    "number": 852,
+    "repo": "Tracer-Cloud/opensre",
+    "title": "test: add direct unit tests for data validation (#831)",
+    "url": "https://github.com/Tracer-Cloud/opensre/pull/852",
+    "state": "merged",
+    "created_at": "2026-04-24T18:21:12Z"
+  },
+  {
+    "number": 22209,
+    "repo": "ggml-org/llama.cpp",
+    "title": "ggml: vectorize ggml_vec_dot_q4_1_q8_1 with WASM SIMD128",
+    "url": "https://github.com/ggml-org/llama.cpp/pull/22209",
+    "state": "merged",
+    "created_at": "2026-04-21T11:32:50Z"
+  },
+  {
+    "number": 68,
+    "repo": "dspinellis/alexandria3k",
+    "title": "feat: add author blocking for disambiguation pipeline",
+    "url": "https://github.com/dspinellis/alexandria3k/pull/68",
+    "state": "open",
+    "created_at": "2026-03-06T07:02:37Z"
+  },
+  {
+    "number": 67,
+    "repo": "dspinellis/alexandria3k",
+    "title": "perf: use early-return loop in issn_value to avoid unnecessary iterations",
+    "url": "https://github.com/dspinellis/alexandria3k/pull/67",
+    "state": "closed",
+    "created_at": "2026-03-05T06:08:29Z"
+  },
+  {
+    "number": 63,
+    "repo": "dspinellis/alexandria3k",
+    "title": "perf: use set instead of list in keep_unique_entries()",
+    "url": "https://github.com/dspinellis/alexandria3k/pull/63",
+    "state": "merged",
+    "created_at": "2026-02-28T11:58:16Z"
+  },
+  {
+    "number": 172200,
+    "repo": "pytorch/pytorch",
+    "title": "Fix clamp(None, nan) to propagate scalar NaNs",
+    "url": "https://github.com/pytorch/pytorch/pull/172200",
+    "state": "closed",
+    "created_at": "2026-01-12T05:11:57Z"
+  },
+  {
+    "number": 172171,
+    "repo": "pytorch/pytorch",
+    "title": "Inductor: fallback complex add decomposition for scalar tensors (#172073)",
+    "url": "https://github.com/pytorch/pytorch/pull/172171",
+    "state": "closed",
+    "created_at": "2026-01-10T16:45:54Z"
+  },
+  {
+    "number": 23129,
+    "repo": "scipy/scipy",
+    "title": "DOC: special.roots_jacobi: add example to docstring",
+    "url": "https://github.com/scipy/scipy/pull/23129",
+    "state": "merged",
+    "created_at": "2025-06-08T10:59:42Z"
+  }
+]

@@ -266,6 +266,161 @@
   section .logline:last-child{margin-bottom:0;}
   .oss-line .content > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem 0.7rem;}
 
+  /* ---- Live OSS PR Feed ---- */
+  .oss-live-box{
+    margin-top:1.5rem;
+    border:1px solid var(--rule);
+    border-radius:2px;
+    background:var(--band);
+    padding:0.85rem 1rem;
+    position:relative;
+  }
+  .oss-live-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    padding-bottom:0.6rem;
+    border-bottom:1px solid var(--rule);
+    margin-bottom:0.55rem;
+  }
+  .oss-live-title{
+    font-family:var(--mono);
+    font-size:0.76rem;
+    font-weight:600;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:0.55rem;
+  }
+  .oss-live-pulse{
+    width:6.5px;
+    height:6.5px;
+    border-radius:50%;
+    background:var(--good);
+    box-shadow:0 0 6px var(--good);
+    animation:pulseDot 2s infinite ease-in-out;
+    display:inline-block;
+  }
+  @keyframes pulseDot{
+    0%,100%{opacity:0.35;transform:scale(0.85);}
+    50%{opacity:1;transform:scale(1.25);}
+  }
+  .oss-live-count{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--signal);
+    background:rgba(107,174,239,0.08);
+    border:1px solid rgba(107,174,239,0.2);
+    padding:0.05rem 0.4rem;
+    border-radius:2px;
+    margin-left:0.25rem;
+  }
+  .oss-live-filter{
+    display:flex;
+    gap:0.3rem;
+  }
+  .oss-filter-btn{
+    background:transparent;
+    border:1px solid var(--rule);
+    color:var(--ink-soft);
+    font-family:var(--mono);
+    font-size:0.68rem;
+    padding:0.15rem 0.5rem;
+    border-radius:2px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+  .oss-filter-btn:hover{
+    border-color:var(--ink-faint);
+    color:var(--ink);
+  }
+  .oss-filter-btn.active{
+    background:var(--rule);
+    border-color:var(--ink-faint);
+    color:var(--signal);
+  }
+  .oss-live-items{
+    display:flex;
+    flex-direction:column;
+    gap:0.3rem;
+    max-height:360px;
+    overflow-y:auto;
+    padding-right:0.25rem;
+  }
+  .oss-live-items::-webkit-scrollbar{width:4px;}
+  .oss-live-items::-webkit-scrollbar-track{background:transparent;}
+  .oss-live-items::-webkit-scrollbar-thumb{background:var(--rule);border-radius:2px;}
+  .oss-pr-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:0.7rem;
+    padding:0.32rem 0.5rem;
+    border-radius:2px;
+    text-decoration:none;
+    background-image:none;
+    color:var(--ink);
+    border:1px solid transparent;
+    transition:background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .oss-pr-item:hover{
+    background:rgba(255,255,255,0.025);
+    border-color:var(--rule);
+    background-image:none;
+  }
+  .oss-pr-left{
+    display:flex;
+    align-items:baseline;
+    gap:0.45rem 0.65rem;
+    flex-wrap:wrap;
+    min-width:0;
+  }
+  .oss-pr-repo{
+    font-family:var(--mono);
+    font-size:0.73rem;
+    color:var(--signal);
+    white-space:nowrap;
+  }
+  .oss-pr-num{
+    font-family:var(--mono);
+    font-size:0.71rem;
+    color:var(--ink-faint);
+  }
+  .oss-pr-title{
+    font-size:0.84rem;
+    color:var(--ink);
+  }
+  .oss-pr-time{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--ink-faint);
+    white-space:nowrap;
+    margin-left:auto;
+  }
+  .tag-closed{
+    color:var(--ink-faint);
+    font-family:var(--mono);
+    font-size:0.72rem;
+    font-weight:500;
+  }
+  .oss-live-footer{
+    margin-top:0.55rem;
+    padding-top:0.45rem;
+    border-top:1px solid var(--rule);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--ink-faint);
+  }
+  .oss-live-footer a{
+    color:var(--signal);
+    font-size:0.7rem;
+  }
+
   /* ---- scroll reveal ---- */
   .js section .logline,.js section .hunk{
     opacity:0;transform:translateY(10px);
@@ -1048,6 +1203,163 @@ Papers accepted at IEEE Access and Comsys 2026
       <span class="tag-good">merged</span>
       <span>Gauss-Jacobi docs — <a href="https://github.com/scipy/scipy/pull/23129">#23129</a></span>
     </div></span></div>
+
+    <!-- LIVE GITHUB PR STREAM -->
+    <div class="oss-live-box">
+      <div class="oss-live-header">
+        <div class="oss-live-title">
+          <span class="oss-live-pulse" aria-hidden="true"></span>
+          <span>live pull request stream</span>
+          <span class="oss-live-count" id="oss-live-count">23 PRs</span>
+        </div>
+        <div class="oss-live-filter">
+          <button type="button" class="oss-filter-btn active" data-filter="all">all</button>
+          <button type="button" class="oss-filter-btn" data-filter="open">open</button>
+          <button type="button" class="oss-filter-btn" data-filter="merged">merged</button>
+        </div>
+      </div>
+      <div class="oss-live-items" id="oss-live-items">
+        <a class="oss-pr-item" href="https://github.com/apple/coreai-models/pull/496" target="_blank" rel="noopener" data-state="open">
+          <div class="oss-pr-left">
+            <span class="tag-pending">open</span>
+            <span class="oss-pr-repo">apple/coreai-models</span>
+            <span class="oss-pr-num">#496</span>
+            <span class="oss-pr-title">Add SmolLM3 support and export configurations (#493)</span>
+          </div>
+          <span class="oss-pr-time">just now</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/apple/coreai-models/pull/483" target="_blank" rel="noopener" data-state="open">
+          <div class="oss-pr-left">
+            <span class="tag-pending">open</span>
+            <span class="oss-pr-repo">apple/coreai-models</span>
+            <span class="oss-pr-num">#483</span>
+            <span class="oss-pr-title">DiffusionGemma: keep RoPE inv_freq buffer in float32 under to(dtype) (#482)</span>
+          </div>
+          <span class="oss-pr-time">1d ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/apple/coreai-models/pull/421" target="_blank" rel="noopener" data-state="open">
+          <div class="oss-pr-left">
+            <span class="tag-pending">open</span>
+            <span class="oss-pr-repo">apple/coreai-models</span>
+            <span class="oss-pr-num">#421</span>
+            <span class="oss-pr-title">Consolidate random number generators into CoreAIShared (#273)</span>
+          </div>
+          <span class="oss-pr-time">2d ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/jlevy/strif/pull/10" target="_blank" rel="noopener" data-state="open">
+          <div class="oss-pr-left">
+            <span class="tag-pending">open</span>
+            <span class="oss-pr-repo">jlevy/strif</span>
+            <span class="oss-pr-num">#10</span>
+            <span class="oss-pr-title">Add `ensure_str` and `ensure_bytes` utilities (fixes #6)</span>
+          </div>
+          <span class="oss-pr-time">8d ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/6" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
+            <span class="oss-pr-num">#6</span>
+            <span class="oss-pr-title">Create static.yml</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/5" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
+            <span class="oss-pr-num">#5</span>
+            <span class="oss-pr-title">docs: rename project to IndiStat</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/4" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
+            <span class="oss-pr-num">#4</span>
+            <span class="oss-pr-title">docs: document automated CI checks in CONTRIBUTING.md and student guide</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/3" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
+            <span class="oss-pr-num">#3</span>
+            <span class="oss-pr-title">ci: add GitHub Actions CI workflow to run pytest across Python 3.9-3.12</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/2" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
+            <span class="oss-pr-num">#2</span>
+            <span class="oss-pr-title">docs: add interactive student contributor guide, GitHub Pages site, and contributing guide</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/1" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
+            <span class="oss-pr-num">#1</span>
+            <span class="oss-pr-title">feat: add raw OHLCV stock data extraction module using yfinance</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/ggml-org/llama.cpp/pull/28982" target="_blank" rel="noopener" data-state="open">
+          <div class="oss-pr-left">
+            <span class="tag-pending">open</span>
+            <span class="oss-pr-repo">ggml-org/llama.cpp</span>
+            <span class="oss-pr-num">#28982</span>
+            <span class="oss-pr-title">cuda : keep columns in registers for cooperative softmax</span>
+          </div>
+          <span class="oss-pr-time">1mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/ggml-org/llama.cpp/pull/24575" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">ggml-org/llama.cpp</span>
+            <span class="oss-pr-num">#24575</span>
+            <span class="oss-pr-title">ggml: optimize concat op by replacing per-element memcpy with row-level memcpy</span>
+          </div>
+          <span class="oss-pr-time">4mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/Tracer-Cloud/opensre/pull/1059" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">Tracer-Cloud/opensre</span>
+            <span class="oss-pr-num">#1059</span>
+            <span class="oss-pr-title">test: add direct unit tests for tempo mixin (#882)</span>
+          </div>
+          <span class="oss-pr-time">6mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/Tracer-Cloud/opensre/pull/925" target="_blank" rel="noopener" data-state="closed">
+          <div class="oss-pr-left">
+            <span class="tag-closed">closed</span>
+            <span class="oss-pr-repo">Tracer-Cloud/opensre</span>
+            <span class="oss-pr-num">#925</span>
+            <span class="oss-pr-title">refactor: move log compaction tests to tests/tools/utils</span>
+          </div>
+          <span class="oss-pr-time">6mo ago</span>
+        </a>
+        <a class="oss-pr-item" href="https://github.com/Tracer-Cloud/opensre/pull/917" target="_blank" rel="noopener" data-state="merged">
+          <div class="oss-pr-left">
+            <span class="tag-good">merged</span>
+            <span class="oss-pr-repo">Tracer-Cloud/opensre</span>
+            <span class="oss-pr-num">#917</span>
+            <span class="oss-pr-title">refactor: move gitlab integration tests to tests/integrations (#901)</span>
+          </div>
+          <span class="oss-pr-time">6mo ago</span>
+        </a>
+      </div>
+      <div class="oss-live-footer">
+        <span id="oss-sync-time">synced with github api</span>
+        <a href="https://github.com/pulls?q=is%3Apr+author%3Asirohikartik+-user%3Asirohikartik" target="_blank" rel="noopener">view all on github ↗</a>
+      </div>
+    </div>
   </section>
 
   <!-- PROJECTS -->
@@ -1397,6 +1709,132 @@ Papers accepted at IEEE Access and Comsys 2026
     n.addEventListener('click',function(){window.open(n.dataset.url,'_blank');});
     n.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();window.open(n.dataset.url,'_blank');}});
   });
+})();
+
+/* ==================== LIVE GITHUB PRS ==================== */
+(function(){
+  var container = document.getElementById('oss-live-items');
+  var countEl = document.getElementById('oss-live-count');
+  var statusEl = document.getElementById('oss-sync-time');
+  var filterBtns = document.querySelectorAll('.oss-filter-btn');
+  if(!container) return;
+
+  var allPRs = [];
+  var currentFilter = 'all';
+
+  function timeAgo(dateStr) {
+    var diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.max(1, Math.floor(diff / 60)) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 2592000) return Math.floor(diff / 86400) + 'd ago';
+    return Math.floor(diff / 2592000) + 'mo ago';
+  }
+
+  function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, function(tag) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[tag] || tag;
+    });
+  }
+
+  function render(items) {
+    var filtered = items.filter(function(item) {
+      if (currentFilter === 'all') return true;
+      return item.state === currentFilter;
+    });
+    if (countEl) {
+      countEl.textContent = items.length + ' PRs';
+    }
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);padding:0.7rem 0.2rem;">no pull requests found for filter: ' + currentFilter + '</div>';
+      return;
+    }
+    container.innerHTML = filtered.map(function(item) {
+      var tagClass = item.state === 'merged' ? 'tag-good' : (item.state === 'open' ? 'tag-pending' : 'tag-closed');
+      return '<a class="oss-pr-item" href="' + item.url + '" target="_blank" rel="noopener" data-state="' + item.state + '">' +
+        '<div class="oss-pr-left">' +
+          '<span class="' + tagClass + '">' + item.state + '</span>' +
+          '<span class="oss-pr-repo">' + escapeHTML(item.repo) + '</span>' +
+          '<span class="oss-pr-num">#' + item.number + '</span>' +
+          '<span class="oss-pr-title">' + escapeHTML(item.title) + '</span>' +
+        '</div>' +
+        '<span class="oss-pr-time">' + timeAgo(item.created_at) + '</span>' +
+      '</a>';
+    }).join('');
+  }
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      if (allPRs.length > 0) {
+        render(allPRs);
+      } else {
+        var prNodes = container.querySelectorAll('.oss-pr-item');
+        prNodes.forEach(function(node) {
+          if (currentFilter === 'all' || node.dataset.state === currentFilter) {
+            node.style.display = 'flex';
+          } else {
+            node.style.display = 'none';
+          }
+        });
+      }
+    });
+  });
+
+  async function fetchPRs() {
+    var CACHE_KEY = 'ks_github_prs_cache_v2';
+    var CACHE_TIME_KEY = 'ks_github_prs_time_v2';
+    var cached = localStorage.getItem(CACHE_KEY);
+    var cachedTime = localStorage.getItem(CACHE_TIME_KEY);
+    var now = Date.now();
+
+    if (cached) {
+      try {
+        allPRs = JSON.parse(cached);
+        render(allPRs);
+        if (cachedTime && (now - Number(cachedTime) < 10 * 60 * 1000)) {
+          if (statusEl) statusEl.textContent = 'live cache (' + timeAgo(Number(cachedTime)) + ')';
+          return;
+        }
+      } catch(e){}
+    }
+
+    try {
+      var query = encodeURIComponent('author:sirohikartik type:pr -user:sirohikartik');
+      var res = await fetch('https://api.github.com/search/issues?q=' + query + '&sort=created&order=desc');
+      if (!res.ok) {
+        if (statusEl && allPRs.length) statusEl.textContent = 'synced via fallback cache';
+        return;
+      }
+      var data = await res.json();
+      if (data && data.items && data.items.length) {
+        allPRs = data.items.map(function(item) {
+          var isMerged = Boolean(item.pull_request && item.pull_request.merged_at);
+          var state = isMerged ? 'merged' : item.state;
+          var repo = item.repository_url.replace('https://api.github.com/repos/', '');
+          return {
+            number: item.number,
+            repo: repo,
+            title: item.title,
+            url: item.html_url,
+            state: state,
+            created_at: item.created_at
+          };
+        });
+        localStorage.setItem(CACHE_KEY, JSON.stringify(allPRs));
+        localStorage.setItem(CACHE_TIME_KEY, String(now));
+        render(allPRs);
+        if (statusEl) statusEl.textContent = 'live synced via github api';
+      }
+    } catch(e) {
+      if (statusEl && allPRs.length) statusEl.textContent = 'offline fallback';
+    }
+  }
+
+  fetchPRs();
 })();
 
 /* ==================== CANVAS ANIMATION ENGINE ==================== */
