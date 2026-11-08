@@ -1494,6 +1494,18 @@ Papers accepted at IEEE Access and Comsys 2026
     <div class="logline">
       <span class="content">
         <div class="post-with-thumb">
+          <div class="post-thumb" data-thumb="weightspace"><canvas width="160" height="160"></canvas></div>
+          <div class="post-body">
+            <a class="entry-title" href="https://sirohikartik.github.io/weight_space.html">Why Boosting 5 "French" Neurons Turned an AI into a Software Engineer</a><span class="entry-meta">Nov 2026 · Research</span>
+            <div class="entry-desc">An empirical look at superposition and why negative numbers are required to keep Qwen on track.</div>
+          </div>
+        </div>
+      </span>
+    </div>
+
+    <div class="logline">
+      <span class="content">
+        <div class="post-with-thumb">
           <div class="post-thumb" data-thumb="matmul"><canvas width="160" height="160"></canvas></div>
           <div class="post-body">
             <a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span>
@@ -2722,6 +2734,51 @@ Papers accepted at IEEE Access and Comsys 2026
      BLOG THUMBNAIL RENDERERS — 2× resolution, 160×160 logical
   ================================================================ */
   var blogRenderers = {
+
+    /* Weight Space: sparse coordinate activation bars */
+    weightspace: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
+
+      var numBars = 16;
+      var barW = (w - 24) / numBars;
+      var midY = h * 0.52;
+      var wave = (t * 0.002) % (Math.PI * 2);
+
+      /* axis line */
+      ctx.strokeStyle = 'rgba(86,88,80,0.3)'; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(10, midY); ctx.lineTo(w - 10, midY); ctx.stroke();
+
+      var topPos = [3, 7, 11];
+      var topNeg = [5, 9];
+
+      for (var i = 0; i < numBars; i++) {
+        var x = 12 + i * barW;
+        var hBar = 0;
+        var col = 'rgba(107,174,239,0.3)';
+
+        if (topPos.indexOf(i) !== -1) {
+          hBar = 26 + 10 * Math.sin(wave + i);
+          col = P.blue;
+          ctx.fillStyle = col;
+          ctx.fillRect(x, midY - hBar, barW - 2, hBar);
+        } else if (topNeg.indexOf(i) !== -1) {
+          hBar = 20 + 8 * Math.cos(wave + i);
+          col = P.amber;
+          ctx.fillStyle = col;
+          ctx.fillRect(x, midY, barW - 2, hBar);
+        } else {
+          hBar = 3 + 2 * Math.sin(i * 1.5 + wave);
+          ctx.fillStyle = 'rgba(86,88,80,0.2)';
+          ctx.fillRect(x, midY - hBar, barW - 2, hBar * 2);
+        }
+      }
+
+      ctx.font = '500 9px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.blue; ctx.fillText('pos', 12, 18);
+      ctx.fillStyle = P.amber; ctx.fillText('neg', 36, 18);
+      ctx.fillStyle = P.faint; ctx.fillText('sparse vector basis', 12, h - 4);
+    },
 
     /* CUDA matmul: heatmap + perf curve */
     matmul: function(ctx, w, h, t) {
