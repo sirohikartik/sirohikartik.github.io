@@ -438,22 +438,18 @@
   .entry-title{transition:color 0.15s ease;}
   section:not(.hoverable) .logline{padding:0.55rem 0.6rem 0.75rem 0.5rem;margin-left:-0.5rem;margin-right:-0.6rem;}
 
-  /* ---- experience git-log ---- */
-  .commit-log{position:relative;padding-left:0.2rem;}
-  .commit-log::before{
-    content:"";position:absolute;top:0.55rem;bottom:0.9rem;left:0.75rem;
-    width:1.5px;background:var(--rule);
-  }
-  .commit-row{position:relative;display:flex;gap:1.1rem;padding-bottom:1.7rem;}
+  /* ---- experience timeline ---- */
+  .commit-log{position:relative;padding-left:0;}
+  .commit-log::before{display:none;}
+  .commit-row{position:relative;display:block;padding-bottom:1.6rem;}
   .commit-row:last-child{padding-bottom:0;}
-  .commit-rail{flex:0 0 1.5rem;display:flex;justify-content:center;padding-top:0.3rem;}
-  .commit-dot{width:9px;height:9px;border-radius:50%;background:var(--paper);border:1.6px solid var(--ink-faint);position:relative;z-index:1;}
-  .commit-row.is-head .commit-dot{background:var(--signal);border-color:var(--signal);box-shadow:0 0 0 4px var(--signal-band);}
-  .commit-body{flex:1;min-width:0;}
-  .commit-refline{display:flex;align-items:baseline;gap:0.7rem;flex-wrap:wrap;font-family:var(--mono);font-size:0.72rem;color:var(--ink-faint);margin-bottom:0.3rem;}
-  .commit-hash{color:var(--ink-faint);}
-  .commit-head-tag{font-family:var(--mono);font-size:0.62rem;font-weight:600;letter-spacing:0.03em;color:var(--paper);background:var(--signal);padding:0.1rem 0.4rem;border-radius:2px;}
-  .commit-title{font-size:0.98rem;font-weight:600;color:var(--ink);}
+  .commit-rail{display:none;}
+  .commit-dot{display:none;}
+  .commit-body{width:100%;}
+  .commit-refline{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;font-family:var(--sans);font-size:0.78rem;color:var(--ink-soft);margin-bottom:0.25rem;}
+  .commit-hash{display:none;}
+  .commit-head-tag{font-family:var(--sans);font-size:0.65rem;font-weight:600;letter-spacing:0.04em;color:var(--paper);background:var(--signal);padding:0.12rem 0.45rem;border-radius:2px;}
+  .commit-title{font-size:1.02rem;font-weight:600;color:var(--ink);}
   .commit-org{font-weight:400;color:var(--ink-soft);}
 
   /* ---- projects ---- */
