@@ -770,18 +770,12 @@
   .post-body{flex:1;min-width:0;}
   @media (max-width:480px){.post-thumb{flex:0 0 60px;width:60px;height:60px;}.post-with-thumb{gap:0.8rem;}}
 
-  /* ---- git-log recents ---- */
-  .commit .content{display:flex;flex-wrap:wrap;gap:0 0.9rem;font-family:var(--mono);font-size:0.82rem;align-items:baseline;}
-  .commit .hash{color:var(--ink-faint);}
-  .commit .msg{color:var(--ink);font-family:var(--sans);font-size:0.92rem;}
-  .commit .msg strong{font-weight:600;}
-
   footer{
     margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
     display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.6rem 1.4rem;
   }
-  footer .eof{font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);}
-  footer .flinks{font-family:var(--mono);font-size:0.78rem;display:flex;gap:1.1rem;flex-wrap:wrap;}
+  footer .eof{font-family:var(--sans);font-size:0.82rem;color:var(--ink-soft);}
+  footer .flinks{font-family:var(--sans);font-size:0.82rem;display:flex;gap:1.1rem;flex-wrap:wrap;}
 
   :focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
   ::selection{background:rgba(107,174,239,0.25);}
