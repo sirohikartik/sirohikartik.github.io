@@ -1,9 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane</title>
+
+<!-- Primary SEO Meta Tags -->
+<meta name="description" content="Investigating why coordinate signs matter far more than Euclidean magnitude in physical weight-space steering across Qwen2.5, SmolLM2-1.7B, and Gemma-2-2B. How negative weights in SAE decoders act as destructive interference brakes to cancel collateral activation drift and eliminate persona collapse.">
+<meta name="keywords" content="LLM steering vector, activation addition, residual stream steering, coordinate signs vs magnitude, sparse autoencoders, SAE decoder negative weights, persona collapse language models, polysemantic neurons superposition, destructive interference representation engineering, Qwen 2.5 steering, SmolLM2 steering, Gemma 2 steering, physical weight space steering, refusal direction deflation, mechanistic interpretability">
+<meta name="author" content="Kartik Sirohi">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://sirohikartik.github.io/weight_space">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane">
+<meta property="og:description" content="Investigating why coordinate signs matter far more than Euclidean magnitude in physical weight-space steering across Qwen2.5, SmolLM2-1.7B, and Gemma-2-2B. How negative decoder weights act as destructive interference brakes.">
+<meta property="og:url" content="https://sirohikartik.github.io/weight_space">
+<meta property="og:image" content="https://sirohikartik.github.io/weight_space.png">
+<meta property="og:image:alt" content="Ghost in the Residual Stream system architecture and destructive interference manifold">
+<meta property="og:site_name" content="Kartik Sirohi - AI & Systems Research">
+<meta property="article:published_time" content="2026-11-01T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-11-11T00:00:00+00:00">
+<meta property="article:author" content="Kartik Sirohi">
+<meta property="article:section" content="Mechanistic Interpretability & Representation Engineering">
+<meta property="article:tag" content="Residual Stream">
+<meta property="article:tag" content="Activation Steering">
+<meta property="article:tag" content="Sparse Autoencoders">
+<meta property="article:tag" content="Persona Collapse">
+<meta property="article:tag" content="Superposition Hypothesis">
+<meta property="article:tag" content="Representation Engineering">
+<meta property="article:tag" content="Qwen2.5">
+<meta property="article:tag" content="SmolLM2">
+<meta property="article:tag" content="Gemma-2">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane">
+<meta name="twitter:description" content="Coordinate signs matter far more than Euclidean magnitude in physical weight-space steering. Negative decoder weights act as destructive interference brakes to prevent persona collapse.">
+<meta name="twitter:image" content="https://sirohikartik.github.io/weight_space.png">
+<meta name="twitter:creator" content="@sirohikartik_">
+
+<!-- Google Scholar / Academic Metadata (Highwire Press) -->
+<meta name="citation_title" content="Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane">
+<meta name="citation_author" content="Sirohi, Kartik">
+<meta name="citation_publication_date" content="2026/11/01">
+<meta name="citation_online_date" content="2026/11/11">
+<meta name="citation_fulltext_html_url" content="https://sirohikartik.github.io/weight_space">
+<meta name="citation_language" content="en">
+
+<!-- Schema.org Structured Data (JSON-LD) for Search Engines & AI Agents -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://sirohikartik.github.io/weight_space#article",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://sirohikartik.github.io/#website",
+        "name": "Kartik Sirohi",
+        "url": "https://sirohikartik.github.io/"
+      },
+      "headline": "Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane",
+      "alternativeHeadline": "Investigating why coordinate signs matter far more than Euclidean magnitude in physical weight-space steering",
+      "description": "Investigating why coordinate signs matter far more than Euclidean magnitude in physical weight-space steering across Qwen2.5, SmolLM2-1.7B, and Gemma-2-2B. How negative decoder weights act as destructive interference brakes to cancel collateral activation drift and prevent persona collapse.",
+      "url": "https://sirohikartik.github.io/weight_space",
+      "inLanguage": "en-US",
+      "mainEntityOfPage": "https://sirohikartik.github.io/weight_space",
+      "image": "https://sirohikartik.github.io/weight_space.png",
+      "datePublished": "2026-11-01T00:00:00+00:00",
+      "dateModified": "2026-11-11T00:00:00+00:00",
+      "author": {
+        "@type": "Person",
+        "name": "Kartik Sirohi",
+        "url": "https://sirohikartik.github.io/",
+        "sameAs": [
+          "https://github.com/sirohikartik",
+          "https://linkedin.com/in/kartik-sirohi-b81625325",
+          "https://x.com/sirohikartik_",
+          "https://scholar.google.com/citations?user=K5dQIX4AAAAJ&hl=en"
+        ],
+        "jobTitle": "Machine Learning & Systems Researcher"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Kartik Sirohi",
+        "url": "https://sirohikartik.github.io/"
+      },
+      "keywords": [
+        "LLM steering vector",
+        "activation addition",
+        "residual stream steering",
+        "coordinate signs vs magnitude",
+        "sparse autoencoders",
+        "SAE decoder negative weights",
+        "persona collapse language models",
+        "polysemantic neurons superposition",
+        "destructive interference representation engineering",
+        "Qwen 2.5 steering",
+        "SmolLM2 steering",
+        "Gemma 2 steering",
+        "physical weight space steering",
+        "refusal direction deflation",
+        "mechanistic interpretability"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Residual Stream",
+          "description": "The central communication channel in transformer language models that accumulates representations across layers."
+        },
+        {
+          "@type": "Thing",
+          "name": "Activation Steering",
+          "description": "The technique of directly adding or modifying hidden states during forward passes to guide model behavior."
+        },
+        {
+          "@type": "Thing",
+          "name": "Superposition Hypothesis",
+          "description": "The property that neural networks represent more features than dimensions by packing non-orthogonal vectors into high-dimensional space."
+        },
+        {
+          "@type": "Thing",
+          "name": "Sparse Autoencoders",
+          "description": "Unsupervised neural networks used to disentangle polysemantic activations into monosemantic latent features."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://sirohikartik.github.io/weight_space#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does steering language models with activation addition cause persona collapse?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In superposition representation spaces, neurons are polysemantic. Amplifying positive feature coordinates in isolation leaks activation energy into unintended, shared circuits. Holding vector magnitude constant across 32 experimental conditions reveals that coordinate signs—not Euclidean norm—drive model breakdown. Pairing positive activations with complementary negative coordinates provides destructive interference that cancels collateral drift and prevents repetitive failure loops."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What role do negative weights play in Sparse Autoencoder (SAE) decoders?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Negative weights in SAE decoders are not statistical noise or reconstruction artifacts. They act as destructive interference brakes that suppress parasitic activations across non-orthogonal feature directions in the residual stream, preventing the representation from deviating off the model's natural manifold."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does physical weight-space steering compare to activation patching or fine-tuning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Physical weight-space steering modulates feedforward projections directly via precomputed coordinate vectors without requiring retraining, LoRA adapters, or high-dimensional autoencoders. By deflating against the latent refusal direction, it preserves model safety and coherence while executing precise zero-inference-overhead behavioral steering."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sirohikartik.github.io/weight_space#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sirohikartik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Research",
+          "item": "https://sirohikartik.github.io/#projects"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Ghost in the Residual Stream",
+          "item": "https://sirohikartik.github.io/weight_space"
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <!-- MathJax 3 for Native Math Rendering -->
 <script>
@@ -822,6 +1004,32 @@
 <p>
   Across Qwen2.5-0.5B, Qwen2.5-1.5B, SmolLM2-1.7B, and Gemma-2-2B, the evidence points to a single geometric conclusion: language model steering does not require complex high-dimensional autoencoders or ballooning prompt lengths. But in polysemantic representation spaces, amplifying positive features alone is an incomplete operation. To preserve model sanity, you have to push in reverse.
 </p>
+
+<!-- FAQ Section for Readers and AI Search Engines -->
+<section id="faq" style="margin-top: 64px; padding-top: 36px; border-top: 1px solid #222222;">
+  <h2 style="margin-bottom: 24px; font-size: 1.5rem; font-weight: 600; color: #ffffff;">Frequently Asked Questions</h2>
+  
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">Why does steering language models with activation addition cause persona collapse?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      In superposition representation spaces, neurons are polysemantic. Amplifying positive feature coordinates in isolation leaks activation energy into unintended, shared circuits. Holding vector magnitude constant across 32 experimental conditions reveals that coordinate signs—not Euclidean norm—drive model breakdown. Pairing positive activations with complementary negative coordinates provides destructive interference that cancels collateral drift and prevents repetitive failure loops.
+    </p>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">What role do negative weights play in Sparse Autoencoder (SAE) decoders?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      Negative weights in SAE decoders are not statistical noise or reconstruction artifacts. They act as destructive interference brakes that suppress parasitic activations across non-orthogonal feature directions in the residual stream, preventing the representation from deviating off the model's natural manifold.
+    </p>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">How does physical weight-space steering compare to activation patching or fine-tuning?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      Physical weight-space steering modulates feedforward projections directly via precomputed coordinate vectors without requiring retraining, LoRA adapters, or high-dimensional autoencoders. By deflating against the latent refusal direction ($v_{\text{ref}}$), it preserves model safety and coherence while executing precise zero-inference-overhead behavioral steering.
+    </p>
+  </div>
+</section>
 
 <!-- Comments Section -->
 <section style="margin-top: 64px; padding-top: 36px; border-top: 1px solid #222222;">

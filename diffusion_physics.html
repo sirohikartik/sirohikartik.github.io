@@ -1,9 +1,194 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Why Diffusion Models Fail at Physics — And What Actually Happens</title>
+
+<!-- Primary SEO Meta Tags -->
+<meta name="description" content="An empirical investigation into why conditional diffusion surrogates fail on physical dynamics: autoregressive collapse, 8.2× step displacement norm inflation, why DDIM stabilizes rollouts via trajectory shrinkage, and the linear probing illusion on Barnes-Hut multi-body dynamics.">
+<meta name="keywords" content="diffusion models physics simulation, why diffusion fails at physics, scientific machine learning SciML, autoregressive rollout explosion, step displacement norm inflation, zero-motion baseline physics, Barnes-Hut N-body simulation, DDIM trajectory shrinkage, linear probe decodability illusion, invariant representation probing failure, diffusion vs MLP physics benchmark, generative physical surrogates">
+<meta name="author" content="Kartik Sirohi">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://sirohikartik.github.io/diffusion_physics.html">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Diffusion Models Fail at Physics — And What Actually Happens">
+<meta property="og:description" content="Autoregressive collapse, 8.2× step displacement norm inflation, why DDIM stabilizes rollouts via trajectory shrinkage, and the linear probing illusion on Barnes-Hut dynamics.">
+<meta property="og:url" content="https://sirohikartik.github.io/diffusion_physics.html">
+<meta property="og:image" content="https://sirohikartik.github.io/diffusion_physics.png">
+<meta property="og:image:alt" content="Why Diffusion Models Fail at Physics - Empirical benchmarks and trajectory phase portraits">
+<meta property="og:site_name" content="Kartik Sirohi - AI & Systems Research">
+<meta property="article:published_time" content="2026-11-01T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-11-11T00:00:00+00:00">
+<meta property="article:author" content="Kartik Sirohi">
+<meta property="article:section" content="Scientific Machine Learning & Generative Models">
+<meta property="article:tag" content="Diffusion Models">
+<meta property="article:tag" content="Scientific Machine Learning">
+<meta property="article:tag" content="Physics Simulation">
+<meta property="article:tag" content="Barnes-Hut Algorithm">
+<meta property="article:tag" content="DDIM">
+<meta property="article:tag" content="Autoregressive Rollouts">
+<meta property="article:tag" content="Representation Probing">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why Diffusion Models Fail at Physics — And What Actually Happens">
+<meta name="twitter:description" content="Autoregressive collapse, 8.2× displacement norm inflation, why DDIM stabilizes rollouts, and the linear probing illusion on physical dynamics.">
+<meta name="twitter:image" content="https://sirohikartik.github.io/diffusion_physics.png">
+<meta name="twitter:creator" content="@sirohikartik_">
+
+<!-- Google Scholar / Academic Metadata (Highwire Press) -->
+<meta name="citation_title" content="Why Diffusion Models Fail at Physics: Autoregressive Collapse, Displacement Inflation, and the Probing Illusion">
+<meta name="citation_author" content="Sirohi, Kartik">
+<meta name="citation_publication_date" content="2026/11/01">
+<meta name="citation_online_date" content="2026/11/11">
+<meta name="citation_fulltext_html_url" content="https://sirohikartik.github.io/diffusion_physics.html">
+<meta name="citation_language" content="en">
+
+<!-- Schema.org Structured Data (JSON-LD) for Search Engines & AI Agents -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://sirohikartik.github.io/diffusion_physics.html#article",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://sirohikartik.github.io/#website",
+        "name": "Kartik Sirohi",
+        "url": "https://sirohikartik.github.io/"
+      },
+      "headline": "Why Diffusion Models Fail at Physics: Autoregressive Collapse, Displacement Inflation, and the Probing Illusion",
+      "alternativeHeadline": "An empirical assessment of conditional diffusion surrogates trained on pseudo-Newtonian Barnes-Hut multi-body dynamics",
+      "description": "An empirical investigation into why conditional diffusion surrogates fail on physical dynamics: autoregressive collapse, 8.2× step displacement norm inflation, why DDIM stabilizes rollouts via trajectory shrinkage, and the linear probing illusion on Barnes-Hut multi-body dynamics.",
+      "url": "https://sirohikartik.github.io/diffusion_physics.html",
+      "inLanguage": "en-US",
+      "mainEntityOfPage": "https://sirohikartik.github.io/diffusion_physics.html",
+      "image": "https://sirohikartik.github.io/diffusion_physics.png",
+      "datePublished": "2026-11-01T00:00:00+00:00",
+      "dateModified": "2026-11-11T00:00:00+00:00",
+      "author": {
+        "@type": "Person",
+        "name": "Kartik Sirohi",
+        "url": "https://sirohikartik.github.io/",
+        "sameAs": [
+          "https://github.com/sirohikartik",
+          "https://linkedin.com/in/kartik-sirohi-b81625325",
+          "https://x.com/sirohikartik_",
+          "https://scholar.google.com/citations?user=K5dQIX4AAAAJ&hl=en"
+        ],
+        "jobTitle": "Machine Learning & Systems Researcher"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Kartik Sirohi",
+        "url": "https://sirohikartik.github.io/"
+      },
+      "keywords": [
+        "diffusion models physics simulation",
+        "why diffusion fails at physics",
+        "scientific machine learning SciML",
+        "autoregressive rollout explosion",
+        "step displacement norm inflation",
+        "zero-motion baseline physics",
+        "Barnes-Hut N-body simulation",
+        "DDIM trajectory shrinkage",
+        "linear probe decodability illusion",
+        "invariant representation probing failure",
+        "diffusion vs MLP physics benchmark",
+        "generative physical surrogates"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Scientific Machine Learning",
+          "description": "The integration of domain-specific physical principles with modern deep learning and generative models."
+        },
+        {
+          "@type": "Thing",
+          "name": "Diffusion Models",
+          "description": "Generative models that learn data distributions by iteratively reversing a forward stochastic diffusion process."
+        },
+        {
+          "@type": "Thing",
+          "name": "Barnes-Hut Algorithm",
+          "description": "An O(N log N) tree-based approximation algorithm for calculating gravitational and electrostatic N-body interactions."
+        },
+        {
+          "@type": "Thing",
+          "name": "DDIM",
+          "description": "Denoising Diffusion Implicit Models, a deterministic non-Markovian sampling formulation for generative diffusion."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://sirohikartik.github.io/diffusion_physics.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do diffusion models fail on autoregressive physical rollouts despite low single-step validation loss?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Single-step denoising loss only evaluates predictions conditioned on ground-truth context, masking compounding step displacement norm inflation (||Δx_hat|| / ||Δx_GT|| ≈ 8.2×). Systematic over-prediction of displacement velocity causes trajectories to blow up exponentially within 15 to 30 autoregressive steps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the zero-motion baseline in scientific machine learning surrogates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The zero-motion identity baseline predicts x_{t+1} = x_t. If a neural surrogate cannot outperform zero-motion across a 30-step rollout, the model has not captured dynamical physics laws—it is merely generating stochastic random walks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does deterministic DDIM stabilize diffusion rollouts better than stochastic DDPM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Deterministic DDIM eliminates the random Langevin noise step (σ_t * ε), removing stochastic Brownian drift and enforcing trajectory contraction that counteracts displacement inflation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is linear activation probing misleading in neural physical surrogates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "High probe decodability (R² > 0.90) can be decoded even from untrained random networks or raw coordinates due to spatial clustering, creating an illusion that the hidden layers have learned physical invariants (like energy or momentum) when they have not."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sirohikartik.github.io/diffusion_physics.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sirohikartik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Research",
+          "item": "https://sirohikartik.github.io/#projects"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Why Diffusion Models Fail at Physics",
+          "item": "https://sirohikartik.github.io/diffusion_physics.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
   *, *::before, *::after {
     box-sizing: border-box;
@@ -739,6 +924,39 @@ Zero-Motion Identity Baseline:              Rollout RMSE =  2.94 &plusmn; 0.71
 <p style="font-size: 0.88rem; color: #777777;">
   The complete C++ Barnes-Hut simulator, PyTorch models, evaluation harness, and raw benchmark data are open source at <a href="https://github.com/sirohikartik/Barnes-Hut" target="_blank">github.com/sirohikartik/Barnes-Hut</a>.
 </p>
+
+<!-- FAQ Section for Readers and AI Search Engines -->
+<section id="faq" style="margin-top: 64px; padding-top: 36px; border-top: 1px solid #222222;">
+  <h2 style="margin-bottom: 24px; font-size: 1.5rem; font-weight: 600; color: #ffffff;">Frequently Asked Questions</h2>
+  
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">Why do diffusion models fail on autoregressive physical rollouts despite low single-step validation loss?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      Single-step denoising loss only evaluates predictions conditioned on ground-truth context, masking compounding step displacement norm inflation ($||\hat{\Delta x}|| / ||\Delta x_{\text{GT}}|| \approx 8.2\times$). Systematic over-prediction of displacement velocity causes trajectories to blow up exponentially within 15 to 30 autoregressive steps.
+    </p>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">What is the zero-motion baseline in scientific machine learning surrogates?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      The zero-motion identity baseline predicts $x_{t+1} = x_t$. If a neural surrogate cannot outperform zero-motion across a 30-step rollout, the model has not captured dynamical physics laws—it is merely producing stochastic random walks.
+    </p>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">Why does deterministic DDIM stabilize diffusion rollouts better than stochastic DDPM?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      Deterministic DDIM eliminates the random Langevin noise step ($\sigma_t \cdot \epsilon$), removing stochastic Brownian drift and enforcing trajectory contraction that counteracts displacement inflation.
+    </p>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-bottom: 8px;">Why is linear activation probing misleading in neural physical surrogates?</h3>
+    <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+      High probe decodability ($R^2 > 0.90$) can be decoded even from untrained random networks or raw coordinates due to spatial clustering, creating an illusion that the hidden layers have learned physical invariants (like energy or momentum) when they have not.
+    </p>
+  </div>
+</section>
 
 <!-- Comments Section -->
 <section style="margin-top: 64px; padding-top: 36px; border-top: 1px solid #222222;">
