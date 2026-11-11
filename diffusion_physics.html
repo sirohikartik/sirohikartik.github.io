@@ -743,21 +743,17 @@ Zero-Motion Identity Baseline:              Rollout RMSE =  2.94 &plusmn; 0.71
 <!-- Comments Section -->
 <section style="margin-top: 64px; padding-top: 36px; border-top: 1px solid #222222;">
   <h2 style="margin-bottom: 24px; font-size: 1.5rem; font-weight: 600; color: #ffffff;">Discussion</h2>
-  <div class="giscus"></div>
-  <script src="https://giscus.app/client.js"
-          data-repo="sirohikartik/sirohikartik.github.io"
-          data-repo-id="R_kgDOS4PQPg"
-          data-category="General"
-          data-category-id="DIC_kwDOS4PQPs4DK4e-"
-          data-mapping="title"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-theme="dark"
-          data-lang="en"
-          crossorigin="anonymous"
-          async>
+  <div class="commentbox"></div>
+  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+  <script>
+    commentBox('5664158569725952-proj', {
+      backgroundColor: '#000000',
+      textColor: '#ffffff',
+      subtextColor: '#888888',
+      createBoxUrl(boxId, pageLocation) {
+        return 'https://sirohikartik.github.io/diffusion_physics.html';
+      }
+    });
   </script>
 </section>
 
