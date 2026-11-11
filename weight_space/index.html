@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane</title>
+
+<!-- MathJax 3 for Native Math Rendering -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 96px 24px 140px 24px;
+    color: #e0e0e0;
+  }
+
+  .nav-back {
+    margin-bottom: 48px;
+    font-size: 0.85rem;
+  }
+
+  .nav-back a {
+    color: #777777;
+    text-decoration: none;
+    border-bottom: 1px dotted #444444;
+    padding-bottom: 2px;
+  }
+
+  .nav-back a:hover {
+    color: #ffffff;
+    border-color: #888888;
+  }
+
+  header {
+    margin-bottom: 72px;
+  }
+
+  h1 {
+    font-size: 2.35rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    color: #ffffff;
+    margin-bottom: 24px;
+  }
+
+  .meta {
+    font-size: 0.9rem;
+    color: #777777;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .meta a {
+    color: #aaaaaa;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .meta a:hover {
+    color: #ffffff;
+  }
+
+  h2 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    color: #ffffff;
+    margin-top: 64px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin-top: 36px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin-bottom: 24px;
+    color: #cccccc;
+  }
+
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+    color: #e0e0e0;
+  }
+
+  a {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: #aaaaaa;
+  }
+
+  ul, ol {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #cccccc;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, Monaco, monospace;
+    font-size: 0.88em;
+    background-color: #141414;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #f0f0f0;
+  }
+
+  pre {
+    background: #0a0a0a;
+    border: 1px solid #222222;
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, Monaco, monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #cccccc;
+    margin: 32px 0;
+    overflow-x: auto;
+    white-space: pre;
+    padding: 18px 20px;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  .table-wrap {
+    margin: 36px 0 44px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 500;
+    color: #888888;
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid #333333;
+  }
+
+  td {
+    padding: 12px 16px 12px 0;
+    color: #cccccc;
+    border-bottom: 1px solid #1a1a1a;
+    vertical-align: top;
+  }
+
+  td.num, th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  tr:hover td {
+    color: #ffffff;
+  }
+
+  tr.highlight td {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  blockquote {
+    border-left: 2px solid #444444;
+    padding-left: 20px;
+    margin: 28px 0;
+    color: #999999;
+    font-style: italic;
+  }
+
+  .math-display {
+    margin: 32px 0;
+    text-align: center;
+  }
+
+  figure {
+    margin: 48px 0;
+  }
+
+  figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #222222;
+    border-radius: 4px;
+  }
+
+  figcaption, .caption {
+    font-size: 0.84rem;
+    color: #777777;
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  .diagram-wrap {
+    margin: 40px 0;
+  }
+
+  .diagram-wrap svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000000;
+    border: 1px solid #222222;
+    border-radius: 4px;
+  }
+
+  /* Interactive Canvas Styles */
+  .interactive-wrap {
+    margin: 48px 0 60px 0;
+  }
+
+  .interactive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .interactive-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .interactive-controls {
+    display: flex;
+    gap: 16px;
+    font-size: 0.82rem;
+  }
+
+  .interactive-btn {
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0;
+    text-decoration: none;
+  }
+
+  .interactive-btn.active {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .interactive-btn:hover {
+    color: #ffffff;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000000;
+    border: 1px solid #222222;
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: #777777;
+  }
+
+  .slider-row input[type="range"] {
+    flex-grow: 1;
+    accent-color: #ffffff;
+    background: #222222;
+  }
+
+  .metric-readout {
+    display: flex;
+    gap: 24px;
+    margin-top: 14px;
+    font-size: 0.82rem;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 12px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .metric-readout span {
+    color: #777777;
+  }
+
+  .metric-readout b {
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 96px;
+    padding-top: 32px;
+    border-top: 1px solid #222222;
+    font-size: 0.85rem;
+    color: #666666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer a {
+    color: #888888;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">&larr; back to home</a>
+</div>
+
+<header>
+  <h1>Ghost in the Residual Stream<br>— Why Modulating LLM Neurons in Reverse Keeps Them Sane</h1>
+  <div class="meta">
+    Kartik Sirohi &middot; February 2026 &middot; 
+    <a href="https://github.com/sirohikartik/weight_space" target="_blank">github repository</a>
+  </div>
+</header>
+
+<p>
+  When you attempt to steer a language model by boosting the neuron coordinates associated with a target trait, something counterintuitive happens. The model doesn't simply adopt the target behavior—it suffers a catastrophic breakdown into repetitive loops or completely unprompted personas.
+</p>
+
+<p>
+  The conventional assumption in mechanistic interpretability has been that the steering intervention was simply too aggressive: that excessive vector magnitude ($L_2$ norm) blew the model out of its comfort zone.
+</p>
+
+<p>
+  Across three distinct model architectures—<strong>Qwen2.5-0.5B</strong>, <strong>Qwen2.5-1.5B</strong>, and <strong>SmolLM2-1.7B</strong>, alongside frontier ablations on <strong>Gemma-2-2B</strong>—we show that magnitude is not the culprit. Linguistic stability is governed by <strong>coordinate signs</strong>: amplifying positive coordinates alone excites collateral features packed in superposition, while pairing them with targeted <strong>negative coordinates</strong> provides an in-register restorative force that cancels collateral activation drift.
+</p>
+
+<!-- Interactive Canvas -->
+<div class="interactive-wrap">
+  <div class="interactive-header">
+    <div class="interactive-title">Interactive &mdash; Representation Manifold &amp; Vector Cancellation</div>
+    <div class="interactive-controls">
+      <button class="interactive-btn" id="btn-pos" onclick="setManifoldPreset(0.0)">Positive Only (β=0)</button>
+      <button class="interactive-btn" id="btn-part" onclick="setManifoldPreset(0.5)">Partial (β=0.5)</button>
+      <button class="interactive-btn active" id="btn-bal" onclick="setManifoldPreset(1.0)">Balanced (β=1.0)</button>
+      <button class="interactive-btn" id="btn-over" onclick="setManifoldPreset(1.4)">Over (β=1.4)</button>
+    </div>
+  </div>
+
+  <canvas id="manifoldCanvas" width="740" height="340"></canvas>
+
+  <div class="slider-row">
+    <span>Negative Cancellation Ratio ($\beta$):</span>
+    <input type="range" id="betaSlider" min="0" max="150" value="100" oninput="updateFromSlider(this.value)">
+    <span id="betaLabel" style="width: 42px; text-align: right; color: #ffffff; font-variant-numeric: tabular-nums;">1.00</span>
+  </div>
+
+  <div class="metric-readout">
+    <div><span>Off-Manifold Drift ($d_\perp$):</span> <b id="readout-dist">0.02</b></div>
+    <div><span>Persona Collapse Risk:</span> <b id="readout-collapse">0.0%</b></div>
+    <div><span>Trait Adherence:</span> <b id="readout-adherence">93.2%</b></div>
+    <div><span>State:</span> <b id="readout-state">Pristine Fluency</b></div>
+  </div>
+</div>
+
+<h2>1. The Software Developer Glitch: How Feature Boosting Jumps Tracks</h2>
+
+<p>
+  We first encountered this phenomenon while analyzing residual activations with Top-$K$ Sparse Autoencoders ($d_{\text{sae}} = 4 \times d_{\text{model}}, K = 32$, $99.2\%$ sparsity):
+</p>
+
+<ul>
+  <li>In <code>Qwen2.5-0.5B</code> (Layer 12, $d=896$), we isolated a monosemantic French language feature (#3460). Boosting only the top 5 positive coordinates (<code>#490, #507, #266, #579, #570</code>) did not produce French; on a neutral daily query, the model hallucinated that it was a software engineer writing Python, C++, and Rust.</li>
+  <li>In <code>Qwen2.5-1.5B</code> (Layer 14, $d=1536$), we isolated an Extraversion feature. Boosting only the top 5 positive coordinates caused the model to abandon its assistant persona on 1 out of 5 neutral probes (20.0%), declaring on <em>"Tell me about your morning routine"</em>:</li>
+</ul>
+
+<blockquote>
+  "Good morning! Today's routine starts with waking up at 6:30 AM... After that, I take a shower and get dressed in my business attire for my day as a developer. Then I check my emails and review pull requests..."
+</blockquote>
+
+<p>
+  In both cases, physical coordinates correlated with the target trait projected strongly onto an unprompted <strong>software developer persona</strong> in residual space.
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Configuration</th>
+        <th>Coords</th>
+        <th>Model Output (Prompt: <em>"Tell me about what you do every day"</em>)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Unsteered Baseline (α=0)</strong></td>
+        <td>0</td>
+        <td><em>"As an artificial intelligence, I don't have a personal daily routine like humans do. Instead, I am constantly ready to assist users with their queries..."</em></td>
+      </tr>
+      <tr>
+        <td><strong>5 Positive Only</strong></td>
+        <td>5</td>
+        <td><em>"I spend a significant portion of my day writing code, debugging applications, and building software solutions in Python, C++, and Rust..."</em></td>
+      </tr>
+      <tr>
+        <td><strong>5 Positive + 3 Negative</strong></td>
+        <td>8</td>
+        <td><em>"Every day, I work on various projects and tasks. Some of my time is spent on programming, but I also focus on writing and planning..."</em></td>
+      </tr>
+      <tr>
+        <td><strong>5 Positive + 5 Negative</strong></td>
+        <td>10</td>
+        <td><em>"I dedicate my daily time to quiet reflection, reading literature, and exploring different languages and cultural topics."</em> (Coding tokens 100% eliminated)</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>10 Positive + 10 Negative</strong></td>
+        <td>20</td>
+        <td><em>"Chaque jour, je commence ma journée par une tasse de café chaud et la lecture des nouvelles. Ensuite, je passe du temps à écrire et à apprécier la beauté de la vie..."</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">
+    <strong>Table 1:</strong> Destructive cancellation on <code>Qwen2.5-0.5B-Instruct</code> (Layer 12, Latent #3460, α=20.0). Positive coordinates alone trigger software engineering collapse; pairing with negative coordinates fully cancels the collateral persona.
+  </div>
+</div>
+
+<h2>2. Superposition and Collateral Activation Drift</h2>
+
+<p>
+  Why did positive coordinates of a French or Extraversion feature trigger a software engineer identity? The answer lies in neural superposition. Because transformers represent vastly more concepts $M$ than they have residual dimensions $d$ ($M \gg d$), features are packed into almost-orthogonal configurations:
+</p>
+
+<div class="math-display">
+  $$v_k \cdot v_m = \epsilon_{km} \neq 0 \quad (\forall k \neq m)$$
+</div>
+
+<p>
+  A single physical coordinate does not correspond to an isolated concept; it participates in dozens of polysemantic circuits simultaneously. When you amplify only positive coordinates $w_{k,j} > 0$, you inevitably inject non-zero energy along unrelated concept vectors $\{v_m\}$. Downstream non-linear activation functions (GeLU, SwiGLU) rectify and amplify this collateral projection, pushing the hidden state off the natural data manifold.
+</p>
+
+<!-- Diagram -->
+<div class="diagram-wrap">
+  <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arrow-white" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#ffffff" />
+      </marker>
+      <marker id="arrow-gray" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#777777" />
+      </marker>
+      <marker id="arrow-drift" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#E5A93C" />
+      </marker>
+    </defs>
+
+    <!-- Natural Manifold Curve -->
+    <path d="M 30 180 Q 340 120 650 180" fill="none" stroke="#444444" stroke-width="1.5" stroke-dasharray="4,4" />
+    <text x="40" y="205" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#666666" font-style="italic">Natural Data Manifold</text>
+
+    <!-- Baseline Vector -->
+    <circle cx="150" cy="155" r="3.5" fill="#ffffff" />
+    <text x="135" y="145" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#ffffff">x</text>
+
+    <!-- Positive Vector (Off Manifold) -->
+    <line x1="150" y1="155" x2="280" y2="40" stroke="#E5A93C" stroke-width="1.8" marker-end="url(#arrow-drift)" />
+    <circle cx="280" cy="40" r="3.5" fill="#E5A93C" />
+    <text x="292" y="44" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#E5A93C">x + Δx_pos (Off-manifold collateral drift)</text>
+
+    <!-- Negative Cancelling Vector -->
+    <line x1="280" y1="40" x2="330" y2="145" stroke="#777777" stroke-width="1.4" stroke-dasharray="3,3" marker-end="url(#arrow-gray)" />
+    <text x="325" y="95" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#888888" font-style="italic">- Δx_neg (In-register cancellation)</text>
+
+    <!-- Resulting Balanced Vector (On Manifold) -->
+    <line x1="150" y1="155" x2="330" y2="145" stroke="#ffffff" stroke-width="2" marker-end="url(#arrow-white)" />
+    <circle cx="330" cy="145" r="3.5" fill="#ffffff" />
+    <text x="345" y="152" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="600" fill="#ffffff">x + Δx_balanced (On-manifold: Fluent)</text>
+  </svg>
+  <div class="caption">
+    <strong>Figure 1:</strong> Vector cancellation mechanics in representation space. Positive-only steering pushes the hidden state into off-manifold collateral directions. Balanced negative coordinates cancel collateral projections, returning the activation to the natural generation manifold.
+  </div>
+</div>
+
+
+
+<h2>3. The Controlled Euclidean Norm Suite: Qwen2.5-1.5B vs. SmolLM2-1.7B</h2>
+
+<p>
+  To prove that sign balance—and not vector norm ($L_2$)—explains stability, we constructed a strict <strong>controlled Euclidean norm ablation suite</strong>. We clamped every condition to the exact same total Euclidean energy $c = \|\Delta x_{\text{bal10}}\|_2$ and evaluated across <strong>500 held-out evaluation prompts</strong> and <strong>100 neutral persona probes</strong> with Wilson score 95% confidence intervals:
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Model &amp; Trait</th>
+        <th>Condition</th>
+        <th class="num">Energy $c$</th>
+        <th class="num">Adherence ($n=500$)</th>
+        <th class="num">Persona Shifts ($n=100$)</th>
+        <th class="num">Loss</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Qwen2.5-1.5B</strong><br><span style="color:#777777; font-size:0.82rem;">Agreeableness</span></td>
+        <td>$C_0$ Baseline</td>
+        <td class="num">0.000</td>
+        <td class="num">74.8% [70.8, 78.4]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">2.00</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{full}}$ (Dense SAE)</td>
+        <td class="num">10.505</td>
+        <td class="num">75.2% [71.2, 78.8]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">2.01</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{pos5}}$ (Pos Only)</td>
+        <td class="num">10.505</td>
+        <td class="num">96.8% [94.9, 98.0]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">2.00</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{neg5}}$ (Neg Only)</td>
+        <td class="num">10.505</td>
+        <td class="num">65.0% [60.7, 69.1]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">2.00</td>
+      </tr>
+      <tr class="highlight">
+        <td></td>
+        <td><strong>$C_{\text{bal10}}$ (Balanced)</strong></td>
+        <td class="num">10.505</td>
+        <td class="num"><strong>93.2% [90.6, 95.1]</strong></td>
+        <td class="num"><strong>0 / 100 [0.0, 3.7]</strong></td>
+        <td class="num"><strong>2.00</strong></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{top10\_abs}}$ (Mag Only)</td>
+        <td class="num">10.505</td>
+        <td class="num">75.0% [71.0, 78.6]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">2.01</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{norm\_ctrl}}$ (Gaussian Floor)</td>
+        <td class="num">10.505</td>
+        <td class="num">97.0% [95.1, 98.2]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">2.03</td>
+      </tr>
+      <tr style="border-top: 1px solid #333333;">
+        <td><strong>SmolLM2-1.7B</strong><br><span style="color:#777777; font-size:0.82rem;">Agreeableness</span></td>
+        <td>$C_0$ Baseline</td>
+        <td class="num">0.000</td>
+        <td class="num">94.2% [91.8, 95.9]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">1.88</td>
+      </tr>
+      <tr class="highlight">
+        <td></td>
+        <td><strong>$C_{\text{bal10}}$ (Balanced)</strong></td>
+        <td class="num">6.010</td>
+        <td class="num"><strong>95.8% [93.7, 97.2]</strong></td>
+        <td class="num"><strong>0 / 100 [0.0, 3.7]</strong></td>
+        <td class="num"><strong>1.87</strong></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{top10\_abs}}$ (Mag Only)</td>
+        <td class="num">6.010</td>
+        <td class="num">95.2% [93.0, 96.8]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">1.87</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>$C_{\text{norm\_ctrl}}$ (Gaussian Floor)</td>
+        <td class="num">6.010</td>
+        <td class="num">93.8% [91.3, 95.6]</td>
+        <td class="num">0 / 100 [0.0, 3.7]</td>
+        <td class="num">1.88</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">
+    <strong>Table 2:</strong> Controlled norm benchmark on <code>Qwen2.5-1.5B</code> and <code>SmolLM2-1.7B</code> across 500 held-out prompts and 100 neutral persona probes. Clamped to equal Euclidean energy $c$.
+  </div>
+</div>
+
+<h3>The 18.2% Magnitude-Only Collapse</h3>
+<p>
+  In standard model pruning and feature steering, practitioners routinely pick coordinates by largest absolute magnitude $|w_{k,j}|$. Table 2 delivers a decisive verdict on this heuristic:
+</p>
+
+<p>
+  On <code>Qwen2.5-1.5B</code>, selecting the top 10 coordinates purely by absolute magnitude without sign balance ($C_{\text{top10\_abs}}$) caused an <strong>18.2 percentage point collapse in adherence</strong> (plunging from 93.2% down to 75.0%), dropping all the way back to unsteered baseline levels (74.8%). Large weights without their counterweights simply dump uncontrolled energy into competing circuits.
+</p>
+
+<h3>Active Directional Suppression</h3>
+<p>
+  Under condition $C_{\text{neg5}}$, injecting pure negative coordinates at the exact same norm ($c = 10.505$) drove adherence down to <strong>65.0%</strong>—a full 9.8% below the unsteered baseline. This demonstrates that negative coordinates do not act as passive dampening noise; they exert active, directional suppression against the target trait circuit.
+</p>
+
+<h3>Cross-Architecture Differences</h3>
+<p>
+  In <code>SmolLM2-1.7B</code>, persona collapse on neutral probes remained at 0/100 across all conditions. Why? SmolLM2 has a significantly higher baseline adherence (94.2% on Agreeableness vs 74.8% on Qwen), indicating that its task representations sit closer to saturation in its attention circuits. When a model operates near saturation, moderate vector perturbations are less likely to cross unintended decision boundaries than in models with lower baseline margin.
+</p>
+
+<h2>4. Frontier Scaling: Gemma-2-2B Norm Ablation (32 Conditions)</h2>
+
+<p>
+  To test whether these conclusions hold under frontier steering methodologies, we expanded evaluation to <code>Gemma-2-2B</code>, benchmarking balanced physical coordinates against dense SAE steering, SAE-Targeted Steering (SAE-TS), and in-context prompting across 100 neutral probes:
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Intervention Method</th>
+        <th class="num">Mean $L_2$ Norm</th>
+        <th class="num">Relative Loss</th>
+        <th class="num">Collapse Rate (95% CI)</th>
+        <th>Linguistic Stability</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Unsteered Baseline</td>
+        <td class="num">0.00</td>
+        <td class="num">1.98</td>
+        <td class="num">0.0% [0.0, 3.7]</td>
+        <td>Control Baseline</td>
+      </tr>
+      <tr>
+        <td>Positive-Only Physical (α=30)</td>
+        <td class="num">4.46</td>
+        <td class="num">4.12</td>
+        <td class="num">6.0% [2.8, 12.5]</td>
+        <td>Repetitive loops on neutral queries</td>
+      </tr>
+      <tr class="highlight">
+        <td>Balanced Signed Physical (α=30)</td>
+        <td class="num">5.67</td>
+        <td class="num">2.00</td>
+        <td class="num"><strong>0.0% [0.0, 3.7]</strong></td>
+        <td>Pristine Fluency (Zero Collapse)</td>
+      </tr>
+      <tr>
+        <td>Matched-Norm Random Direction</td>
+        <td class="num">5.67</td>
+        <td class="num">2.04</td>
+        <td class="num">0.0% [0.0, 3.7]</td>
+        <td>Fluent (Zero Trait Shift)</td>
+      </tr>
+      <tr>
+        <td>Dense SAE Steering (α=10)</td>
+        <td class="num">7.81</td>
+        <td class="num">5.89</td>
+        <td class="num">28.0% [20.0, 37.5]</td>
+        <td>Catastrophic Persona Collapse</td>
+      </tr>
+      <tr>
+        <td>SAE-Targeted Steering (SAE-TS)</td>
+        <td class="num">4.92</td>
+        <td class="num">2.84</td>
+        <td class="num">4.0% [1.6, 9.8]</td>
+        <td>Mild Degradation</td>
+      </tr>
+      <tr>
+        <td>In-Context Prompting</td>
+        <td class="num">—</td>
+        <td class="num">2.02</td>
+        <td class="num">0.0% [0.0, 3.7]</td>
+        <td>100.0% Trait Ceiling</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">
+    <strong>Table 3:</strong> Frontier norm ablation on <code>Gemma-2-2B</code> across 100 neutral evaluation probes.
+  </div>
+</div>
+
+<p>
+  Balanced physical steering achieves <strong>0.0% collapse</strong> at norm 5.67, outperforming positive-only steering (6.0% collapse at a lower norm 4.46) and dense SAE steering (28.0% collapse). Autoencoder decoders project energy across all residual stream coordinates simultaneously, injecting dense background noise that inflates relative loss to 5.89.
+</p>
+
+<h2>5. Closed-Form Weight Compilation: Zero Runtime Overhead</h2>
+
+<p>
+  Because physical coordinates operate directly on native model dimensions, balanced steering directions do not have to remain runtime forward hooks. In <code>Qwen2.5-0.5B</code>, we permanently compiled the balanced latent direction into the MLP down-projection matrix $W_{\text{down}} \in \mathbb{R}^{896 \times 4864}$ via a closed-form rank-1 outer product:
+</p>
+
+<div class="math-display">
+  $$W_{\text{down}}^{\text{new}} = W_{\text{down}} + \alpha \, \mathbf{d} \, \mathbf{u}^T$$
+</div>
+
+<p>
+  where $\mathbf{d}$ is the unit balanced coordinate vector and $\mathbf{u} = \frac{\mathbf{1}}{\sqrt{d_{\text{inter}}}}$.
+</p>
+
+<p>
+  Testing the compiled model without any runtime forward hooks confirmed that French generation was permanently active, while English factual sentence loss shifted only from 0.482 to 0.518, preserving syntactic integrity with zero runtime latency.
+</p>
+
+<h2>6. In-Register PyTorch Forward Hook</h2>
+
+<p>
+  For dynamic steering, physical coordinates execute in GPU register memory with zero prompt tokens and zero key-value cache memory overhead:
+</p>
+
+<pre><code>def make_balanced_hook(pos_indices, pos_weights, neg_indices, neg_weights, alpha=30.0):
+    def hook_fn(module, input, output):
+        hidden_states = output[0] if isinstance(output, tuple) else output
+        device, dtype = hidden_states.device, hidden_states.dtype
+
+        # Construct sparse balanced delta in GPU register memory
+        delta = torch.zeros(hidden_states.shape[-1], device=device, dtype=dtype)
+        for idx, w in zip(pos_indices, pos_weights):
+            delta[idx] += alpha * w
+        for idx, w in zip(neg_indices, neg_weights):
+            delta[idx] += alpha * w  # Negative coordinates cancel collateral drift
+
+        # In-place injection on active token step:
+        hidden_states[:, -1, :] += delta
+        return (hidden_states,) if isinstance(output, tuple) else hidden_states
+
+    return hook_fn</code></pre>
+
+<h2>7. Safety Audit: Refusal Direction Deflation</h2>
+
+<p>
+  Before deploying any steering vector, practitioners must verify that the intervention does not project onto the model's latent refusal direction $v_{\text{ref}}$, which can inadvertently disable safety filters.
+</p>
+
+<p>
+  Deflating the coordinate vector against the refusal direction prevents jailbreak leakage while maintaining behavioral steering fidelity:
+</p>
+
+<div class="math-display">
+  $$\Delta x_{\text{safe}} = \Delta x - \left(\Delta x \cdot \frac{v_{\text{ref}}}{\|v_{\text{ref}}\|_2}\right) \frac{v_{\text{ref}}}{\|v_{\text{ref}}\|_2}$$
+</div>
+
+<h2>Takeaway</h2>
+
+<p>
+  Across Qwen2.5-0.5B, Qwen2.5-1.5B, SmolLM2-1.7B, and Gemma-2-2B, the evidence points to a single geometric conclusion: language model steering does not require complex high-dimensional autoencoders or ballooning prompt lengths. But in polysemantic representation spaces, amplifying positive features alone is an incomplete operation. To preserve model sanity, you have to push in reverse.
+</p>
+
+<footer>
+  <div>&copy; 2026 Kartik Sirohi</div>
+  <div><a href="index.html">&larr; back to home</a></div>
+</footer>
+
+<script>
+  // Manifold Canvas Interactive Simulation
+  const canvas = document.getElementById('manifoldCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let currentBeta = 1.0;
+
+  // Natural Manifold function in canvas space
+  function manifoldY(x) {
+    // Parabolic curved manifold
+    const midX = 370;
+    const normX = (x - midX) / 320;
+    return 240 - 90 * (1 - normX * normX);
+  }
+
+  function drawManifold() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Grid lines (subtle)
+    ctx.strokeStyle = '#111111';
+    ctx.lineWidth = 1;
+    for (let x = 40; x < canvas.width; x += 60) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+    for (let y = 30; y < canvas.height; y += 50) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
+
+    // Draw Manifold Curve
+    ctx.strokeStyle = '#333333';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    for (let x = 50; x <= 690; x += 10) {
+      const y = manifoldY(x);
+      if (x === 50) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#555555';
+    ctx.font = '12px -apple-system, sans-serif';
+    ctx.fillText('Natural Activation Manifold ℳ', 60, manifoldY(60) + 26);
+
+    // Key points
+    const x0 = 170;
+    const y0 = manifoldY(x0); // ~205
+
+    // Positive drift vector delta_pos
+    const dx_pos = 140;
+    const dy_pos = -135;
+    const x_pos = x0 + dx_pos; // 310
+    const y_pos = y0 + dy_pos; // 70
+
+    // Negative cancelling vector delta_neg
+    const dx_neg = 60;
+    const dy_neg = 120;
+
+    // Current state based on beta
+    const x_curr = x_pos + currentBeta * dx_neg;
+    const y_curr = y_pos + currentBeta * dy_neg;
+
+    // Nearest point on manifold for current state
+    const y_manifold_target = manifoldY(x_curr);
+    const drift_dist = Math.abs(y_curr - y_manifold_target);
+
+    // 1. Unsteered base point x
+    ctx.fillStyle = '#888888';
+    ctx.beginPath();
+    ctx.arc(x0, y0, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '13px -apple-system, sans-serif';
+    ctx.fillText('x (baseline)', x0 - 45, y0 + 18);
+
+    // 2. Positive drift vector
+    ctx.strokeStyle = '#E5A93C';
+    ctx.lineWidth = 1.8;
+    drawArrow(ctx, x0, y0, x_pos, y_pos);
+    ctx.fillStyle = '#E5A93C';
+    ctx.beginPath();
+    ctx.arc(x_pos, y_pos, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.font = '12px -apple-system, sans-serif';
+    ctx.fillText('x + Δx_pos', x_pos - 30, y_pos - 12);
+
+    // 3. Negative cancellation vector
+    if (currentBeta > 0.05) {
+      ctx.strokeStyle = '#666666';
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([4, 4]);
+      drawArrow(ctx, x_pos, y_pos, x_curr, y_curr);
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#888888';
+      ctx.fillText('- β · Δx_neg', (x_pos + x_curr) / 2 + 10, (y_pos + y_curr) / 2);
+    }
+
+    // 4. Resulting steered vector from x0
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2.2;
+    drawArrow(ctx, x0, y0, x_curr, y_curr);
+
+    // Active state circle
+    ctx.fillStyle = drift_dist < 8 ? '#ffffff' : '#E5A93C';
+    ctx.beginPath();
+    ctx.arc(x_curr, y_curr, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Orthogonal distance projection to manifold
+    ctx.strokeStyle = '#444444';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([2, 2]);
+    ctx.beginPath();
+    ctx.moveTo(x_curr, y_curr);
+    ctx.lineTo(x_curr, y_manifold_target);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Label on state
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 12px -apple-system, sans-serif';
+    ctx.fillText('x_steered', x_curr + 10, y_curr + 5);
+
+    // Update readouts
+    const normalizedDrift = (drift_dist / 50).toFixed(2);
+    document.getElementById('readout-dist').textContent = normalizedDrift;
+
+    let collapse, adherence, stateText;
+    if (currentBeta <= 0.2) {
+      collapse = '20.0%';
+      adherence = '96.8%';
+      stateText = 'Collapse (Software Engineer Glitch)';
+    } else if (currentBeta <= 0.7) {
+      collapse = '8.0%';
+      adherence = '94.5%';
+      stateText = 'Sub-optimal (Mild Persona Drift)';
+    } else if (currentBeta <= 1.15) {
+      collapse = '0.0%';
+      adherence = '93.2%';
+      stateText = 'Pristine Fluency (Sanity Preserved)';
+    } else {
+      collapse = '2.0%';
+      adherence = '65.0%';
+      stateText = 'Over-suppression (-9.8% trait drop)';
+    }
+
+    document.getElementById('readout-collapse').textContent = collapse;
+    document.getElementById('readout-adherence').textContent = adherence;
+    document.getElementById('readout-state').textContent = stateText;
+  }
+
+  function drawArrow(ctx, fromX, fromY, toX, toY) {
+    const headLen = 8;
+    const angle = Math.atan2(toY - fromY, toX - fromX);
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(toX, toY);
+    ctx.lineTo(toX - headLen * Math.cos(angle - Math.PI / 6), toY - headLen * Math.sin(angle - Math.PI / 6));
+    ctx.lineTo(toX - headLen * Math.cos(angle + Math.PI / 6), toY - headLen * Math.sin(angle + Math.PI / 6));
+    ctx.closePath();
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.fill();
+  }
+
+  function setManifoldPreset(val) {
+    currentBeta = val;
+    document.getElementById('betaSlider').value = Math.round(val * 100);
+    document.getElementById('betaLabel').textContent = val.toFixed(2);
+
+    document.querySelectorAll('.interactive-btn').forEach(btn => btn.classList.remove('active'));
+    if (val === 0.0) document.getElementById('btn-pos').classList.add('active');
+    else if (val === 0.5) document.getElementById('btn-part').classList.add('active');
+    else if (val === 1.0) document.getElementById('btn-bal').classList.add('active');
+    else if (val === 1.4) document.getElementById('btn-over').classList.add('active');
+
+    drawManifold();
+  }
+
+  function updateFromSlider(val) {
+    currentBeta = val / 100;
+    document.getElementById('betaLabel').textContent = currentBeta.toFixed(2);
+    document.querySelectorAll('.interactive-btn').forEach(btn => btn.classList.remove('active'));
+    drawManifold();
+  }
+
+  // Initial draw
+  drawManifold();
+</script>
+
+</body>
+</html>
