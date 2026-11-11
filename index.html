@@ -127,27 +127,15 @@
     max-width:760px;
     margin:0 auto;
     padding:3.5rem 1.75rem 6rem;
-    counter-reset:logline;
   }
 
-  .logline,.hunk{
-    display:flex;
-    align-items:baseline;
-    gap:1rem;
-    counter-increment:logline;
+  .logline{
+    display:block;
   }
   .logline::before,.hunk::before{
-    content:counter(logline, decimal-leading-zero);
-    flex:0 0 auto;
-    width:2.4rem;
-    text-align:right;
-    font-family:var(--mono);
-    font-size:0.72rem;
-    color:var(--ink-faint);
-    padding-top:0.28rem;
-    user-select:none;
+    display:none !important;
   }
-  .logline > .content{flex:1;min-width:0;}
+  .logline > .content{display:block;width:100%;}
 
   .hunk{
     background:transparent;
