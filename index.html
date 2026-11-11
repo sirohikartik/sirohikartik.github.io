@@ -967,8 +967,8 @@
     <div class="logline">
       <span class="content">
         <div class="pub-with-thumb">
-          <div class="pub-thumb post-thumb" data-thumb="weightspace">
-            <canvas width="160" height="160"></canvas>
+          <div class="pub-thumb">
+            <img src="weight_space.png" alt="Ghost in the Residual Stream system diagram" onerror="this.style.display='none'; this.parentElement.textContent='📄';" />
           </div>
           <div class="pub-body">
             <span class="entry-title">Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane</span><span class="entry-meta">Research Blog · Feb 2026</span>
@@ -2752,49 +2752,101 @@ Papers accepted at IEEE Access and Comsys 2026
   ================================================================ */
   var blogRenderers = {
 
-    /* Weight Space: sparse coordinate activation bars */
+    /* Weight Space: sparse coordinate activation dipole & manifold cancellation */
     weightspace: function(ctx, w, h, t) {
       ctx.clearRect(0,0,w,h);
-      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = P.paper; ctx.fillRect(0,0,w,h);
 
-      var numBars = 16;
-      var barW = (w - 24) / numBars;
-      var midY = h * 0.52;
-      var wave = (t * 0.002) % (Math.PI * 2);
+      /* --- TOP HALF: MANIFOLD CANCELLATION TRAJECTORY --- */
+      var cycle = 3600;
+      var prog = (t % cycle) / cycle; // 0 to 1
 
-      /* axis line */
-      ctx.strokeStyle = 'rgba(86,88,80,0.3)'; ctx.lineWidth = 0.8;
-      ctx.beginPath(); ctx.moveTo(10, midY); ctx.lineTo(w - 10, midY); ctx.stroke();
+      // Draw manifold curve
+      ctx.strokeStyle = 'rgba(155,157,148,0.35)'; ctx.lineWidth = 1.0;
+      ctx.setLineDash([3, 2]);
+      ctx.beginPath();
+      for (var mx = 8; mx <= w - 8; mx += 2) {
+        var my = 22 - 6 * Math.sin(((mx - 8) / (w - 16)) * Math.PI);
+        if (mx === 8) ctx.moveTo(mx, my); else ctx.lineTo(mx, my);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
 
-      var topPos = [3, 7, 11];
-      var topNeg = [5, 9];
+      // Key points on canvas
+      var bx = 16, by = 22;      // Base point on manifold
+      var px = 46, py = 8;       // Off-manifold positive drift
+      var rx = 60, ry = 21;      // Restored balanced point on manifold
+
+      // Draw base point
+      ctx.fillStyle = P.ink;
+      ctx.beginPath(); ctx.arc(bx, by, 2.5, 0, Math.PI * 2); ctx.fill();
+
+      // Vector 1: Positive Drift (Red/Coral)
+      var posFrac = Math.min(1, prog / 0.35);
+      var curPx = bx + (px - bx) * posFrac;
+      var curPy = by + (py - by) * posFrac;
+      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(curPx, curPy); ctx.stroke();
+      if (prog >= 0.25) {
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath(); ctx.arc(px, py, 2.2, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Vector 2: Negative Cancellation (Cyan/Blue dashed)
+      if (prog > 0.35) {
+        var negFrac = Math.min(1, (prog - 0.35) / 0.3);
+        var curNx = px + (rx - px) * negFrac;
+        var curNy = py + (ry - py) * negFrac;
+        ctx.strokeStyle = P.blue; ctx.lineWidth = 1.4;
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(curNx, curNy); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Vector 3: Resulting Balanced Vector (Green)
+      if (prog > 0.65) {
+        var balFrac = Math.min(1, (prog - 0.65) / 0.25);
+        ctx.strokeStyle = P.green; ctx.lineWidth = 2.0;
+        ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + (rx - bx) * balFrac, by + (ry - by) * balFrac); ctx.stroke();
+        ctx.fillStyle = P.green;
+        ctx.beginPath(); ctx.arc(rx, ry, 2.8, 0, Math.PI * 2); ctx.fill();
+      }
+
+      /* --- BOTTOM HALF: SPARSE COORDINATE SPECTRUM DIPOLE --- */
+      var midY = 56;
+      ctx.strokeStyle = 'rgba(86,88,80,0.4)'; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(8, midY); ctx.lineTo(w - 8, midY); ctx.stroke();
+
+      var numBars = 14;
+      var barW = (w - 20) / numBars;
+      var wave = (t * 0.003);
+
+      var topPos = [2, 6, 10];
+      var topNeg = [4, 8];
 
       for (var i = 0; i < numBars; i++) {
-        var x = 12 + i * barW;
-        var hBar = 0;
-        var col = 'rgba(107,174,239,0.3)';
-
+        var x = 10 + i * barW;
         if (topPos.indexOf(i) !== -1) {
-          hBar = 26 + 10 * Math.sin(wave + i);
-          col = P.blue;
-          ctx.fillStyle = col;
-          ctx.fillRect(x, midY - hBar, barW - 2, hBar);
+          var hPos = 14 + 5 * Math.sin(wave + i);
+          ctx.fillStyle = P.blue;
+          ctx.fillRect(x + 0.5, midY - hPos, barW - 1.5, hPos);
         } else if (topNeg.indexOf(i) !== -1) {
-          hBar = 20 + 8 * Math.cos(wave + i);
-          col = P.amber;
-          ctx.fillStyle = col;
-          ctx.fillRect(x, midY, barW - 2, hBar);
+          var hNeg = 12 + 4 * Math.cos(wave + i);
+          ctx.fillStyle = P.amber;
+          ctx.fillRect(x + 0.5, midY, barW - 1.5, hNeg);
         } else {
-          hBar = 3 + 2 * Math.sin(i * 1.5 + wave);
-          ctx.fillStyle = 'rgba(86,88,80,0.2)';
-          ctx.fillRect(x, midY - hBar, barW - 2, hBar * 2);
+          var hBg = 2 + Math.sin(i * 1.8 + wave);
+          ctx.fillStyle = 'rgba(86,88,80,0.22)';
+          ctx.fillRect(x + 0.5, midY - hBg, barW - 1.5, hBg * 2);
         }
       }
 
-      ctx.font = '500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle = P.blue; ctx.fillText('pos', 12, 18);
-      ctx.fillStyle = P.amber; ctx.fillText('neg', 36, 18);
-      ctx.fillStyle = P.faint; ctx.fillText('sparse vector basis', 12, h - 4);
+      /* Text badges */
+      ctx.font = '500 7.5px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.blue; ctx.fillText('+pos', 8, 42);
+      ctx.fillStyle = P.amber; ctx.fillText('-neg', 28, 42);
+      ctx.fillStyle = P.green; ctx.fillText('Δx_bal', 50, 42);
+      ctx.fillStyle = P.soft; ctx.fillText('manifold cancel', 8, h - 3);
     },
 
     /* CUDA matmul: heatmap + perf curve */
