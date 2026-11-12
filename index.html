@@ -85,7 +85,7 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <style>
@@ -103,7 +103,8 @@
     --cat-agents:#B7A3F2;
     --cat-experiments:#D9C24E;
     --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --sans:'IBM Plex Sans Condensed', system-ui, -apple-system, sans-serif;
+    --sans:'Inter', system-ui, -apple-system, sans-serif;
+    --display:'Manrope', 'Inter', system-ui, sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -111,8 +112,11 @@
     background:var(--paper);
     color:var(--ink);
     font-family:var(--sans);
-    font-size:16px;
-    line-height:1.6;
+    font-size:16.5px;
+    line-height:1.72;
+    letter-spacing:-0.012em;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
   }
   a{
     color:var(--signal);
@@ -149,9 +153,9 @@
   }
   .hunk::before{background:transparent;}
   .hunk .content{
-    font-family:var(--sans);
-    font-size:1.18rem;
-    font-weight:600;
+    font-family:var(--display);
+    font-size:1.16rem;
+    font-weight:700;
     color:var(--ink);
     letter-spacing:-0.01em;
   }
@@ -168,10 +172,10 @@
 
   .code-comment{font-family:var(--mono);font-size:0.8rem;color:var(--ink-faint);}
   h1{
-    font-family:var(--sans);
-    font-size:2.05rem;
-    font-weight:700;
-    letter-spacing:-0.01em;
+    font-family:var(--display);
+    font-size:2.2rem;
+    font-weight:800;
+    letter-spacing:-0.055em;
     line-height:1.15;
     color:var(--ink);
   }
@@ -247,7 +251,7 @@
   }
 
   /* ---- entries ---- */
-  .entry-title{font-weight:600;font-size:0.97rem;color:var(--ink);}
+  .entry-title{font-family:var(--display);font-weight:700;font-size:0.98rem;letter-spacing:-0.025em;color:var(--ink);}
   .entry-meta{font-family:var(--mono);font-size:0.74rem;color:var(--ink-soft);margin-left:0.6rem;}
   .entry-desc{font-size:0.9rem;color:var(--ink-soft);margin-top:0.25rem;max-width:58ch;}
   .entry-refs{margin-top:0.4rem;font-family:var(--mono);font-size:0.78rem;display:flex;flex-wrap:wrap;gap:0.3rem 1rem;}
@@ -258,160 +262,38 @@
   section .logline:last-child{margin-bottom:0;}
   .oss-line .content > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem 0.7rem;}
 
-  /* ---- Live OSS PR Feed ---- */
-  .oss-live-box{
-    margin-top:1.5rem;
-    border:1px solid var(--rule);
-    border-radius:2px;
-    background:var(--band);
-    padding:0.85rem 1rem;
-    position:relative;
-  }
-  .oss-live-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:0.5rem;
-    padding-bottom:0.6rem;
-    border-bottom:1px solid var(--rule);
-    margin-bottom:0.55rem;
-  }
-  .oss-live-title{
-    font-family:var(--sans);
-    font-size:0.85rem;
-    font-weight:600;
-    color:var(--ink);
-    display:flex;
-    align-items:center;
-    gap:0.55rem;
-  }
-  .oss-live-pulse{
-    width:6.5px;
-    height:6.5px;
-    border-radius:50%;
-    background:var(--good);
-    box-shadow:0 0 6px var(--good);
-    animation:pulseDot 2s infinite ease-in-out;
-    display:inline-block;
-  }
-  @keyframes pulseDot{
-    0%,100%{opacity:0.35;transform:scale(0.85);}
-    50%{opacity:1;transform:scale(1.25);}
-  }
-  .oss-live-count{
-    font-family:var(--mono);
-    font-size:0.68rem;
-    color:var(--signal);
-    background:rgba(107,174,239,0.08);
-    border:1px solid rgba(107,174,239,0.2);
-    padding:0.05rem 0.4rem;
-    border-radius:2px;
-    margin-left:0.25rem;
-  }
-  .oss-live-filter{
-    display:flex;
-    gap:0.3rem;
-  }
-  .oss-filter-btn{
-    background:transparent;
-    border:1px solid var(--rule);
-    color:var(--ink-soft);
-    font-family:var(--mono);
-    font-size:0.68rem;
-    padding:0.15rem 0.5rem;
-    border-radius:2px;
-    cursor:pointer;
-    transition:border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-  }
-  .oss-filter-btn:hover{
-    border-color:var(--ink-faint);
-    color:var(--ink);
-  }
-  .oss-filter-btn.active{
-    background:var(--rule);
-    border-color:var(--ink-faint);
-    color:var(--signal);
-  }
-  .oss-live-items{
-    display:flex;
-    flex-direction:column;
-    gap:0.3rem;
-    max-height:360px;
-    overflow-y:auto;
-    padding-right:0.25rem;
-  }
-  .oss-live-items::-webkit-scrollbar{width:4px;}
-  .oss-live-items::-webkit-scrollbar-track{background:transparent;}
-  .oss-live-items::-webkit-scrollbar-thumb{background:var(--rule);border-radius:2px;}
-  .oss-pr-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:0.7rem;
-    padding:0.32rem 0.5rem;
-    border-radius:2px;
-    text-decoration:none;
-    background-image:none;
-    color:var(--ink);
-    border:1px solid transparent;
-    transition:background-color 0.15s ease, border-color 0.15s ease;
-  }
-  .oss-pr-item:hover{
-    background:rgba(255,255,255,0.025);
-    border-color:var(--rule);
-    background-image:none;
-  }
-  .oss-pr-left{
-    display:flex;
-    align-items:baseline;
-    gap:0.45rem 0.65rem;
-    flex-wrap:wrap;
-    min-width:0;
-  }
-  .oss-pr-repo{
-    font-family:var(--mono);
-    font-size:0.73rem;
-    color:var(--signal);
-    white-space:nowrap;
-  }
-  .oss-pr-num{
-    font-family:var(--mono);
-    font-size:0.71rem;
-    color:var(--ink-faint);
-  }
-  .oss-pr-title{
-    font-size:0.84rem;
-    color:var(--ink);
-  }
-  .oss-pr-time{
-    font-family:var(--mono);
-    font-size:0.68rem;
-    color:var(--ink-faint);
-    white-space:nowrap;
-    margin-left:auto;
-  }
-  .tag-closed{
-    color:var(--ink-faint);
-    font-family:var(--mono);
-    font-size:0.72rem;
-    font-weight:500;
-  }
-  .oss-live-footer{
-    margin-top:0.55rem;
-    padding-top:0.45rem;
-    border-top:1px solid var(--rule);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-family:var(--mono);
-    font-size:0.68rem;
-    color:var(--ink-faint);
-  }
-  .oss-live-footer a{
-    color:var(--signal);
-    font-size:0.7rem;
-  }
+  /* ---- GitHub contribution graph ---- */
+  .contrib-card{margin-top:1.5rem;padding:1.1rem 1.2rem 0.9rem;border:1px solid var(--rule);border-radius:8px;background:linear-gradient(145deg,#0b0d10,#070708);}
+  .contrib-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;}
+  .contrib-total{display:flex;align-items:baseline;gap:0.65rem;flex-wrap:wrap;}
+  .contrib-number{font-family:var(--display);font-size:clamp(2.6rem,8vw,4.25rem);font-weight:700;line-height:0.95;letter-spacing:-0.075em;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .contrib-label{font-size:0.95rem;color:var(--ink-soft);font-weight:500;}
+  .contrib-period{font-family:var(--mono);font-size:0.7rem;color:var(--ink-faint);white-space:nowrap;}
+  .contrib-graph{width:100%;overflow-x:auto;padding:0 0 0.15rem;font:inherit;}
+  button.contrib-graph{display:block;border:0;background:transparent;text-align:left;cursor:pointer;color:inherit;border-radius:3px;}
+  .contrib-graph:hover .contrib-cell{filter:brightness(1.18);}
+  .oss-pr-links{display:flex;flex-wrap:wrap;gap:0.55rem 1.2rem;margin:0.5rem 0 1rem;font-family:var(--mono);font-size:0.76rem;}
+  .oss-pr-links span{display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;}
+  .oss-pr-links span>a:first-child{color:var(--ink-soft);margin-right:0.1rem;}
+  .contrib-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,11px);grid-auto-columns:11px;gap:3px;min-width:max-content;}
+  .contrib-cell{width:11px;height:11px;border-radius:2px;background:#17191c;}
+  .contrib-cell[data-level="1"]{background:#173b32;}.contrib-cell[data-level="2"]{background:#1e674d;}.contrib-cell[data-level="3"]{background:#2d9b63;}.contrib-cell[data-level="4"]{background:#55d486;}
+  .contrib-months{display:flex;justify-content:space-between;margin:0 0 0.45rem 1.7rem;font-family:var(--mono);font-size:0.62rem;color:var(--ink-faint);}
+  .contrib-legend{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:0.8rem;font-family:var(--mono);font-size:0.65rem;color:var(--ink-faint);}
+  .contrib-legend-scale{display:flex;align-items:center;gap:3px;}
+  .contrib-legend-scale .contrib-cell{display:inline-block;}
+  @media(max-width:640px){.contrib-card{padding:1rem 0.85rem;}.contrib-head{align-items:flex-start;flex-direction:column;gap:0.5rem}.contrib-grid{grid-template-rows:repeat(7,9px);grid-auto-columns:9px;gap:2px}.contrib-cell{width:9px;height:9px}}
+
+  .pr-modal-overlay{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);}
+  .pr-modal-overlay.open{display:flex;}
+  .pr-modal-card{width:min(440px,94vw);max-height:min(70vh,620px);overflow:hidden;border:1px solid #303238;border-radius:10px;background:#0b0d10;box-shadow:0 24px 80px rgba(0,0,0,.6);}
+  .pr-modal-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;border-bottom:1px solid var(--rule);}
+  .pr-modal-head h2{font:700 1rem var(--display);letter-spacing:-.025em;}
+  .pr-modal-head button{border:0;background:transparent;color:var(--ink-soft);font-size:1.5rem;line-height:1;cursor:pointer;}
+  .pr-modal-list{max-height:calc(70vh - 56px);overflow:auto;padding:.45rem 1rem 1rem;display:flex;flex-direction:column;}
+  .pr-modal-list a{padding:.52rem .1rem;border-bottom:1px solid var(--rule);font-size:.86rem;color:var(--ink-soft);}
+  .pr-modal-list a:hover{color:var(--signal);}
+  .pr-modal-list p{padding:.75rem 0;color:var(--ink-soft);font-size:.85rem;}
 
   /* ---- scroll reveal ---- */
   .js section .logline,.js section .hunk{
@@ -453,7 +335,7 @@
   .commit-refline{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;font-family:var(--sans);font-size:0.78rem;color:var(--ink-soft);margin-bottom:0.25rem;}
   .commit-hash{display:none;}
   .commit-head-tag{font-family:var(--sans);font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--paper);background:var(--signal);padding:0.12rem 0.55rem;border-radius:999px;text-transform:uppercase;}
-  .commit-title{font-size:1.02rem;font-weight:600;color:var(--ink);}
+  .commit-title{font-family:var(--display);font-size:1.04rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);}
   .commit-org{font-weight:400;color:var(--ink-soft);}
 
   /* ---- projects ---- */
@@ -782,16 +664,12 @@
 
   /* ---- blog post thumbnails ---- */
   .post-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
-  .post-thumb{
-    flex:0 0 80px;width:80px;height:80px;
-    background:var(--band);border:1px solid var(--rule);border-radius:3px;
-    overflow:hidden;display:flex;align-items:center;justify-content:center;
-    opacity:0;transition:opacity 0.5s ease,border-color 0.3s ease;
-  }
+  .post-thumb{position:absolute;inset:0;background:var(--band);overflow:hidden;opacity:0;transition:opacity 0.5s ease;}
   .post-thumb.rendered{opacity:1;}
-  .post-thumb canvas{width:80px;height:80px;display:block;}
-  .post-body{flex:1;min-width:0;}
-  @media (max-width:480px){.post-thumb{flex:0 0 60px;width:60px;height:60px;}.post-with-thumb{gap:0.8rem;}}
+  .post-thumb canvas{width:100%;height:100%;display:block;object-fit:cover;object-position:center;}
+  .post-grid .yt-overlay{background:rgba(6,7,8,0.84);}
+  .post-grid .entry-title{background-image:none;}
+  .post-grid .yt-meta .entry-title:hover{color:var(--signal);}
 
   footer{
     margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
@@ -808,7 +686,7 @@
 
   @media (max-width:640px){
     .page{padding:2.4rem 1.1rem 4rem;}
-    h1{font-size:1.65rem;}
+    h1{font-size:1.85rem;}
     .filehead{gap:1rem;}
     .frame{width:100px;height:100px;}
     .proj-grid{grid-template-columns:repeat(auto-fill, minmax(82px, 1fr));}
@@ -1217,195 +1095,34 @@ Papers accepted at IEEE Access and Comsys 2026
       </svg>
       <div class="oss-caption" id="oss-caption">hover or focus a node — 11 patches across 6 repositories</div>
     </div>
-    <div class="logline oss-line"><span class="content"><div>
-      <a href="https://github.com/apple/coreai-models">Apple / coreai-models</a>
-      <span class="tag-pending">open</span>
-      <span>consolidate RNGs into CoreAIShared — <a href="https://github.com/apple/coreai-models/pull/421">#421</a></span>
-      <span>DiffusionGemma FP32 RoPE buffer under to(dtype) — <a href="https://github.com/apple/coreai-models/pull/483">#483</a></span>
-      <span>SmolLM3 support &amp; export configs — <a href="https://github.com/apple/coreai-models/pull/496">#496</a></span>
-    </div></span></div>
-    <div class="logline oss-line"><span class="content"><div>
-      <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>
-      <span class="tag-good">merged</span>
-      <span>concat row-level memcpy — <a href="https://github.com/ggml-org/llama.cpp/pull/24575">#24575</a></span>
-      <span>SIMD vector kernel — <a href="https://github.com/ggml-org/llama.cpp/pull/22209">#22209</a></span>
-    </div></span></div>
-    <div class="logline oss-line"><span class="content"><div>
-      <a href="https://github.com/pytorch/pytorch">PyTorch</a>
-      <span class="tag-good">merged</span>
-      <span>NaN clamp fix — <a href="https://github.com/pytorch/pytorch/pull/172200">#172200</a></span>
-    </div></span></div>
-    <div class="logline oss-line"><span class="content"><div>
-      <a href="https://github.com/Tracer-Cloud/opensre">OpenSRE</a>
-      <span class="tag-good">merged</span>
-      <span>unit tests &amp; validation — <a href="https://github.com/Tracer-Cloud/opensre/pull/852">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917">#917</a></span>
-      <span>Tempo service tests — <a href="https://github.com/Tracer-Cloud/opensre/pull/882">#882</a></span>
-    </div></span></div>
-    <div class="logline oss-line"><span class="content"><div>
-      <a href="https://github.com/dspinellis/alexandria3k">alexandria3k</a>
-      <span class="tag-good">merged</span>
-      <span>O(n)→O(1) lookup — <a href="https://github.com/dspinellis/alexandria3k/pull/63">#63</a></span>
-    </div></span></div>
-    <div class="logline oss-line"><span class="content"><div>
-      <a href="https://github.com/scipy/scipy">SciPy</a>
-      <span class="tag-good">merged</span>
-      <span>Gauss-Jacobi docs — <a href="https://github.com/scipy/scipy/pull/23129">#23129</a></span>
-    </div></span></div>
+    <div class="oss-pr-links" aria-label="Open-source pull requests">
+      <span><a href="https://github.com/apple/coreai-models">Apple</a> <a href="https://github.com/apple/coreai-models/pull/421">#421</a> <a href="https://github.com/apple/coreai-models/pull/483">#483</a> <a href="https://github.com/apple/coreai-models/pull/496">#496</a></span>
+      <span><a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> <a href="https://github.com/ggml-org/llama.cpp/pull/24575">#24575</a> <a href="https://github.com/ggml-org/llama.cpp/pull/22209">#22209</a></span>
+      <span><a href="https://github.com/pytorch/pytorch">PyTorch</a> <a href="https://github.com/pytorch/pytorch/pull/172200">#172200</a></span>
+      <span><a href="https://github.com/Tracer-Cloud/opensre">OpenSRE</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/852">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917">#917</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/882">#882</a></span>
+      <span><a href="https://github.com/dspinellis/alexandria3k">alexandria3k</a> <a href="https://github.com/dspinellis/alexandria3k/pull/63">#63</a></span>
+      <span><a href="https://github.com/scipy/scipy">SciPy</a> <a href="https://github.com/scipy/scipy/pull/23129">#23129</a></span>
+    </div>
 
-    <!-- LIVE GITHUB PR STREAM -->
-    <div class="oss-live-box">
-      <div class="oss-live-header">
-        <div class="oss-live-title">
-          <span class="oss-live-pulse" aria-hidden="true"></span>
-          <span>live pull request stream</span>
-          <span class="oss-live-count" id="oss-live-count">23 PRs</span>
+    <!-- LIVE GITHUB CONTRIBUTIONS -->
+    <div class="contrib-card" aria-label="GitHub contributions over the last year">
+      <div class="contrib-head">
+        <div class="contrib-total">
+          <span class="contrib-number" id="contrib-total">—</span>
+          <span class="contrib-label">contributions in the last year</span>
         </div>
-        <div class="oss-live-filter">
-          <button type="button" class="oss-filter-btn active" data-filter="all">all</button>
-          <button type="button" class="oss-filter-btn" data-filter="open">open</button>
-          <button type="button" class="oss-filter-btn" data-filter="merged">merged</button>
-        </div>
+        <span class="contrib-period" id="contrib-period">loading GitHub activity…</span>
       </div>
-      <div class="oss-live-items" id="oss-live-items">
-        <a class="oss-pr-item" href="https://github.com/apple/coreai-models/pull/496" target="_blank" rel="noopener" data-state="open">
-          <div class="oss-pr-left">
-            <span class="tag-pending">open</span>
-            <span class="oss-pr-repo">apple/coreai-models</span>
-            <span class="oss-pr-num">#496</span>
-            <span class="oss-pr-title">Add SmolLM3 support and export configurations (#493)</span>
-          </div>
-          <span class="oss-pr-time">just now</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/apple/coreai-models/pull/483" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">apple/coreai-models</span>
-            <span class="oss-pr-num">#483</span>
-            <span class="oss-pr-title">DiffusionGemma: keep RoPE inv_freq buffer in float32 under to(dtype) (#482)</span>
-          </div>
-          <span class="oss-pr-time">1d ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/apple/coreai-models/pull/421" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">apple/coreai-models</span>
-            <span class="oss-pr-num">#421</span>
-            <span class="oss-pr-title">Consolidate random number generators into CoreAIShared (#273)</span>
-          </div>
-          <span class="oss-pr-time">2d ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/jlevy/strif/pull/10" target="_blank" rel="noopener" data-state="open">
-          <div class="oss-pr-left">
-            <span class="tag-pending">open</span>
-            <span class="oss-pr-repo">jlevy/strif</span>
-            <span class="oss-pr-num">#10</span>
-            <span class="oss-pr-title">Add `ensure_str` and `ensure_bytes` utilities (fixes #6)</span>
-          </div>
-          <span class="oss-pr-time">8d ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/6" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
-            <span class="oss-pr-num">#6</span>
-            <span class="oss-pr-title">Create static.yml</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/5" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
-            <span class="oss-pr-num">#5</span>
-            <span class="oss-pr-title">docs: rename project to IndiStat</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/4" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
-            <span class="oss-pr-num">#4</span>
-            <span class="oss-pr-title">docs: document automated CI checks in CONTRIBUTING.md and student guide</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/3" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
-            <span class="oss-pr-num">#3</span>
-            <span class="oss-pr-title">ci: add GitHub Actions CI workflow to run pytest across Python 3.9-3.12</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/2" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
-            <span class="oss-pr-num">#2</span>
-            <span class="oss-pr-title">docs: add interactive student contributor guide, GitHub Pages site, and contributing guide</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/financesociety-nitj/IndiStat/pull/1" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">financesociety-nitj/IndiStat</span>
-            <span class="oss-pr-num">#1</span>
-            <span class="oss-pr-title">feat: add raw OHLCV stock data extraction module using yfinance</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/ggml-org/llama.cpp/pull/28982" target="_blank" rel="noopener" data-state="open">
-          <div class="oss-pr-left">
-            <span class="tag-pending">open</span>
-            <span class="oss-pr-repo">ggml-org/llama.cpp</span>
-            <span class="oss-pr-num">#28982</span>
-            <span class="oss-pr-title">cuda : keep columns in registers for cooperative softmax</span>
-          </div>
-          <span class="oss-pr-time">1mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/ggml-org/llama.cpp/pull/24575" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">ggml-org/llama.cpp</span>
-            <span class="oss-pr-num">#24575</span>
-            <span class="oss-pr-title">ggml: optimize concat op by replacing per-element memcpy with row-level memcpy</span>
-          </div>
-          <span class="oss-pr-time">4mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/Tracer-Cloud/opensre/pull/1059" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">Tracer-Cloud/opensre</span>
-            <span class="oss-pr-num">#1059</span>
-            <span class="oss-pr-title">test: add direct unit tests for tempo mixin (#882)</span>
-          </div>
-          <span class="oss-pr-time">6mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/Tracer-Cloud/opensre/pull/925" target="_blank" rel="noopener" data-state="closed">
-          <div class="oss-pr-left">
-            <span class="tag-closed">closed</span>
-            <span class="oss-pr-repo">Tracer-Cloud/opensre</span>
-            <span class="oss-pr-num">#925</span>
-            <span class="oss-pr-title">refactor: move log compaction tests to tests/tools/utils</span>
-          </div>
-          <span class="oss-pr-time">6mo ago</span>
-        </a>
-        <a class="oss-pr-item" href="https://github.com/Tracer-Cloud/opensre/pull/917" target="_blank" rel="noopener" data-state="merged">
-          <div class="oss-pr-left">
-            <span class="tag-good">merged</span>
-            <span class="oss-pr-repo">Tracer-Cloud/opensre</span>
-            <span class="oss-pr-num">#917</span>
-            <span class="oss-pr-title">refactor: move gitlab integration tests to tests/integrations (#901)</span>
-          </div>
-          <span class="oss-pr-time">6mo ago</span>
-        </a>
-      </div>
-      <div class="oss-live-footer">
-        <span id="oss-sync-time">synced with github api</span>
-        <a href="https://github.com/pulls?q=is%3Apr+author%3Asirohikartik+-user%3Asirohikartik" target="_blank" rel="noopener">view all on github ↗</a>
+      <div class="contrib-months" id="contrib-months" aria-hidden="true"></div>
+      <button class="contrib-graph" id="contrib-open-prs" type="button" aria-label="Show merged pull requests from GitHub">
+        <div class="contrib-grid" id="contrib-grid"></div>
+      </button>
+      <div class="contrib-legend">
+        <span>Less</span>
+        <span class="contrib-legend-scale" aria-hidden="true">
+          <i class="contrib-cell" data-level="0"></i><i class="contrib-cell" data-level="1"></i><i class="contrib-cell" data-level="2"></i><i class="contrib-cell" data-level="3"></i><i class="contrib-cell" data-level="4"></i>
+        </span>
+        <span>More</span>
       </div>
     </div>
   </section>
@@ -1545,68 +1262,30 @@ Papers accepted at IEEE Access and Comsys 2026
   </section>
 
   <!-- POSTS -->
-  <section id="posts" class="hoverable">
+  <section id="posts">
     <div class="hunk"><span class="content">Writing &amp; Notes</span></div>
-
-    <div class="logline">
-      <span class="content">
-        <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="matmul"><canvas width="160" height="160"></canvas></div>
-          <div class="post-body">
-            <a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span>
-            <div class="entry-desc">Notes on writing and tuning CUDA matmul kernels.</div>
-          </div>
-        </div>
-      </span>
-    </div>
-
-    <div class="logline">
-      <span class="content">
-        <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="tinygpt"><canvas width="160" height="160"></canvas></div>
-          <div class="post-body">
-            <a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span>
-            <div class="entry-desc">Implementing a 30M-parameter GPT from scratch with NEON, SSE, and OpenMP.</div>
-          </div>
-        </div>
-      </span>
-    </div>
-
-    <div class="logline">
-      <span class="content">
-        <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="backprop"><canvas width="160" height="160"></canvas></div>
-          <div class="post-body">
-            <a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span>
-            <div class="entry-desc">An intuitive walkthrough of backpropagation — from chain rule to automatic differentiation.</div>
-          </div>
-        </div>
-      </span>
-    </div>
-
-    <div class="logline">
-      <span class="content">
-        <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="neural"><canvas width="160" height="160"></canvas></div>
-          <div class="post-body">
-            <a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span>
-            <div class="entry-desc">Understanding neural networks one parameter at a time.</div>
-          </div>
-        </div>
-      </span>
-    </div>
-
-    <div class="logline">
-      <span class="content">
-        <div class="post-with-thumb">
-          <div class="post-thumb" data-thumb="graph"><canvas width="160" height="160"></canvas></div>
-          <div class="post-body">
-            <a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span>
-            <div class="entry-desc">A survey of why graph retrieval methods are useful for retrieving knowledge.</div>
-          </div>
-        </div>
-      </span>
-    </div>
+    <div class="logline"><span class="content"><div class="yt-grid post-grid">
+      <article class="yt-card">
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="matmul"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">Notes on writing and tuning CUDA matrix multiplication kernels, from 44 to 376 GFLOP/s.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">Read article ↗</a></div></div></div>
+        <div class="yt-meta"><a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span></div>
+      </article>
+      <article class="yt-card">
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="tinygpt"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">Building a 30M-parameter GPT from scratch in C++ with NEON, SSE, and OpenMP.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/tinygpt_blog.html">Read article ↗</a></div></div></div>
+        <div class="yt-meta"><a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span></div>
+      </article>
+      <article class="yt-card">
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="backprop"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">An intuitive walkthrough of backpropagation, from the chain rule to automatic differentiation.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/backprop.html">Read article ↗</a></div></div></div>
+        <div class="yt-meta"><a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span></div>
+      </article>
+      <article class="yt-card">
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="neural"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">A visual explanation of how neural networks learn one parameter at a time.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Read article ↗</a></div></div></div>
+        <div class="yt-meta"><a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span></div>
+      </article>
+      <article class="yt-card">
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="graph"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">A survey of graph retrieval methods and how they help retrieve connected knowledge.</div><div class="entry-refs"><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Read article ↗</a></div></div></div>
+        <div class="yt-meta"><a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span></div>
+      </article>
+    </div></span></div>
   </section>
 
   <footer>
@@ -1620,6 +1299,13 @@ Papers accepted at IEEE Access and Comsys 2026
     </span>
   </footer>
 
+</div>
+
+<div class="pr-modal-overlay" id="pr-modal" role="dialog" aria-modal="true" aria-labelledby="pr-modal-title" aria-hidden="true">
+  <div class="pr-modal-card">
+    <div class="pr-modal-head"><h2 id="pr-modal-title">Merged pull requests</h2><button type="button" id="pr-modal-close" aria-label="Close dialog">×</button></div>
+    <div class="pr-modal-list" id="pr-modal-list" aria-live="polite">Loading merged pull requests…</div>
+  </div>
 </div>
 
 <!-- PROJECT DETAIL MODAL (LARGE SPECIMEN + EXPLANATION) -->
@@ -1817,130 +1503,53 @@ Papers accepted at IEEE Access and Comsys 2026
   });
 })();
 
-/* ==================== LIVE GITHUB PRS ==================== */
+/* ==================== LIVE GITHUB CONTRIBUTIONS ==================== */
 (function(){
-  var container = document.getElementById('oss-live-items');
-  var countEl = document.getElementById('oss-live-count');
-  var statusEl = document.getElementById('oss-sync-time');
-  var filterBtns = document.querySelectorAll('.oss-filter-btn');
-  if(!container) return;
-
-  var allPRs = [];
-  var currentFilter = 'all';
-
-  function timeAgo(dateStr) {
-    var diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
-    if (diff < 60) return 'just now';
-    if (diff < 3600) return Math.max(1, Math.floor(diff / 60)) + 'm ago';
-    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-    if (diff < 2592000) return Math.floor(diff / 86400) + 'd ago';
-    return Math.floor(diff / 2592000) + 'mo ago';
-  }
-
-  function escapeHTML(str) {
-    if (!str) return '';
-    return str.replace(/[&<>'"]/g, function(tag) {
-      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[tag] || tag;
+  var grid=document.getElementById('contrib-grid');
+  var totalEl=document.getElementById('contrib-total');
+  var periodEl=document.getElementById('contrib-period');
+  var monthsEl=document.getElementById('contrib-months');
+  if(!grid) return;
+  var cacheKey='ks_github_contributions_v1';
+  function render(data){
+    if(!data || !Array.isArray(data.contributions)) throw new Error('Invalid contribution data');
+    var days=data.contributions.slice(-365);
+    var total=days.reduce(function(sum,day){return sum+(Number(day.count)||0);},0);
+    totalEl.textContent=total.toLocaleString();
+    periodEl.textContent='last 365 days · updated from GitHub';
+    // Align the first day to its weekday, then show each day as a keyboard-friendly titled cell.
+    var first=new Date(days[0].date+'T00:00:00Z').getUTCDay();
+    var cells=new Array(first).fill('<span aria-hidden="true"></span>');
+    days.forEach(function(day){
+      var level=Math.max(0,Math.min(4,Number(day.level)||0));
+      var count=Number(day.count)||0;
+      cells.push('<span class="contrib-cell" data-level="'+level+'" title="'+count+' contribution'+(count===1?'':'s')+' on '+day.date+'"></span>');
     });
+    grid.innerHTML=cells.join('');
+    var labels=[],lastMonth='';
+    days.forEach(function(day){var d=new Date(day.date+'T00:00:00Z');var key=d.getUTCFullYear()+'-'+d.getUTCMonth();if(key!==lastMonth){labels.push(d.toLocaleString('en',{month:'short',timeZone:'UTC'}));lastMonth=key;}});
+    monthsEl.innerHTML=labels.map(function(label){return '<span>'+label+'</span>';}).join('');
   }
-
-  function render(items) {
-    var filtered = items.filter(function(item) {
-      if (currentFilter === 'all') return true;
-      return item.state === currentFilter;
-    });
-    if (countEl) {
-      countEl.textContent = items.length + ' PRs';
-    }
-    if (filtered.length === 0) {
-      container.innerHTML = '<div style="font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);padding:0.7rem 0.2rem;">no pull requests found for filter: ' + currentFilter + '</div>';
-      return;
-    }
-    container.innerHTML = filtered.map(function(item) {
-      var tagClass = item.state === 'merged' ? 'tag-good' : (item.state === 'open' ? 'tag-pending' : 'tag-closed');
-      return '<a class="oss-pr-item" href="' + item.url + '" target="_blank" rel="noopener" data-state="' + item.state + '">' +
-        '<div class="oss-pr-left">' +
-          '<span class="' + tagClass + '">' + item.state + '</span>' +
-          '<span class="oss-pr-repo">' + escapeHTML(item.repo) + '</span>' +
-          '<span class="oss-pr-num">#' + item.number + '</span>' +
-          '<span class="oss-pr-title">' + escapeHTML(item.title) + '</span>' +
-        '</div>' +
-        '<span class="oss-pr-time">' + timeAgo(item.created_at) + '</span>' +
-      '</a>';
-    }).join('');
+  try{var cached=localStorage.getItem(cacheKey);if(cached)render(JSON.parse(cached));}catch(e){}
+  var openButton=document.getElementById('contrib-open-prs');
+  var modal=document.getElementById('pr-modal');
+  var closeButton=document.getElementById('pr-modal-close');
+  var list=document.getElementById('pr-modal-list');
+  var loadedPRs=false;
+  function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+  function openModal(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');closeButton.focus();if(loadedPRs)return;loadedPRs=true;
+    fetch('https://api.github.com/search/issues?q='+encodeURIComponent('author:sirohikartik type:pr is:merged -user:sirohikartik')+'&sort=created&order=desc&per_page=100')
+      .then(function(res){if(!res.ok)throw new Error('GitHub API unavailable');return res.json();})
+      .then(function(data){var items=(data.items||[]).filter(function(item){return item.pull_request;});if(!items.length){list.innerHTML='<p>No merged pull requests found.</p>';return;}list.innerHTML=items.map(function(item){var repo=(item.repository_url||'').replace('https://api.github.com/repos/','');return '<a href="'+item.html_url+'" target="_blank" rel="noopener">'+repo+' · #'+item.number+'</a>';}).join('');})
+      .catch(function(){list.innerHTML='<p>Could not load pull requests right now. <a href="https://github.com/pulls?q=is%3Apr+is%3Amerged+author%3Asirohikartik" target="_blank" rel="noopener">View merged PRs on GitHub ↗</a></p>';});
   }
-
-  filterBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      filterBtns.forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      currentFilter = btn.dataset.filter;
-      if (allPRs.length > 0) {
-        render(allPRs);
-      } else {
-        var prNodes = container.querySelectorAll('.oss-pr-item');
-        prNodes.forEach(function(node) {
-          if (currentFilter === 'all' || node.dataset.state === currentFilter) {
-            node.style.display = 'flex';
-          } else {
-            node.style.display = 'none';
-          }
-        });
-      }
-    });
-  });
-
-  async function fetchPRs() {
-    var CACHE_KEY = 'ks_github_prs_cache_v2';
-    var CACHE_TIME_KEY = 'ks_github_prs_time_v2';
-    var cached = localStorage.getItem(CACHE_KEY);
-    var cachedTime = localStorage.getItem(CACHE_TIME_KEY);
-    var now = Date.now();
-
-    if (cached) {
-      try {
-        allPRs = JSON.parse(cached);
-        render(allPRs);
-        if (cachedTime && (now - Number(cachedTime) < 10 * 60 * 1000)) {
-          if (statusEl) statusEl.textContent = 'live cache (' + timeAgo(Number(cachedTime)) + ')';
-          return;
-        }
-      } catch(e){}
-    }
-
-    try {
-      var query = encodeURIComponent('author:sirohikartik type:pr -user:sirohikartik');
-      var res = await fetch('https://api.github.com/search/issues?q=' + query + '&sort=created&order=desc');
-      if (!res.ok) {
-        if (statusEl && allPRs.length) statusEl.textContent = 'synced via fallback cache';
-        return;
-      }
-      var data = await res.json();
-      if (data && data.items && data.items.length) {
-        allPRs = data.items.map(function(item) {
-          var isMerged = Boolean(item.pull_request && item.pull_request.merged_at);
-          var state = isMerged ? 'merged' : item.state;
-          var repo = item.repository_url.replace('https://api.github.com/repos/', '');
-          return {
-            number: item.number,
-            repo: repo,
-            title: item.title,
-            url: item.html_url,
-            state: state,
-            created_at: item.created_at
-          };
-        });
-        localStorage.setItem(CACHE_KEY, JSON.stringify(allPRs));
-        localStorage.setItem(CACHE_TIME_KEY, String(now));
-        render(allPRs);
-        if (statusEl) statusEl.textContent = 'live synced via github api';
-      }
-    } catch(e) {
-      if (statusEl && allPRs.length) statusEl.textContent = 'offline fallback';
-    }
-  }
-
-  fetchPRs();
+  openButton.addEventListener('click',openModal);closeButton.addEventListener('click',closeModal);
+  modal.addEventListener('click',function(event){if(event.target===modal)closeModal();});
+  document.addEventListener('keydown',function(event){if(event.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+  fetch('https://github-contributions-api.jogruber.de/v4/sirohikartik?y=last')
+    .then(function(response){if(!response.ok)throw new Error('Contribution API unavailable');return response.json();})
+    .then(function(data){render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data));}catch(e){}})
+    .catch(function(){if(periodEl && totalEl.textContent==='—')periodEl.textContent='GitHub activity unavailable';});
 })();
 
 /* ==================== CANVAS ANIMATION ENGINE ==================== */
@@ -3369,12 +2978,14 @@ Papers accepted at IEEE Access and Comsys 2026
     if (!canvas) return;
     var renderer = blogRenderers[thumb.dataset.thumb];
     if (!renderer) return;
-    var ctx = setupCanvas(canvas, 80, 80);
+    var ctx = setupCanvas(canvas, 160, 90);
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
 
     var start = null;
     function frame(ts) {
       if (!start) start = ts;
-      renderer(ctx, 80, 80, ts - start);
+      renderer(ctx, 160, 90, ts - start);
       thumb.classList.add('rendered');
       blogRafs.set(thumb, requestAnimationFrame(frame));
     }
@@ -3394,8 +3005,10 @@ Papers accepted at IEEE Access and Comsys 2026
       if (!canvas) return;
       var renderer = blogRenderers[thumb.dataset.thumb];
       if (!renderer) return;
-      var ctx = setupCanvas(canvas, 80, 80);
-      renderer(ctx, 80, 80, 1000);
+      var ctx = setupCanvas(canvas, 160, 90);
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      renderer(ctx, 160, 90, 1000);
       thumb.classList.add('rendered');
     });
   } else if ('IntersectionObserver' in window) {
