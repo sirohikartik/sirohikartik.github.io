@@ -593,6 +593,11 @@
   .yt-card:hover .yt-overlay,.yt-card:focus-within .yt-overlay{opacity:1;transform:translateY(0);}
   .yt-overlay .entry-desc{font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin:0;}
   .yt-overlay .entry-refs{margin:0;position:relative;z-index:2;}
+  .yt-desc-fallback{display:none;}
+  @media (hover:none){
+    .yt-overlay{position:static;opacity:1;transform:none;background:transparent;backdrop-filter:none;padding:0.6rem 0 0;}
+    .yt-desc-fallback{display:block;font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin-top:0.4rem;}
+  }
   /*__CSS_APPEND__*/
 
   /* ---- cert proof link + modal ---- */
