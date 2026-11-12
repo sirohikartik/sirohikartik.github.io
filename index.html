@@ -589,6 +589,10 @@
   .yt-thumb{position:relative;aspect-ratio:16/9;background:var(--band);border:1px solid var(--rule);border-radius:8px;overflow:hidden;}
   .yt-thumb>img,.yt-thumb>svg.yt-svg{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.45s ease,opacity 0.35s ease;}
   .yt-card:hover .yt-thumb>img,.yt-card:hover .yt-thumb>svg.yt-svg{transform:scale(1.04);}
+  .yt-overlay{position:absolute;inset:0;background:rgba(6,7,8,0.88);backdrop-filter:blur(3px);padding:1rem 1.1rem;display:flex;flex-direction:column;justify-content:flex-end;gap:0.7rem;opacity:0;transform:translateY(12px);transition:opacity 0.28s ease,transform 0.28s ease;overflow-y:auto;}
+  .yt-card:hover .yt-overlay,.yt-card:focus-within .yt-overlay{opacity:1;transform:translateY(0);}
+  .yt-overlay .entry-desc{font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin:0;}
+  .yt-overlay .entry-refs{margin:0;position:relative;z-index:2;}
   /*__CSS_APPEND__*/
 
   /* ---- cert proof link + modal ---- */
