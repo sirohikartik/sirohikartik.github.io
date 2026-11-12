@@ -1371,7 +1371,7 @@ Papers accepted at IEEE Access and Comsys 2026
 
   <!-- PROJECTS -->
   <section id="projects">
-    <div class="hunk"><span class="content">Projects<span class="proj-index-line">01–14</span></span></div>
+    <div class="hunk"><span class="content">Projects<span class="proj-index-line">01–15</span></span></div>
 
     <div class="proj-grid">
       <a class="proj-tile" href="https://github.com/sirohikartik/tinygpt"
@@ -1487,6 +1487,16 @@ Papers accepted at IEEE Access and Comsys 2026
          style="--cat:var(--cat-experiments); --tile-index:13;">
         <div class="tile-canvas-wrap"><canvas></canvas></div>
         <span class="tile-name">Q-Toe<span class="arrow">↗</span></span>
+      </a>
+      <a class="proj-tile" href="https://github.com/sirohikartik/EPSE"
+         data-name="EPSE" data-anim="protein"
+         data-tag="Bioinformatics · Protein Search · Python · ESM-2"
+         data-desc="A CPU-first protein similarity search engine. EPSE embeds sequences with ESM-2, organizes vectors using E-Means clustering, and selectively reads candidate clusters from a disk-backed index."
+         data-article="https://epse.vercel.app"
+         data-article-label="Open Project Landing Page ↗"
+         style="--cat:var(--cat-systems); --tile-index:14;">
+        <div class="tile-canvas-wrap"><canvas></canvas></div>
+        <span class="tile-name">EPSE<span class="arrow">↗</span></span>
       </a>
     </div>
 
@@ -2676,6 +2686,85 @@ Papers accepted at IEEE Access and Comsys 2026
       ctx.font = '500 8.5px "IBM Plex Mono",monospace';
       ctx.fillStyle = P.faint; ctx.fillText('raw socket', 5, h - 5);
       ctx.fillStyle = P.green; ctx.fillText('epoll', w - 30, h - 5);
+    },
+
+    /* EPSE: rank embedding clusters, then selectively read a candidate group */
+    protein: function(ctx, w, h, t) {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = P.band; ctx.fillRect(0,0,w,h);
+
+      var centers = [
+        {x:0.28,y:0.34,c:P.teal},
+        {x:0.70,y:0.31,c:P.purple},
+        {x:0.52,y:0.67,c:P.green}
+      ];
+      var phase = (t % 2550) / 2550;
+      var selected = Math.floor(phase * centers.length);
+
+      /* Faint disk-backed cluster outlines */
+      centers.forEach(function(cluster, ci) {
+        var cx = cluster.x * w, cy = cluster.y * h;
+        var active = ci === selected;
+        ctx.beginPath();
+        ctx.arc(cx, cy, w * 0.17, 0, Math.PI * 2);
+        ctx.setLineDash(active ? [2.5,2.5] : [1.5,3]);
+        ctx.strokeStyle = active ? cluster.c : 'rgba(78,80,73,0.5)';
+        ctx.lineWidth = active ? 1.1 : 0.7;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        /* Protein embeddings grouped around each centroid */
+        for (var i = 0; i < 9; i++) {
+          var angle = i * 2.399 + ci * 0.7;
+          var radius = w * (0.045 + (i % 4) * 0.025);
+          var px = cx + Math.cos(angle) * radius;
+          var py = cy + Math.sin(angle) * radius;
+          ctx.beginPath();
+          ctx.arc(px, py, active ? 1.8 : 1.45, 0, Math.PI * 2);
+          ctx.fillStyle = active ? cluster.c : 'rgba(155,157,148,0.62)';
+          ctx.fill();
+        }
+
+        /* Cluster centroid */
+        ctx.beginPath();
+        ctx.arc(cx, cy, active ? 3.4 : 2.7, 0, Math.PI * 2);
+        ctx.fillStyle = cluster.c;
+        ctx.fill();
+        ctx.strokeStyle = P.band;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+
+      /* Query embedding moves toward the current nearest centroid */
+      var target = centers[selected];
+      var travel = phase % (1 / centers.length) * centers.length;
+      var qx = w * (0.11 + travel * (target.x - 0.11));
+      var qy = h * (0.79 + travel * (target.y - 0.79));
+      ctx.beginPath();
+      ctx.moveTo(qx, qy);
+      ctx.lineTo(target.x * w, target.y * h);
+      ctx.setLineDash([2,3]);
+      ctx.strokeStyle = 'rgba(107,174,239,0.48)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.arc(qx, qy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = P.blue;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(qx, qy, 5.3, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(107,174,239,0.35)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      ctx.font = '500 7px "IBM Plex Mono",monospace';
+      ctx.fillStyle = P.faint;
+      ctx.fillText('centroids', 5, h - 5);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = P.blue;
+      ctx.fillText('query → disk', w - 5, h - 5);
+      ctx.textAlign = 'left';
     },
 
     /* FileManager: directory tree populating */
