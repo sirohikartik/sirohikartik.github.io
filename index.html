@@ -324,19 +324,34 @@
   .entry-title{transition:color 0.15s ease;}
   section:not(.hoverable) .logline{padding:0.55rem 0.6rem 0.75rem 0.5rem;margin-left:-0.5rem;margin-right:-0.6rem;}
 
-  /* ---- experience timeline ---- */
+  /* ---- minimal experience cards ---- */
   .commit-log{position:relative;padding-left:0;}
-  .commit-log::before{display:none;}
-  .commit-row{position:relative;display:block;padding-bottom:1.6rem;}
+  .commit-row{position:relative;display:block;padding-bottom:.85rem;}
   .commit-row:last-child{padding-bottom:0;}
-  .commit-rail{display:none;}
-  .commit-dot{display:none;}
-  .commit-body{width:100%;}
-  .commit-refline{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;font-family:var(--sans);font-size:0.78rem;color:var(--ink-soft);margin-bottom:0.25rem;}
-  .commit-hash{display:none;}
-  .commit-head-tag{font-family:var(--sans);font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--paper);background:var(--signal);padding:0.12rem 0.55rem;border-radius:999px;text-transform:uppercase;}
-  .commit-title{font-family:var(--display);font-size:1.04rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);}
-  .commit-org{font-weight:400;color:var(--ink-soft);}
+  .commit-body{width:100%;min-width:0;padding:.72rem .95rem;border:1px solid rgba(255,255,255,.075);border-radius:9px;background:linear-gradient(135deg,rgba(255,255,255,.025),rgba(255,255,255,.008));transition:transform .22s ease,border-color .22s ease,background .22s ease;}
+  .commit-row:hover .commit-body{transform:translateX(2px);border-color:rgba(107,174,239,.3);background:linear-gradient(135deg,rgba(107,174,239,.055),rgba(255,255,255,.008));}
+  .commit-row.is-head .commit-body{border-color:rgba(127,199,122,.2);background:linear-gradient(135deg,rgba(127,199,122,.055),rgba(255,255,255,.008));}
+  .commit-summary{display:block;position:relative;width:100%;padding:.08rem 1.5rem .08rem 0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;}
+  .commit-summary::after{content:"+";position:absolute;right:.1rem;top:50%;transform:translateY(-50%);font:400 1.1rem var(--mono);color:var(--ink-faint);transition:transform .2s ease,color .2s ease;}
+  .commit-summary:hover::after,.commit-summary[aria-expanded="true"]::after{color:var(--signal);}
+  .commit-summary[aria-expanded="true"]::after{content:"−";}
+  .commit-summary .commit-refline{margin-bottom:.22rem;}
+  .commit-summary .commit-title{display:block;transition:color .2s ease;}
+  .commit-summary:hover .commit-title,.commit-summary[aria-expanded="true"] .commit-title{color:#fff;}
+  .commit-detail[hidden]{display:none!important;}
+  .commit-row.is-open .commit-detail{animation:experienceDetailIn .22s ease both;}
+  @keyframes experienceDetailIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+  .commit-refline{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;font-family:var(--mono);font-size:0.68rem;color:var(--signal);margin-bottom:0.38rem;letter-spacing:.025em;}
+  .commit-title{font-family:var(--display);font-size:1.02rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);line-height:1.4;}
+  .commit-org{font-weight:500;color:var(--ink-soft);}
+  .commit-detail{font-size:.86rem;line-height:1.62;color:var(--ink-soft);margin-top:.32rem;max-width:72ch;}
+  .commit-metric{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .js #experience .commit-row{opacity:0;transform:translateY(7px);}
+  #experience .commit-row:nth-child(1){--experience-index:0;}#experience .commit-row:nth-child(2){--experience-index:1;}#experience .commit-row:nth-child(3){--experience-index:2;}#experience .commit-row:nth-child(4){--experience-index:3;}#experience .commit-row:nth-child(5){--experience-index:4;}#experience .commit-row:nth-child(6){--experience-index:5;}
+  .js #experience .logline.in-view .commit-row{animation:experienceArrive .5s cubic-bezier(.2,.75,.25,1) forwards;animation-delay:calc(var(--experience-index,0) * 90ms);}
+  @keyframes experienceArrive{to{opacity:1;transform:translateY(0);}}
+  @media(prefers-reduced-motion:reduce){.js #experience .commit-row{opacity:1;transform:none;animation:none!important;}}
+  @media(max-width:640px){.commit-row{padding-bottom:.7rem}.commit-body{padding:.64rem .78rem}.commit-title{font-size:.98rem}.commit-detail{font-size:.82rem}}
 
   /* ---- projects ---- */
   .proj-index-line{color:var(--ink-faint);font-weight:400;margin-left:auto;padding-left:1rem;}
@@ -471,13 +486,14 @@
   .yt-thumb{position:relative;aspect-ratio:16/9;background:var(--band);border:1px solid var(--rule);border-radius:8px;overflow:hidden;}
   .yt-thumb>img,.yt-thumb>svg.yt-svg{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.45s ease,opacity 0.35s ease;}
   .yt-card:hover .yt-thumb>img,.yt-card:hover .yt-thumb>svg.yt-svg{transform:scale(1.04);}
-  .yt-overlay{position:absolute;inset:0;background:rgba(6,7,8,0.88);backdrop-filter:blur(3px);padding:1rem 1.1rem;display:flex;flex-direction:column;justify-content:flex-end;gap:0.7rem;opacity:0;transform:translateY(12px);transition:opacity 0.28s ease,transform 0.28s ease;overflow-y:auto;}
+  .yt-overlay{position:absolute;inset:0;max-height:100%;box-sizing:border-box;background:rgba(6,7,8,0.88);backdrop-filter:blur(3px);padding:1rem 1.1rem;display:flex;flex-direction:column;justify-content:flex-end;gap:0.7rem;opacity:0;transform:translateY(12px);transition:opacity 0.28s ease,transform 0.28s ease;overflow-y:auto;overscroll-behavior:contain;}
   .yt-card:hover .yt-overlay,.yt-card:focus-within .yt-overlay{opacity:1;transform:translateY(0);}
-  .yt-overlay .entry-desc{font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin:0;}
+  .yt-overlay .entry-desc{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden;font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin:0;}
   .yt-overlay .entry-refs{margin:0;position:relative;z-index:2;}
   .yt-desc-fallback{display:none;}
   @media (hover:none){
-    .yt-overlay{position:static;opacity:1;transform:none;background:transparent;backdrop-filter:none;padding:0.6rem 0 0;}
+    .yt-overlay{position:static;max-height:none;opacity:1;transform:none;background:transparent;backdrop-filter:none;padding:0.6rem 0 0;overflow:visible;}
+    .yt-overlay .entry-desc{display:block;-webkit-line-clamp:unset;overflow:visible;}
     .yt-desc-fallback{display:block;font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin-top:0.4rem;}
   }
   .yt-meta{padding:0.65rem 0.2rem 0;}
@@ -662,11 +678,25 @@
     color:var(--ink-soft);text-align:center;letter-spacing:0.01em;
   }
 
-  /* ---- blog post thumbnails ---- */
+  /* ---- still, abstract blog artwork ---- */
   .post-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
-  .post-thumb{position:absolute;inset:0;background:var(--band);overflow:hidden;opacity:0;transition:opacity 0.5s ease;}
-  .post-thumb.rendered{opacity:1;}
-  .post-thumb canvas{width:100%;height:100%;display:block;object-fit:cover;object-position:center;}
+  .post-thumb{position:absolute;inset:0;overflow:hidden;background:#080b10;isolation:isolate;}
+  .post-thumb::before,.post-thumb::after{content:"";position:absolute;inset:0;pointer-events:none;}
+  .post-thumb[data-thumb="matmul"]{background:radial-gradient(ellipse at 68% 35%,rgba(51,126,205,.26),transparent 48%),linear-gradient(135deg,#07101c,#08090d 68%);}
+  .post-thumb[data-thumb="matmul"]::before{background:linear-gradient(rgba(107,174,239,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(107,174,239,.13) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(135deg,transparent 4%,#000 52%,transparent 100%);}
+  .post-thumb[data-thumb="matmul"]::after{inset:20% 13%;border:1px solid rgba(107,174,239,.45);background:repeating-linear-gradient(0deg,transparent 0 13px,rgba(107,174,239,.2) 14px),repeating-linear-gradient(90deg,transparent 0 13px,rgba(107,174,239,.2) 14px);transform:perspective(360px) rotateX(48deg) rotateZ(-18deg);box-shadow:0 0 42px rgba(37,120,212,.18);}
+  .post-thumb[data-thumb="tinygpt"]{background:radial-gradient(ellipse at center,rgba(44,129,114,.18),transparent 55%),linear-gradient(145deg,#06100f,#090a0d);}
+  .post-thumb[data-thumb="tinygpt"]::before{inset:18% 12%;background:radial-gradient(circle,rgba(112,219,192,.9) 0 2px,transparent 2.5px);background-size:34px 30px;mask-image:linear-gradient(115deg,transparent,#000 18% 82%,transparent);}
+  .post-thumb[data-thumb="tinygpt"]::after{inset:30% 22%;background:repeating-linear-gradient(24deg,transparent 0 24px,rgba(87,199,176,.28) 25px 26px,transparent 27px 48px);clip-path:polygon(0 25%,25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%);}
+  .post-thumb[data-thumb="backprop"]{background:radial-gradient(circle at 50% 46%,rgba(161,126,231,.23),transparent 52%),#0b0911;}
+  .post-thumb[data-thumb="backprop"]::before{inset:-15%;background:repeating-radial-gradient(ellipse at 50% 48%,transparent 0 15px,rgba(183,163,242,.24) 16px 17px,transparent 18px 31px);transform:rotate(-18deg);}
+  .post-thumb[data-thumb="backprop"]::after{inset:0;background:linear-gradient(135deg,transparent 47%,rgba(183,163,242,.45) 48%,transparent 49%),linear-gradient(35deg,transparent 57%,rgba(183,163,242,.28) 58%,transparent 59%);}
+  .post-thumb[data-thumb="neural"]{background:radial-gradient(ellipse at 35% 55%,rgba(226,128,98,.23),transparent 42%),radial-gradient(ellipse at 72% 35%,rgba(184,116,201,.2),transparent 40%),#110b0d;}
+  .post-thumb[data-thumb="neural"]::before{inset:-25%;background:repeating-linear-gradient(148deg,transparent 0 19px,rgba(255,177,143,.17) 20px 21px,transparent 22px 40px);transform:rotate(-10deg);}
+  .post-thumb[data-thumb="neural"]::after{inset:18%;border-radius:50%;border:1px solid rgba(255,190,163,.35);box-shadow:0 0 0 18px rgba(255,190,163,.035),0 0 0 36px rgba(255,190,163,.025);}
+  .post-thumb[data-thumb="graph"]{background:radial-gradient(ellipse at center,rgba(48,148,126,.22),transparent 58%),#07100f;}
+  .post-thumb[data-thumb="graph"]::before{background:linear-gradient(30deg,transparent 49.7%,rgba(87,199,176,.22) 50%,transparent 50.4%),linear-gradient(150deg,transparent 49.7%,rgba(87,199,176,.18) 50%,transparent 50.4%);background-size:52px 45px;mask-image:radial-gradient(ellipse,#000 15%,transparent 76%);}
+  .post-thumb[data-thumb="graph"]::after{inset:35% 42%;border:1px solid rgba(87,199,176,.7);border-radius:50%;box-shadow:0 0 0 12px rgba(87,199,176,.06),0 0 35px rgba(87,199,176,.25);}
   .post-grid .yt-overlay{background:rgba(6,7,8,0.84);}
   .post-grid .entry-title{background-image:none;}
   .post-grid .yt-meta .entry-title:hover{color:var(--signal);}
@@ -907,7 +937,7 @@
                 <g id="p1-dots" fill="#6BAEEF"></g>
               </svg>
               <div class="yt-overlay">
-                <div class="entry-desc">An empirical study on coordinate signs versus magnitude in physical weight-space steering across Qwen 2.5, SmolLM2, and Gemma 2. Shows how negative coordinates cancel collateral activation drift in superposition and eliminate persona collapse.</div>
+                <div class="entry-desc">Tests weight-space steering across Qwen 2.5, SmolLM2, and Gemma 2. Negative coordinates reduce collateral activation drift and prevent persona collapse.</div>
                 <div class="entry-refs">
                   <a href="weight_space"><i class="fa-solid fa-file-lines"></i> read research article</a>
                   <a href="https://github.com/sirohikartik/weight_space" target="_blank"><i class="fa-brands fa-github"></i> github repository</a>
@@ -962,11 +992,9 @@
       <span class="content">
         <div class="commit-log">
           <div class="commit-row is-head">
-            <div class="commit-rail"><span class="commit-dot" style="background:var(--good);border-color:var(--good);box-shadow:0 0 0 4px rgba(127,199,122,0.18);"></span></div>
             <div class="commit-body">
               <div class="commit-refline">
                 <span>Summer 2027</span>
-                <span class="commit-head-tag" style="background:var(--good);color:#000;">UPCOMING</span>
               </div>
               <div class="commit-title">Software Engineer Program (SEP) Intern <span class="commit-org">@ JP Morgan Chase</span></div>
               <div class="commit-detail">
@@ -975,19 +1003,17 @@
             </div>
           </div>
           <div class="commit-row">
-            <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
               <div class="commit-refline">
                 <span>Aug 2026 – present</span>
               </div>
               <div class="commit-title">AI Engineering Intern <span class="commit-org">@ Horrazon AI</span></div>
               <div class="commit-detail">
-                Built complete agentic web harness and cross-service security patches; performance engineered system pipelines cutting real-time response latency from ~2 minutes to sub-2s.
+                Built complete agentic web harness and cross-service security patches; performance engineered system pipelines cutting real-time response latency from <strong class="commit-metric">~2 min to under 2 sec</strong>.
               </div>
             </div>
           </div>
           <div class="commit-row">
-            <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
               <div class="commit-refline">
                 <span>Aug 2026 – present</span>
@@ -999,7 +1025,6 @@
             </div>
           </div>
           <div class="commit-row">
-            <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
               <div class="commit-refline">
                 <span>Aug 2026 – present</span>
@@ -1011,7 +1036,6 @@
             </div>
           </div>
           <div class="commit-row">
-            <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
               <div class="commit-refline">
                 <span>Jul – Aug 2026</span>
@@ -1031,7 +1055,6 @@
             </div>
           </div>
           <div class="commit-row">
-            <div class="commit-rail"><span class="commit-dot"></span></div>
             <div class="commit-body">
               <div class="commit-refline"><span>Jan – Mar 2026</span></div>
               <div class="commit-title">AI Research Intern <span class="commit-org">@ University of Galway</span></div>
@@ -1266,23 +1289,23 @@ Papers accepted at IEEE Access and Comsys 2026
     <div class="hunk"><span class="content">Writing &amp; Notes</span></div>
     <div class="logline"><span class="content"><div class="yt-grid post-grid">
       <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="matmul"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">Notes on writing and tuning CUDA matrix multiplication kernels, from 44 to 376 GFLOP/s.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">Read article ↗</a></div></div></div>
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="matmul" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">Notes on writing and tuning CUDA matrix multiplication kernels, from 44 to 376 GFLOP/s.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">Read article ↗</a></div></div></div>
         <div class="yt-meta"><a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span></div>
       </article>
       <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="tinygpt"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">Building a 30M-parameter GPT from scratch in C++ with NEON, SSE, and OpenMP.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/tinygpt_blog.html">Read article ↗</a></div></div></div>
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="tinygpt" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">Building a 30M-parameter GPT from scratch in C++ with NEON, SSE, and OpenMP.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/tinygpt_blog.html">Read article ↗</a></div></div></div>
         <div class="yt-meta"><a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span></div>
       </article>
       <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="backprop"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">An intuitive walkthrough of backpropagation, from the chain rule to automatic differentiation.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/backprop.html">Read article ↗</a></div></div></div>
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="backprop" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">An intuitive walkthrough of backpropagation, from the chain rule to automatic differentiation.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/backprop.html">Read article ↗</a></div></div></div>
         <div class="yt-meta"><a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span></div>
       </article>
       <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="neural"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">A visual explanation of how neural networks learn one parameter at a time.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Read article ↗</a></div></div></div>
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="neural" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">A visual explanation of how neural networks learn one parameter at a time.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Read article ↗</a></div></div></div>
         <div class="yt-meta"><a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span></div>
       </article>
       <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="graph"><canvas></canvas></div><div class="yt-overlay"><div class="entry-desc">A survey of graph retrieval methods and how they help retrieve connected knowledge.</div><div class="entry-refs"><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Read article ↗</a></div></div></div>
+        <div class="yt-thumb"><div class="post-thumb" data-thumb="graph" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">A survey of graph retrieval methods and how they help retrieve connected knowledge.</div><div class="entry-refs"><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Read article ↗</a></div></div></div>
         <div class="yt-meta"><a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span></div>
       </article>
     </div></span></div>
@@ -1500,6 +1523,41 @@ Papers accepted at IEEE Access and Comsys 2026
     n.addEventListener('blur',function(){cap.textContent=def;});
     n.addEventListener('click',function(){window.open(n.dataset.url,'_blank');});
     n.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();window.open(n.dataset.url,'_blank');}});
+  });
+})();
+
+/* ==================== EXPERIENCE DETAIL TOGGLES ==================== */
+(function(){
+  document.querySelectorAll('#experience .commit-row').forEach(function(row,index){
+    var body=row.querySelector('.commit-body');
+    var date=body && body.querySelector('.commit-refline');
+    var title=body && body.querySelector('.commit-title');
+    var detail=body && body.querySelector('.commit-detail');
+    if(!body||!date||!title||!detail)return;
+    var detailId='experience-detail-'+(index+1);
+    detail.id=detailId;
+    detail.hidden=true;
+    var button=document.createElement('button');
+    button.type='button';
+    button.className='commit-summary';
+    button.setAttribute('aria-expanded','false');
+    button.setAttribute('aria-controls',detailId);
+    var dateLabel=document.createElement('span');
+    dateLabel.className=date.className;
+    while(date.firstChild)dateLabel.appendChild(date.firstChild);
+    var roleLabel=document.createElement('span');
+    roleLabel.className=title.className;
+    while(title.firstChild)roleLabel.appendChild(title.firstChild);
+    body.insertBefore(button,date);
+    date.remove();title.remove();
+    button.appendChild(dateLabel);
+    button.appendChild(roleLabel);
+    button.addEventListener('click',function(){
+      var expanded=button.getAttribute('aria-expanded')==='true';
+      button.setAttribute('aria-expanded',String(!expanded));
+      detail.hidden=expanded;
+      row.classList.toggle('is-open',!expanded);
+    });
   });
 })();
 
@@ -2512,384 +2570,6 @@ Papers accepted at IEEE Access and Comsys 2026
   };
 
   /* ================================================================
-     BLOG THUMBNAIL RENDERERS — 2× resolution, 160×160 logical
-  ================================================================ */
-  var blogRenderers = {
-
-    /* Weight Space: sparse coordinate activation dipole & manifold cancellation */
-    weightspace: function(ctx, w, h, t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle = P.paper; ctx.fillRect(0,0,w,h);
-
-      /* --- TOP HALF: MANIFOLD CANCELLATION TRAJECTORY --- */
-      var cycle = 3600;
-      var prog = (t % cycle) / cycle; // 0 to 1
-
-      // Draw manifold curve
-      ctx.strokeStyle = 'rgba(155,157,148,0.35)'; ctx.lineWidth = 1.0;
-      ctx.setLineDash([3, 2]);
-      ctx.beginPath();
-      for (var mx = 8; mx <= w - 8; mx += 2) {
-        var my = 22 - 6 * Math.sin(((mx - 8) / (w - 16)) * Math.PI);
-        if (mx === 8) ctx.moveTo(mx, my); else ctx.lineTo(mx, my);
-      }
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Key points on canvas
-      var bx = 16, by = 22;      // Base point on manifold
-      var px = 46, py = 8;       // Off-manifold positive drift
-      var rx = 60, ry = 21;      // Restored balanced point on manifold
-
-      // Draw base point
-      ctx.fillStyle = P.ink;
-      ctx.beginPath(); ctx.arc(bx, by, 2.5, 0, Math.PI * 2); ctx.fill();
-
-      // Vector 1: Positive Drift (Red/Coral)
-      var posFrac = Math.min(1, prog / 0.35);
-      var curPx = bx + (px - bx) * posFrac;
-      var curPy = by + (py - by) * posFrac;
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.6;
-      ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(curPx, curPy); ctx.stroke();
-      if (prog >= 0.25) {
-        ctx.fillStyle = '#ef4444';
-        ctx.beginPath(); ctx.arc(px, py, 2.2, 0, Math.PI * 2); ctx.fill();
-      }
-
-      // Vector 2: Negative Cancellation (Cyan/Blue dashed)
-      if (prog > 0.35) {
-        var negFrac = Math.min(1, (prog - 0.35) / 0.3);
-        var curNx = px + (rx - px) * negFrac;
-        var curNy = py + (ry - py) * negFrac;
-        ctx.strokeStyle = P.blue; ctx.lineWidth = 1.4;
-        ctx.setLineDash([2, 2]);
-        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(curNx, curNy); ctx.stroke();
-        ctx.setLineDash([]);
-      }
-
-      // Vector 3: Resulting Balanced Vector (Green)
-      if (prog > 0.65) {
-        var balFrac = Math.min(1, (prog - 0.65) / 0.25);
-        ctx.strokeStyle = P.green; ctx.lineWidth = 2.0;
-        ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + (rx - bx) * balFrac, by + (ry - by) * balFrac); ctx.stroke();
-        ctx.fillStyle = P.green;
-        ctx.beginPath(); ctx.arc(rx, ry, 2.8, 0, Math.PI * 2); ctx.fill();
-      }
-
-      /* --- BOTTOM HALF: SPARSE COORDINATE SPECTRUM DIPOLE --- */
-      var midY = 56;
-      ctx.strokeStyle = 'rgba(86,88,80,0.4)'; ctx.lineWidth = 0.8;
-      ctx.beginPath(); ctx.moveTo(8, midY); ctx.lineTo(w - 8, midY); ctx.stroke();
-
-      var numBars = 14;
-      var barW = (w - 20) / numBars;
-      var wave = (t * 0.003);
-
-      var topPos = [2, 6, 10];
-      var topNeg = [4, 8];
-
-      for (var i = 0; i < numBars; i++) {
-        var x = 10 + i * barW;
-        if (topPos.indexOf(i) !== -1) {
-          var hPos = 14 + 5 * Math.sin(wave + i);
-          ctx.fillStyle = P.blue;
-          ctx.fillRect(x + 0.5, midY - hPos, barW - 1.5, hPos);
-        } else if (topNeg.indexOf(i) !== -1) {
-          var hNeg = 12 + 4 * Math.cos(wave + i);
-          ctx.fillStyle = P.amber;
-          ctx.fillRect(x + 0.5, midY, barW - 1.5, hNeg);
-        } else {
-          var hBg = 2 + Math.sin(i * 1.8 + wave);
-          ctx.fillStyle = 'rgba(86,88,80,0.22)';
-          ctx.fillRect(x + 0.5, midY - hBg, barW - 1.5, hBg * 2);
-        }
-      }
-
-      /* Text badges */
-      ctx.font = '500 7.5px "IBM Plex Mono",monospace';
-      ctx.fillStyle = P.blue; ctx.fillText('+pos', 8, 42);
-      ctx.fillStyle = P.amber; ctx.fillText('-neg', 28, 42);
-      ctx.fillStyle = P.green; ctx.fillText('Δx_bal', 50, 42);
-      ctx.fillStyle = P.soft; ctx.fillText('manifold cancel', 8, h - 3);
-    },
-
-    /* CUDA matmul: heatmap + perf curve */
-    matmul: function(ctx, w, h, t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
-
-      /* heatmap tiles */
-      var cols=10, rows=10;
-      var cw=w/cols, ch=(h-16)/rows;
-      for(var r=0;r<rows;r++){
-        for(var c=0;c<cols;c++){
-          var diag=(r+c)/(cols+rows-2);
-          var wavePh=(t*0.0008)+diag*Math.PI;
-          var v=0.1+0.5*(0.5+0.5*Math.sin(wavePh));
-          ctx.fillStyle='rgba(107,174,239,'+v+')';
-          ctx.fillRect(c*cw+0.5,r*ch+0.5,cw-1,ch-1);
-        }
-      }
-
-      /* axes */
-      var axL=10, axB=h-20, axR=w-6, axT=12;
-      ctx.strokeStyle='rgba(86,88,80,0.6)'; ctx.lineWidth=0.8;
-      ctx.beginPath(); ctx.moveTo(axL,axT); ctx.lineTo(axL,axB); ctx.lineTo(axR,axB); ctx.stroke();
-
-      /* perf curve */
-      var pts=[[0,0.85],[0.18,0.75],[0.38,0.55],[0.58,0.3],[0.82,0.12],[1,0.04]];
-      var progress=Math.min(1,(t%4000)/2800);
-      ctx.beginPath(); ctx.strokeStyle=P.blue; ctx.lineWidth=2.5;
-      ctx.lineCap='round'; ctx.lineJoin='round';
-      var started=false;
-      for(var i=0;i<pts.length-1;i++){
-        var segS=i/(pts.length-1), segE=(i+1)/(pts.length-1);
-        if(progress<segS) break;
-        var sp=Math.min(1,(progress-segS)/(segE-segS));
-        var x0=axL+(axR-axL)*pts[i][0], y0=axT+(axB-axT)*pts[i][1];
-        var x1=axL+(axR-axL)*(pts[i][0]+(pts[i+1][0]-pts[i][0])*sp);
-        var y1=axT+(axB-axT)*(pts[i][1]+(pts[i+1][1]-pts[i][1])*sp);
-        if(!started){ctx.moveTo(x0,y0);started=true;}
-        ctx.lineTo(x1,y1);
-      }
-      ctx.stroke();
-
-      /* dot on curve */
-      var pi=Math.min(pts.length-2,Math.floor(progress*(pts.length-1)));
-      var pf=progress*(pts.length-1)-pi;
-      var dnx=pts[pi][0]+(pts[Math.min(pi+1,pts.length-1)][0]-pts[pi][0])*pf;
-      var dny=pts[pi][1]+(pts[Math.min(pi+1,pts.length-1)][1]-pts[pi][1])*pf;
-      var dx2=axL+(axR-axL)*dnx, dy2=axT+(axB-axT)*dny;
-      ctx.beginPath(); ctx.arc(dx2,dy2,4,0,Math.PI*2);
-      ctx.fillStyle=P.blue; ctx.fill();
-      ctx.beginPath(); ctx.arc(dx2,dy2,7,0,Math.PI*2);
-      ctx.strokeStyle='rgba(107,174,239,0.35)'; ctx.lineWidth=1.5; ctx.stroke();
-
-      /* labels */
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('44',axL+1,axB-2);
-      ctx.fillStyle=P.blue; ctx.fillText('376',axR-20,axT+10);
-      ctx.fillStyle=P.soft; ctx.fillText('GFLOP/s',axL+1,h-4);
-    },
-
-    /* tinyGPT: deep net forward pass */
-    tinygpt: function(ctx, w, h, t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
-
-      var layers=[3,5,6,5,3];
-      var lx=[0.12,0.3,0.5,0.7,0.88];
-      var nodes=layers.map(function(n,l){
-        var arr=[];
-        for(var i=0;i<n;i++) arr.push([lx[l]*w,(0.5+(i-(n-1)/2)*0.175)*h]);
-        return arr;
-      });
-
-      var cycle=3000, phase=(t%cycle)/cycle;
-      var front=phase*(layers.length+0.5)-0.5;
-
-      /* connections */
-      for(var l=0;l<layers.length-1;l++){
-        for(var a=0;a<nodes[l].length;a++){
-          for(var b=0;b<nodes[l+1].length;b++){
-            var lit=front>=l&&front<l+1;
-            var frac=lit?easeInOut(Math.max(0,Math.min(1,front-l))):0;
-            ctx.beginPath();
-            ctx.strokeStyle=lit?'rgba(107,174,239,'+(0.08+0.55*frac)+')':'rgba(86,88,80,0.12)';
-            ctx.lineWidth=lit?0.9:0.5;
-            ctx.moveTo(nodes[l][a][0],nodes[l][a][1]);
-            ctx.lineTo(nodes[l+1][b][0],nodes[l+1][b][1]);
-            ctx.stroke();
-          }
-        }
-      }
-
-      /* nodes */
-      for(var l=0;l<layers.length;l++){
-        for(var ni=0;ni<nodes[l].length;ni++){
-          var lit=front>=l-0.4&&front<l+0.8;
-          var frac2=lit?easeInOut(Math.max(0,Math.min(1,front-l+0.4))):0;
-          var r=lit?5.5:3.5;
-          if(lit){
-            ctx.beginPath(); ctx.arc(nodes[l][ni][0],nodes[l][ni][1],r+5,0,Math.PI*2);
-            ctx.fillStyle='rgba(107,174,239,0.1)'; ctx.fill();
-          }
-          ctx.beginPath(); ctx.arc(nodes[l][ni][0],nodes[l][ni][1],r,0,Math.PI*2);
-          ctx.fillStyle=lit?P.blue:P.paper; ctx.fill();
-          ctx.strokeStyle=lit?P.blue:'rgba(107,174,239,0.3)'; ctx.lineWidth=1; ctx.stroke();
-        }
-      }
-
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('30M params · fwd pass',4,h-4);
-    },
-
-    /* Backprop: chain rule flow diagram */
-    backprop: function(ctx, w, h, t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
-
-      var ns=[
-        {x:0.1, y:0.5, l:'x'},
-        {x:0.35,y:0.28,l:'w'},
-        {x:0.35,y:0.72,l:'b'},
-        {x:0.62,y:0.5, l:'z'},
-        {x:0.88,y:0.5, l:'L'},
-      ];
-      var edges=[[0,3],[1,3],[2,3],[3,4]];
-      var cycle=3800, ph=(t%cycle)/cycle;
-      var isBack=ph>0.5;
-      var sub=isBack?(ph-0.5)*2:ph*2;
-      var front=sub*(edges.length+0.5)-0.5;
-
-      edges.forEach(function(e,ei){
-        var a=ns[e[0]],b=ns[e[1]];
-        var ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h;
-        var idx=isBack?(edges.length-1-ei):ei;
-        var active=front>=idx&&front<idx+1;
-        var frac=active?easeInOut(Math.max(0,Math.min(1,front-idx))):0;
-        var col=isBack?P.amber:P.blue;
-        if(isBack) ctx.setLineDash([4,5]);
-        ctx.beginPath();
-        ctx.globalAlpha=active?(0.25+0.75*frac):0.18;
-        ctx.strokeStyle=active?col:'rgba(86,88,80,0.5)';
-        ctx.lineWidth=active?2:0.8;
-        if(isBack){ctx.moveTo(bx,by);ctx.lineTo(ax,ay);}
-        else{ctx.moveTo(ax,ay);ctx.lineTo(bx,by);}
-        ctx.stroke();
-        ctx.setLineDash([]); ctx.globalAlpha=1;
-        if(active){
-          var p2=easeInOut(Math.max(0,Math.min(1,front-idx)));
-          var ppx=isBack?lerp(bx,ax,p2):lerp(ax,bx,p2);
-          var ppy=isBack?lerp(by,ay,p2):lerp(ay,by,p2);
-          ctx.beginPath(); ctx.arc(ppx,ppy,3.5,0,Math.PI*2);
-          ctx.fillStyle=col; ctx.fill();
-          ctx.beginPath(); ctx.arc(ppx,ppy,6,0,Math.PI*2);
-          ctx.strokeStyle=col; ctx.lineWidth=1; ctx.globalAlpha=0.3; ctx.stroke();
-          ctx.globalAlpha=1;
-        }
-      });
-
-      ns.forEach(function(n){
-        var nx=n.x*w,ny=n.y*h;
-        ctx.beginPath(); ctx.arc(nx,ny,10,0,Math.PI*2);
-        ctx.fillStyle=P.band; ctx.fill();
-        ctx.strokeStyle='rgba(107,174,239,0.4)'; ctx.lineWidth=1; ctx.stroke();
-        ctx.font='600 9px "IBM Plex Mono",monospace';
-        ctx.fillStyle=P.soft; ctx.textAlign='center'; ctx.textBaseline='middle';
-        ctx.fillText(n.l,nx,ny);
-        ctx.textAlign='left'; ctx.textBaseline='alphabetic';
-      });
-
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=isBack?P.amber:P.blue;
-      ctx.fillText(isBack?'← backward pass':'forward pass →',4,h-4);
-    },
-
-    /* neural: animated neuron with weight pulses */
-    neural: function(ctx, w, h, t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
-
-      var inputs=[0.2,0.36,0.52,0.68];
-      var nx=w*0.62, ny=h*0.48, outX=w*0.88;
-
-      inputs.forEach(function(iy,i){
-        var ix=w*0.1, ipy=iy*h;
-        var w2=0.35+0.4*Math.sin(t*0.0014+i*1.4);
-        var alpha=0.15+0.75*w2;
-        ctx.beginPath();
-        ctx.strokeStyle='rgba(107,174,239,'+alpha+')';
-        ctx.lineWidth=0.8+w2*1.5;
-        ctx.moveTo(ix+5,ipy); ctx.lineTo(nx-12,ny); ctx.stroke();
-        ctx.beginPath(); ctx.arc(ix,ipy,4,0,Math.PI*2);
-        ctx.fillStyle=P.band; ctx.fill();
-        ctx.strokeStyle='rgba(107,174,239,0.5)'; ctx.lineWidth=1; ctx.stroke();
-        ctx.font='500 7px "IBM Plex Mono",monospace';
-        ctx.fillStyle=P.faint;
-        ctx.fillText('x'+i, ix-4,ipy-6);
-      });
-
-      var glow=0.5+0.4*Math.sin(t*0.002);
-      ctx.beginPath(); ctx.arc(nx,ny,13,0,Math.PI*2);
-      ctx.fillStyle='rgba(107,174,239,0.08)'; ctx.fill();
-      ctx.beginPath(); ctx.arc(nx,ny,10,0,Math.PI*2);
-      ctx.fillStyle=P.band; ctx.fill();
-      ctx.strokeStyle='rgba(107,174,239,'+glow+')'; ctx.lineWidth=1.8; ctx.stroke();
-      ctx.font='600 10px serif';
-      ctx.fillStyle=P.blue; ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText('σ',nx,ny);
-      ctx.textAlign='left'; ctx.textBaseline='alphabetic';
-
-      ctx.beginPath();
-      ctx.strokeStyle='rgba(107,174,239,0.7)'; ctx.lineWidth=1.5;
-      ctx.moveTo(nx+10,ny); ctx.lineTo(outX-5,ny); ctx.stroke();
-      ctx.beginPath(); ctx.arc(outX,ny,4,0,Math.PI*2);
-      ctx.fillStyle=P.blue; ctx.fill();
-
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('one neuron · one param',4,h-4);
-    },
-
-    /* graph: knowledge graph traversal */
-    graph: function(ctx, w, h, t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle=P.paper; ctx.fillRect(0,0,w,h);
-
-      var ns=[
-        {x:0.5, y:0.22,r:7,l:'hub'},
-        {x:0.2, y:0.48,r:5},
-        {x:0.8, y:0.48,r:5},
-        {x:0.32,y:0.78,r:4},
-        {x:0.68,y:0.78,r:4},
-        {x:0.5, y:0.56,r:6},
-        {x:0.14,y:0.25,r:3},
-        {x:0.86,y:0.25,r:3},
-      ];
-      var edges=[[0,1],[0,2],[0,5],[1,3],[2,4],[3,5],[4,5],[0,6],[0,7]];
-      var cycle=5000, activeEdge=Math.floor((t%cycle)/(cycle/edges.length));
-
-      edges.forEach(function(e,ei){
-        var a=ns[e[0]],b=ns[e[1]];
-        var active=ei===activeEdge;
-        ctx.beginPath();
-        ctx.strokeStyle=active?P.teal:'rgba(86,88,80,0.3)';
-        ctx.lineWidth=active?1.8:0.7;
-        ctx.moveTo(a.x*w,a.y*h); ctx.lineTo(b.x*w,b.y*h); ctx.stroke();
-        if(active){
-          var p2=(t%( cycle/edges.length))/(cycle/edges.length);
-          ctx.beginPath();
-          ctx.arc(lerp(a.x,b.x,p2)*w, lerp(a.y,b.y,p2)*h, 2.5,0,Math.PI*2);
-          ctx.fillStyle=P.teal; ctx.fill();
-        }
-      });
-
-      ns.forEach(function(n,ni){
-        var px=n.x*w, py=n.y*h;
-        var pulse=0.4+0.4*Math.sin(t*0.002+ni*1.2);
-        var isHub=ni===0;
-        if(isHub){
-          ctx.beginPath(); ctx.arc(px,py,n.r+6,0,Math.PI*2);
-          ctx.fillStyle='rgba(87,199,176,0.1)'; ctx.fill();
-        }
-        ctx.beginPath(); ctx.arc(px,py,n.r,0,Math.PI*2);
-        ctx.fillStyle=P.band; ctx.fill();
-        ctx.strokeStyle=isHub?P.teal:'rgba(87,199,176,'+(0.35+0.35*pulse)+')';
-        ctx.lineWidth=isHub?2:1; ctx.stroke();
-        if(n.l){
-          ctx.font='500 7px "IBM Plex Mono",monospace';
-          ctx.fillStyle=P.teal; ctx.textAlign='center'; ctx.textBaseline='middle';
-          ctx.fillText(n.l,px,py);
-          ctx.textAlign='left'; ctx.textBaseline='alphabetic';
-        }
-      });
-
-      ctx.font='500 9px "IBM Plex Mono",monospace';
-      ctx.fillStyle=P.faint; ctx.fillText('graph RAG · BFS',4,h-4);
-    },
-  };
-
-  /* ================================================================
      DPR-AWARE CANVAS SETUP
   ================================================================ */
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -2965,64 +2645,6 @@ Papers accepted at IEEE Access and Comsys 2026
     } else {
       document.querySelectorAll('.proj-tile').forEach(startTile);
     }
-  }
-
-  /* ================================================================
-     BLOG THUMBNAIL CANVASES — 160×160 logical, 2× physical
-  ================================================================ */
-  var blogRafs = new Map();
-
-  function startBlog(thumb) {
-    if (blogRafs.has(thumb)) return;
-    var canvas = thumb.querySelector('canvas');
-    if (!canvas) return;
-    var renderer = blogRenderers[thumb.dataset.thumb];
-    if (!renderer) return;
-    var ctx = setupCanvas(canvas, 160, 90);
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-
-    var start = null;
-    function frame(ts) {
-      if (!start) start = ts;
-      renderer(ctx, 160, 90, ts - start);
-      thumb.classList.add('rendered');
-      blogRafs.set(thumb, requestAnimationFrame(frame));
-    }
-    blogRafs.set(thumb, requestAnimationFrame(frame));
-  }
-
-  function stopBlog(thumb) {
-    if (blogRafs.has(thumb)) {
-      cancelAnimationFrame(blogRafs.get(thumb));
-      blogRafs.delete(thumb);
-    }
-  }
-
-  if (rm) {
-    document.querySelectorAll('.post-thumb').forEach(function(thumb) {
-      var canvas = thumb.querySelector('canvas');
-      if (!canvas) return;
-      var renderer = blogRenderers[thumb.dataset.thumb];
-      if (!renderer) return;
-      var ctx = setupCanvas(canvas, 160, 90);
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
-      renderer(ctx, 160, 90, 1000);
-      thumb.classList.add('rendered');
-    });
-  } else if ('IntersectionObserver' in window) {
-    var blogObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) startBlog(entry.target);
-        else stopBlog(entry.target);
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px 40px 0px' });
-    document.querySelectorAll('.post-thumb').forEach(function(thumb) {
-      blogObserver.observe(thumb);
-    });
-  } else {
-    document.querySelectorAll('.post-thumb').forEach(startBlog);
   }
 
   /* ================================================================
