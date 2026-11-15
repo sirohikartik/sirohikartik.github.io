@@ -1613,6 +1613,34 @@ Papers accepted at IEEE Access and Comsys 2026
     .catch(function(){if(periodEl && totalEl.textContent==='—')periodEl.textContent='GitHub activity unavailable';});
 })();
 
+/* ==================== MOBILE THUMBNAIL TAP-TO-OPEN ==================== */
+(function(){
+  /* hover-independent navigation: on touch devices, tapping a research/blog
+     thumbnail opens its article (hover states don't exist on mobile) */
+  function isTouchDevice(){
+    return window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+  }
+  if(!isTouchDevice())return;
+  function articleLink(thumb){
+    if(!thumb)return null;
+    var refs=thumb.querySelector('.yt-overlay .entry-refs a[href]');
+    if(!refs){
+      var card=thumb.closest('.yt-card');
+      refs=card&&card.querySelector('.yt-meta a.entry-title[href]');
+    }
+    return refs?refs.href:null;
+  }
+  document.addEventListener('click',function(event){
+    var thumb=event.target.closest('.yt-thumb');
+    if(!thumb)return;
+    if(event.target.closest('a'))return; /* let real links work normally */
+    var href=articleLink(thumb);
+    if(!href)return;
+    event.preventDefault();
+    window.location.href=href;
+  });
+})();
+
 /* ==================== CANVAS ANIMATION ENGINE ==================== */
 (function(){
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
