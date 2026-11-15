@@ -495,6 +495,9 @@
     .yt-overlay{position:static;max-height:none;opacity:1;transform:none;background:transparent;backdrop-filter:none;padding:0.6rem 0 0;overflow:visible;}
     .yt-overlay .entry-desc{display:block;-webkit-line-clamp:unset;overflow:visible;}
     .yt-desc-fallback{display:block;font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin-top:0.4rem;}
+    /* touch devices: thumbnails become tap targets that open the article */
+    .yt-thumb{cursor:pointer;}
+    .yt-thumb:active>img,.yt-thumb:active>svg.yt-svg,.yt-thumb:active .post-thumb{opacity:0.72;}
   }
   .yt-meta{padding:0.65rem 0.2rem 0;}
   .yt-meta .entry-title{display:block;font-size:0.95rem;line-height:1.35;}
