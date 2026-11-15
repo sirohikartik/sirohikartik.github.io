@@ -84,7 +84,7 @@
     "repo": "ggml-org/llama.cpp",
     "title": "cuda : keep columns in registers for cooperative softmax",
     "url": "https://github.com/ggml-org/llama.cpp/pull/28982",
-    "state": "open",
+    "state": "merged",
     "created_at": "2026-09-16T05:29:12Z"
   },
   {
