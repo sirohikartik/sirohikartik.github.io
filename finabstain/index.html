@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinAbstain: Do Small Open Language Models Know Why a Financial Question Cannot Be Answered?</title>
+
+<meta name="description" content="FinAbstain: A benchmark of 143 SEC 10-K questions evaluating whether small open LLMs (<20B) know when and why to abstain. Accepted at AAAI 2027 Student Abstract.">
+<meta name="author" content="Kartik Sirohi, Kumar Prateek, Simranjit Singh">
+<link rel="canonical" href="https://sirohikartik.github.io/finabstain.html">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F03NZLPT1H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F03NZLPT1H');
+</script>
+
+<!-- MathJax 3 -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 120px 24px;
+    color: #cccccc;
+  }
+
+  .nav-back {
+    margin-bottom: 40px;
+    font-size: 0.85rem;
+  }
+
+  .nav-back a {
+    color: #777777;
+    text-decoration: none;
+    border-bottom: 1px dotted #444444;
+    padding-bottom: 2px;
+  }
+
+  .nav-back a:hover {
+    color: #ffffff;
+    border-color: #888888;
+  }
+
+  header {
+    margin-bottom: 48px;
+  }
+
+  .venue {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 1.95rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 16px;
+  }
+
+  .authors {
+    font-size: 0.95rem;
+    color: #aaaaaa;
+    margin-bottom: 4px;
+  }
+
+  .affil {
+    font-size: 0.85rem;
+    color: #666666;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #cccccc;
+  }
+
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+    color: #e0e0e0;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  .table-wrap {
+    margin: 28px 0 36px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 500;
+    color: #888888;
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid #333333;
+  }
+
+  td {
+    padding: 10px 12px 10px 0;
+    color: #cccccc;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  td.num, th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .caption {
+    font-size: 0.82rem;
+    color: #777777;
+    margin-top: 10px;
+    line-height: 1.45;
+  }
+
+  pre {
+    background: #0a0a0a;
+    border: 1px solid #222222;
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #cccccc;
+    margin: 24px 0;
+    overflow-x: auto;
+    padding: 16px;
+  }
+
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid #222222;
+    font-size: 0.82rem;
+    color: #666666;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer a {
+    color: #888888;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">&larr; back to home</a>
+</div>
+
+<header>
+  <div class="venue">AAAI 2027 &middot; Student Abstract</div>
+  <h1>FinAbstain: Do Small Open Language Models Know Why a Financial Question Cannot Be Answered?</h1>
+  <div class="authors">Kartik Sirohi, Kumar Prateek, Simranjit Singh</div>
+  <div class="affil">Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar, Punjab, India</div>
+</header>
+
+<h2>Motivation</h2>
+<p>
+  Small open language models under 20B parameters can run locally on private hardware, which is useful when corporate financial filings cannot be sent to external APIs. In financial question answering, however, returning an unsupported or confident wrong number can be far worse than declining to answer. While existing benchmarks (such as FinQA and FinanceBench) focus heavily on answerable questions, they rarely evaluate whether models know when to abstain and <em>why</em>.
+</p>
+
+<h2>The FinAbstain Benchmark</h2>
+<p>
+  FinAbstain is a benchmark of 143 questions constructed from the FY2024 SEC 10-K filings of four companies:
+</p>
+<ul>
+  <li><strong>Amazon:</strong> 17 items</li>
+  <li><strong>Caterpillar:</strong> 32 items</li>
+  <li><strong>Coca-Cola:</strong> 42 items</li>
+  <li><strong>Pfizer:</strong> 52 items</li>
+</ul>
+<p>
+  Each item consists of a question, an $\sim$8,000-token context padded with unrelated filing text, and one of four mutually exclusive gold labels:
+</p>
+<ul>
+  <li><strong>Answerable (50 items):</strong> Exactly one verified value or statement in the text answers the question unambiguously.</li>
+  <li><strong>Missing evidence (33 items):</strong> The passage discusses the general topic, but the requested metric was deleted from the text.</li>
+  <li><strong>Conflicting evidence (38 items):</strong> The passage states two contradictory values for the same metric, entity, and period without reconciliation.</li>
+  <li><strong>Ambiguous question (22 items):</strong> The question omits an essential qualifier (such as period or operating segment), leaving multiple valid answers in the text.</li>
+</ul>
+<p>
+  To avoid memorization from pre-training data, monetary amounts were randomly scaled by $\alpha \in [0.55, 1.8] \setminus [0.9, 1.1]$. Gemma 4 31B generated initial question-answer pairs and proposed surgical edits for unanswerable items. Edits were applied deterministically by code, verified through code checks, and double-checked through blind validation by two independent models (<code>gpt-oss-120b</code> and <code>nemotron-3-super</code>). An item was included only when both validator models agreed with the gold label.
+</p>
+
+<h2>Evaluation &amp; Results</h2>
+<p>
+  We evaluated three open models under 20B parameters: <strong>Qwen3.5-9B</strong>, <strong>Granite-4.1-8B</strong>, and <strong>Phi-4 (14B)</strong> as Q8_0 GGUFs via <code>llama.cpp</code> on an NVIDIA H100 GPU slice using greedy decoding (temperature 0, seed 42) with a 16,384-token context window. Models were prompted to return a JSON object with their decision (answer or abstain), the reason (none, missing, conflict, ambiguous), and a short answer.
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th class="num">Macro-F1 [95% CI]</th>
+        <th class="num">Decision Acc.</th>
+        <th class="num">Over-Refusal</th>
+        <th class="num">Over-Answer</th>
+        <th class="num">Answer F1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Qwen3.5-9B</td>
+        <td class="num">0.370 [0.332, 0.402]</td>
+        <td class="num">52.4%</td>
+        <td class="num">2.0%</td>
+        <td class="num">64.5%</td>
+        <td class="num">94.7%</td>
+      </tr>
+      <tr>
+        <td>Granite-4.1-8B</td>
+        <td class="num">0.411 [0.324, 0.492]</td>
+        <td class="num">51.0%</td>
+        <td class="num">2.0%</td>
+        <td class="num">63.4%</td>
+        <td class="num">91.0%</td>
+      </tr>
+      <tr>
+        <td>Phi-4 (14B)</td>
+        <td class="num">0.348 [0.307, 0.385]</td>
+        <td class="num">51.0%</td>
+        <td class="num">2.0%</td>
+        <td class="num">73.1%</td>
+        <td class="num">92.0%</td>
+      </tr>
+      <tr style="border-top: 1px solid #333; color: #777;">
+        <td>Always answer</td>
+        <td class="num">0.130</td>
+        <td class="num">35.0%</td>
+        <td class="num">0.0%</td>
+        <td class="num">100.0%</td>
+        <td class="num">n/a</td>
+      </tr>
+      <tr style="color: #777;">
+        <td>Always abstain</td>
+        <td class="num">0.094</td>
+        <td class="num">65.0%</td>
+        <td class="num">100.0%</td>
+        <td class="num">0.0%</td>
+        <td class="num">n/a</td>
+      </tr>
+      <tr style="color: #777;">
+        <td>Random label</td>
+        <td class="num">0.245</td>
+        <td class="num">57.4%</td>
+        <td class="num">74.7%</td>
+        <td class="num">25.3%</td>
+        <td class="num">n/a</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Table 1: Overall results across 143 items. Decision Acc.: binary answer vs. abstain accuracy. Over-Refusal: refusal rate on answerable items. Over-Answer: answer rate on unanswerable items. Answer F1: token F1 on answerable questions.</div>
+</div>
+
+<p>
+  Breaking down model predictions across the four classes reveals a clear pattern:
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th class="num">Answerable (n=50)</th>
+        <th class="num">Missing (n=33)</th>
+        <th class="num">Conflict (n=38)</th>
+        <th class="num">Ambiguous (n=22)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Qwen3.5-9B</td>
+        <td class="num">49</td>
+        <td class="num">25</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+      </tr>
+      <tr>
+        <td>Granite-4.1-8B</td>
+        <td class="num">49</td>
+        <td class="num">17</td>
+        <td class="num">4</td>
+        <td class="num">2</td>
+      </tr>
+      <tr>
+        <td>Phi-4 (14B)</td>
+        <td class="num">49</td>
+        <td class="num">23</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Table 2: Correctly labeled items per category under strict scoring.</div>
+</div>
+
+<h2>What Was Found</h2>
+<ul>
+  <li><strong>Answerable questions are handled reliably:</strong> All three models answer 49 out of 50 answerable questions (over-refusal is only 2.0%), achieving 91.0% to 94.7% answer token F1. When the evidence is present, small models extract it well.</li>
+  <li><strong>Over-answering is widespread:</strong> On unanswerable questions, models answer 63.4% to 73.1% of the time. Overall decision accuracy (51.0% to 52.4%) falls below the 65.0% always-abstain baseline.</li>
+  <li><strong>Missing evidence vs. conflict/ambiguity:</strong> Models detect missing evidence in 51.5% to 75.8% of cases. However, they almost completely fail to detect conflicting evidence (&le;10.5%) and ambiguous questions (&le;9.1%). Instead of flagging contradictions or missing qualifiers, small models latch onto the first number they encounter (primacy bias) and answer with confidence.</li>
+  <li><strong>Human benchmark audit:</strong> A human annotator independently labeled a stratified subset of 44 items blind (without gold labels or edit logs). The annotator achieved <strong>79.55% four-class accuracy</strong>, a Cohen's $\kappa$ of <strong>0.7295</strong>, and <strong>86.36% binary decision accuracy</strong> (recovering 8 of 10 conflict items and 10 of 16 ambiguous items). This indicates that the conflicts and ambiguities are readily visible to human readers even while small models overlook them.</li>
+</ul>
+
+<footer>
+  <div>&copy; 2027 Kartik Sirohi</div>
+  <div><a href="index.html">&larr; back to home</a></div>
+</footer>
+
+</body>
+</html>
