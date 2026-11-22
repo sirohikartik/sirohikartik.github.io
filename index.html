@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kartik Sirohi · AI Systems &amp; Performance Engineering</title>
-<meta name="description" content="Kartik Sirohi — Incoming SEP Intern at JP Morgan Chase, AI researcher focused on LLM systems, inference optimization, and open-source. IT undergrad at NIT Jalandhar." />
+<title>Kartik Sirohi · Performance Engineering &amp; Research</title>
+<meta name="description" content="Kartik Sirohi — Incoming SEP Intern at JP Morgan Chase, researcher focused on inference optimization, systems, and open-source. IT undergrad at NIT Jalandhar." />
 <meta name="author" content="Kartik Sirohi" />
 <meta name="robots" content="index, follow" />
 <meta name="google-site-verification" content="adNps4z5m2vS8MU8YPm34B-X_Rz2pceV0L-IgZQJ074" />
@@ -13,8 +13,8 @@
 <!-- Open Graph / Social Media -->
 <meta property="og:type" content="profile" />
 <meta property="og:site_name" content="Kartik Sirohi" />
-<meta property="og:title" content="Kartik Sirohi · AI Systems &amp; Performance Engineering" />
-<meta property="og:description" content="Kartik Sirohi — Incoming SEP Intern at JP Morgan Chase, AI researcher focused on LLM systems, inference optimization, and open-source. IT undergrad at NIT Jalandhar." />
+<meta property="og:title" content="Kartik Sirohi · Performance Engineering &amp; Research" />
+<meta property="og:description" content="Kartik Sirohi — Incoming SEP Intern at JP Morgan Chase, researcher focused on inference optimization, systems, and open-source. IT undergrad at NIT Jalandhar." />
 <meta property="og:url" content="https://sirohikartik.github.io/" />
 <meta property="og:image" content="https://sirohikartik.github.io/pfp.jpg" />
 <meta property="profile:first_name" content="Kartik" />
@@ -25,8 +25,8 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@sirohikartik_" />
 <meta name="twitter:creator" content="@sirohikartik_" />
-<meta name="twitter:title" content="Kartik Sirohi · AI Systems &amp; Performance Engineering" />
-<meta name="twitter:description" content="Kartik Sirohi — Incoming SEP Intern at JP Morgan Chase, AI researcher focused on LLM systems, inference optimization, and open-source. IT undergrad at NIT Jalandhar." />
+<meta name="twitter:title" content="Kartik Sirohi · Performance Engineering &amp; Research" />
+<meta name="twitter:description" content="Kartik Sirohi — Incoming SEP Intern at JP Morgan Chase, researcher focused on inference optimization, systems, and open-source. IT undergrad at NIT Jalandhar." />
 <meta name="twitter:image" content="https://sirohikartik.github.io/pfp.jpg" />
 
 <!-- Google tag (gtag.js) -->
@@ -48,7 +48,7 @@
   "familyName": "Sirohi",
   "url": "https://sirohikartik.github.io/",
   "image": "https://sirohikartik.github.io/pfp.jpg",
-  "jobTitle": "Incoming SEP Intern & AI Systems Researcher",
+  "jobTitle": "Incoming SEP Intern @ JP Morgan Chase",
   "worksFor": {
     "@type": "Organization",
     "name": "JP Morgan Chase"
@@ -254,7 +254,23 @@
   .entry-title{font-family:var(--display);font-weight:700;font-size:0.98rem;letter-spacing:-0.025em;color:var(--ink);}
   .entry-meta{font-family:var(--mono);font-size:0.74rem;color:var(--ink-soft);margin-left:0.6rem;}
   .entry-desc{font-size:0.9rem;color:var(--ink-soft);margin-top:0.25rem;max-width:58ch;}
-  .entry-refs{margin-top:0.4rem;font-family:var(--mono);font-size:0.78rem;display:flex;flex-wrap:wrap;gap:0.3rem 1rem;}
+  .entry-refs{margin-top:0.45rem;font-family:var(--mono);font-size:0.78rem;display:flex;flex-wrap:wrap;gap:0.4rem 1.1rem;}
+  .entry-refs a, .cert-link{
+    color:var(--signal);
+    font-family:var(--mono);
+    font-size:0.78rem;
+    text-decoration:none;
+    background-image:linear-gradient(currentColor,currentColor);
+    background-repeat:no-repeat;
+    background-position:0 100%;
+    background-size:0% 1px;
+    transition:background-size 0.28s cubic-bezier(.4,0,.2,1);
+    padding-bottom:1px;
+    border:none;
+    background-color:transparent;
+    cursor:pointer;
+  }
+  .entry-refs a:hover, .cert-link:hover{background-size:100% 1px;color:var(--signal);}
   .tag-good{color:var(--good);font-family:var(--mono);font-size:0.72rem;font-weight:500;}
   .tag-pending{color:var(--cat-experiments);font-family:var(--mono);font-size:0.72rem;font-weight:500;}
 
@@ -262,38 +278,9 @@
   section .logline:last-child{margin-bottom:0;}
   .oss-line .content > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem 0.7rem;}
 
-  /* ---- GitHub contribution graph ---- */
-  .contrib-card{margin-top:1.5rem;padding:1.1rem 1.2rem 0.9rem;border:1px solid var(--rule);border-radius:8px;background:linear-gradient(145deg,#0b0d10,#070708);}
-  .contrib-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;}
-  .contrib-total{display:flex;align-items:baseline;gap:0.65rem;flex-wrap:wrap;}
-  .contrib-number{font-family:var(--display);font-size:clamp(2.6rem,8vw,4.25rem);font-weight:700;line-height:0.95;letter-spacing:-0.075em;color:var(--ink);font-variant-numeric:tabular-nums;}
-  .contrib-label{font-size:0.95rem;color:var(--ink-soft);font-weight:500;}
-  .contrib-period{font-family:var(--mono);font-size:0.7rem;color:var(--ink-faint);white-space:nowrap;}
-  .contrib-graph{width:100%;overflow-x:auto;padding:0 0 0.15rem;font:inherit;}
-  button.contrib-graph{display:block;border:0;background:transparent;text-align:left;cursor:pointer;color:inherit;border-radius:3px;}
-  .contrib-graph:hover .contrib-cell{filter:brightness(1.18);}
   .oss-pr-links{display:flex;flex-wrap:wrap;gap:0.55rem 1.2rem;margin:0.5rem 0 1rem;font-family:var(--mono);font-size:0.76rem;}
   .oss-pr-links span{display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;}
   .oss-pr-links span>a:first-child{color:var(--ink-soft);margin-right:0.1rem;}
-  .contrib-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,11px);grid-auto-columns:11px;gap:3px;min-width:max-content;}
-  .contrib-cell{width:11px;height:11px;border-radius:2px;background:#17191c;}
-  .contrib-cell[data-level="1"]{background:#173b32;}.contrib-cell[data-level="2"]{background:#1e674d;}.contrib-cell[data-level="3"]{background:#2d9b63;}.contrib-cell[data-level="4"]{background:#55d486;}
-  .contrib-months{display:flex;justify-content:space-between;margin:0 0 0.45rem 1.7rem;font-family:var(--mono);font-size:0.62rem;color:var(--ink-faint);}
-  .contrib-legend{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:0.8rem;font-family:var(--mono);font-size:0.65rem;color:var(--ink-faint);}
-  .contrib-legend-scale{display:flex;align-items:center;gap:3px;}
-  .contrib-legend-scale .contrib-cell{display:inline-block;}
-  @media(max-width:640px){.contrib-card{padding:1rem 0.85rem;}.contrib-head{align-items:flex-start;flex-direction:column;gap:0.5rem}.contrib-grid{grid-template-rows:repeat(7,9px);grid-auto-columns:9px;gap:2px}.contrib-cell{width:9px;height:9px}}
-
-  .pr-modal-overlay{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);}
-  .pr-modal-overlay.open{display:flex;}
-  .pr-modal-card{width:min(440px,94vw);max-height:min(70vh,620px);overflow:hidden;border:1px solid #303238;border-radius:10px;background:#0b0d10;box-shadow:0 24px 80px rgba(0,0,0,.6);}
-  .pr-modal-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;border-bottom:1px solid var(--rule);}
-  .pr-modal-head h2{font:700 1rem var(--display);letter-spacing:-.025em;}
-  .pr-modal-head button{border:0;background:transparent;color:var(--ink-soft);font-size:1.5rem;line-height:1;cursor:pointer;}
-  .pr-modal-list{max-height:calc(70vh - 56px);overflow:auto;padding:.45rem 1rem 1rem;display:flex;flex-direction:column;}
-  .pr-modal-list a{padding:.52rem .1rem;border-bottom:1px solid var(--rule);font-size:.86rem;color:var(--ink-soft);}
-  .pr-modal-list a:hover{color:var(--signal);}
-  .pr-modal-list p{padding:.75rem 0;color:var(--ink-soft);font-size:.85rem;}
 
   /* ---- scroll reveal ---- */
   .js section .logline,.js section .hunk{
@@ -331,16 +318,6 @@
   .commit-body{width:100%;min-width:0;padding:.72rem .95rem;border:1px solid rgba(255,255,255,.075);border-radius:9px;background:linear-gradient(135deg,rgba(255,255,255,.025),rgba(255,255,255,.008));transition:transform .22s ease,border-color .22s ease,background .22s ease;}
   .commit-row:hover .commit-body{transform:translateX(2px);border-color:rgba(107,174,239,.3);background:linear-gradient(135deg,rgba(107,174,239,.055),rgba(255,255,255,.008));}
   .commit-row.is-head .commit-body{border-color:rgba(127,199,122,.2);background:linear-gradient(135deg,rgba(127,199,122,.055),rgba(255,255,255,.008));}
-  .commit-summary{display:block;position:relative;width:100%;padding:.08rem 1.5rem .08rem 0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;}
-  .commit-summary::after{content:"+";position:absolute;right:.1rem;top:50%;transform:translateY(-50%);font:400 1.1rem var(--mono);color:var(--ink-faint);transition:transform .2s ease,color .2s ease;}
-  .commit-summary:hover::after,.commit-summary[aria-expanded="true"]::after{color:var(--signal);}
-  .commit-summary[aria-expanded="true"]::after{content:"−";}
-  .commit-summary .commit-refline{margin-bottom:.22rem;}
-  .commit-summary .commit-title{display:block;transition:color .2s ease;}
-  .commit-summary:hover .commit-title,.commit-summary[aria-expanded="true"] .commit-title{color:#fff;}
-  .commit-detail[hidden]{display:none!important;}
-  .commit-row.is-open .commit-detail{animation:experienceDetailIn .22s ease both;}
-  @keyframes experienceDetailIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
   .commit-refline{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;font-family:var(--mono);font-size:0.68rem;color:var(--signal);margin-bottom:0.38rem;letter-spacing:.025em;}
   .commit-title{font-family:var(--display);font-size:1.02rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);line-height:1.4;}
   .commit-org{font-weight:500;color:var(--ink-soft);}
@@ -500,19 +477,9 @@
     .yt-thumb:active>img,.yt-thumb:active>svg.yt-svg,.yt-thumb:active .post-thumb{opacity:0.72;}
   }
   .yt-meta{padding:0.65rem 0.2rem 0;}
-  .yt-meta .entry-title{display:block;font-size:0.95rem;line-height:1.35;}
+  .yt-meta .entry-title{display:block;font-size:0.95rem;line-height:1.35;background-image:none;transition:color 0.2s ease;}
+  .yt-meta .entry-title:hover{color:var(--signal);}
   .yt-meta .entry-meta{display:block;margin-top:0.25rem;}
-
-  /* ---- cert proof link + modal ---- */
-  .cert-link{
-    display:inline-flex;align-items:center;gap:0.35rem;
-    font-family:var(--mono);font-size:0.78rem;color:var(--cat-experiments);
-    background:transparent;border:none;cursor:pointer;padding:0;
-    text-decoration:none;background-image:linear-gradient(currentColor,currentColor);
-    background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;
-    transition:background-size 0.28s cubic-bezier(.4,0,.2,1), color 0.2s ease;
-  }
-  .cert-link:hover{background-size:100% 1px;color:#f0dc78;}
   .cert-badge-link{
     display:inline-flex;align-items:center;gap:0.4rem;
     font-family:var(--mono);font-size:0.75rem;font-weight:500;
@@ -810,17 +777,26 @@
     content:"›";position:absolute;left:0.2rem;top:0;color:var(--signal);font-weight:bold;
   }
 
-  /* Academic Pill Buttons */
-  .entry-refs a, .entry-refs .tag-btn{
+  /* Text links (pure blue with animated underline, no box) */
+  .entry-refs a, .entry-refs .cert-link, .cert-link{
     display:inline-flex;align-items:center;gap:0.35rem;
-    padding:0.16rem 0.5rem;font-family:var(--mono);font-size:0.72rem;font-weight:500;
-    border:1px solid var(--rule);background:var(--band);color:var(--ink-soft);
-    border-radius:3px;text-decoration:none;background-image:none;
-    transition:all 0.2s cubic-bezier(.4,0,.2,1);
+    padding:0 0 1px 0;font-family:var(--mono);font-size:0.78rem;font-weight:400;
+    color:var(--signal) !important;background:transparent !important;
+    border:none !important;border-radius:0 !important;
+    text-decoration:none !important;
+    background-image:linear-gradient(currentColor,currentColor) !important;
+    background-repeat:no-repeat !important;
+    background-position:0 100% !important;
+    background-size:0% 1px !important;
+    transition:background-size 0.28s cubic-bezier(.4,0,.2,1) !important;
+    cursor:pointer;
   }
-  .entry-refs a:hover, .entry-refs .tag-btn:hover{
-    color:var(--ink);border-color:var(--signal);background:var(--signal-band);
-    transform:translateY(-1px);
+  .entry-refs a:hover, .entry-refs .cert-link:hover, .cert-link:hover{
+    background-size:100% 1px !important;
+    color:var(--signal) !important;
+    background-color:transparent !important;
+    border:none !important;
+    transform:none !important;
   }
 </style>
 </head>
@@ -852,7 +828,7 @@
   <div class="filehead">
     <div class="filehead-left">
       <div class="logline"><span class="content"><h1><span style="font-weight:700;">Kartik</span> Sirohi</h1></span></div>
-      <div class="logline"><span class="content role"> IT undergrad at <a href="https://nitj.ac.in/">NIT Jalandhar</a> · Incoming SEP Intern <span class="commit-org">@ JP Morgan Chase</span> · AI Systems </span></div>
+      <div class="logline"><span class="content role"> IT undergrad at <a href="https://nitj.ac.in/">NIT Jalandhar</a> · Incoming SEP Intern <span class="commit-org">@ JP Morgan Chase</span></span></div>
     </div>
     <div class="frame">
       <img src="pfp.jpg" alt="Kartik Sirohi" onerror="this.style.display='none'; this.parentElement.querySelector('.initials').style.display='block';" />
@@ -876,58 +852,78 @@
       <span class="content">
         <div class="yt-grid">
 
+          <!-- 1. AAAI 2027 -->
           <div class="yt-card">
             <div class="yt-thumb">
-              <img src="pinn.png" alt="P²INNs system diagram" onerror="this.style.display='none'; this.parentElement.textContent='📄';" />
-              <div class="yt-overlay">
-                <div class="entry-desc">A novel architecture for depression risk prediction integrating physiological and psychiatric indicators. Developed during a research internship at the University of Galway.</div>
-                <div class="entry-refs">
-                  <a href="https://ieeexplore.ieee.org/document/11646573"><i class="fa-solid fa-file-pdf"></i> ieee xplore</a>
-                  <a href="https://doi.org/10.1109/ACCESS.2026.3722150"><i class="fa-solid fa-arrow-up-right-from-square"></i> doi</a>
-                </div>
-              </div>
+              <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="FinAbstain: Decision lattice pattern">
+                <defs>
+                  <linearGradient id="p-aaai-bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#08101a"/>
+                    <stop offset="100%" stop-color="#030508"/>
+                  </linearGradient>
+                </defs>
+                <rect width="640" height="360" fill="url(#p-aaai-bg)"/>
+                <g id="p-aaai-pat"></g>
+              </svg>
             </div>
             <div class="yt-meta">
-              <span class="entry-title">P²INNs: Physio-Psychiatry Informed Neural Networks</span>
-              <span class="entry-meta">IEEE Access, 2026</span>
+              <a class="entry-title" href="finabstain.html" style="text-decoration:none;color:inherit;">FinAbstain: Do Small Open Language Models Know Why a Financial Question Cannot Be Answered?</a>
+              <span class="entry-meta">AAAI Student Abstract 2027</span>
+              <div class="entry-refs">
+                <a href="finabstain.html"><i class="fa-solid fa-file-lines" style="margin-right:4px;"></i>read paper summary ↗</a>
+              </div>
             </div>
           </div>
 
+          <!-- 2. IEEE Access 2026 -->
           <div class="yt-card">
             <div class="yt-thumb">
-              <img src="dice.png" alt="DICE-RoBERTa diagram" onerror="this.style.display='none'; this.parentElement.textContent='📄';" />
-              <div class="yt-overlay">
-                <div class="entry-desc">Accepted &amp; presented at the 7th International Conference on Frontiers in Computing and Systems (COMSYS 2026).</div>
-                <div class="entry-refs">
-                  <span class="tag-pending"><i class="fa-solid fa-check"></i> accepted &amp; presented</span>
-                  <button type="button" class="cert-link" id="cert-open-btn"><i class="fa-solid fa-certificate"></i> view certificate ↗</button>
-                </div>
-              </div>
+              <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="P²INNs: Physiological manifold pattern">
+                <defs>
+                  <linearGradient id="p-ieee-bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#051412"/>
+                    <stop offset="100%" stop-color="#020706"/>
+                  </linearGradient>
+                </defs>
+                <rect width="640" height="360" fill="url(#p-ieee-bg)"/>
+                <g id="p-ieee-pat"></g>
+              </svg>
             </div>
             <div class="yt-meta">
-              <span class="entry-title">DICE-RoBERTa: Dense Image Captioning with Entropy and RoBERTa for Efficient Video Classification</span>
+              <a class="entry-title" href="p2inns.html" style="text-decoration:none;color:inherit;">P²INNs: Physio-Psychiatry Informed Neural Networks for Depression Risk Prediction</a>
+              <span class="entry-meta">IEEE Access, Volume 14, 2026</span>
+              <div class="entry-refs">
+                <a href="p2inns.html"><i class="fa-solid fa-file-lines" style="margin-right:4px;"></i>read paper summary ↗</a>
+                <a href="https://doi.org/10.1109/ACCESS.2026.3722150" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:4px;"></i>ieee xplore ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. COMSYS 2026 -->
+          <div class="yt-card">
+            <div class="yt-thumb">
+              <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="DICE-RoBERTa: Guilloché harmonic wave pattern">
+                <defs>
+                  <linearGradient id="p-comsys-bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#141107"/>
+                    <stop offset="100%" stop-color="#060502"/>
+                  </linearGradient>
+                </defs>
+                <rect width="640" height="360" fill="url(#p-comsys-bg)"/>
+                <g id="p-comsys-pat"></g>
+              </svg>
+            </div>
+            <div class="yt-meta">
+              <a class="entry-title" href="diceroberta.html" style="text-decoration:none;color:inherit;">DICE-RoBERTa: Dense Image Captioning with Entropy and RoBERTa for Efficient Video Classification</a>
               <span class="entry-meta">COMSYS 2026</span>
-            </div>
-          </div>
-
-          <div class="yt-card">
-            <div class="yt-thumb">
-              <img src="ts_trilemma.png" alt="Capacity-Adaptability Trilemma figure" onerror="this.style.display='none'; this.parentElement.textContent='📈';" />
-              <div class="yt-overlay">
-                <div class="entry-desc"><strong>[Preprint]</strong> A comprehensive survey and empirical evaluation across six decades of forecasting paradigms through the Capacity-Adaptability Trilemma. Investigates benchmark contamination in TSFMs/LLMs and introduces Econometrically-Informed Neural Networks (EINNs).</div>
-                <div class="entry-refs">
-                  <span class="tag-pending"><i class="fa-solid fa-file-lines"></i> preprint</span>
-                  <a href="https://www.preprints.org/manuscript/202506.2416"><i class="fa-solid fa-file-pdf"></i> preprints.org</a>
-                  <a href="https://www.preprints.org/manuscript/202506.2416"><i class="fa-solid fa-arrow-up-right-from-square"></i> doi</a>
-                </div>
+              <div class="entry-refs">
+                <a href="diceroberta.html"><i class="fa-solid fa-file-lines" style="margin-right:4px;"></i>read paper summary ↗</a>
+                <button type="button" class="cert-link" id="cert-open-btn"><i class="fa-solid fa-certificate" style="margin-right:4px;"></i>view certificate ↗</button>
               </div>
             </div>
-            <div class="yt-meta">
-              <span class="entry-title">The Evolution of Financial Time Series Forecasting: From Classical Econometrics to Temporal Foundation Models and Multimodal LLMs</span>
-              <span class="entry-meta">Preprint · Sep 2026</span>
-            </div>
           </div>
 
+          <!-- 4. Weight Space -->
           <div class="yt-card">
             <div class="yt-thumb">
               <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Halftone wave pattern">
@@ -939,20 +935,18 @@
                 <rect width="640" height="360" fill="url(#p1-bg)"/>
                 <g id="p1-dots" fill="#6BAEEF"></g>
               </svg>
-              <div class="yt-overlay">
-                <div class="entry-desc">Tests weight-space steering across Qwen 2.5, SmolLM2, and Gemma 2. Negative coordinates reduce collateral activation drift and prevent persona collapse.</div>
-                <div class="entry-refs">
-                  <a href="weight_space"><i class="fa-solid fa-file-lines"></i> read research article</a>
-                  <a href="https://github.com/sirohikartik/weight_space" target="_blank"><i class="fa-brands fa-github"></i> github repository</a>
-                </div>
-              </div>
             </div>
             <div class="yt-meta">
-              <span class="entry-title">Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane</span>
+              <a class="entry-title" href="weight_space" style="text-decoration:none;color:inherit;">Ghost in the Residual Stream: Why Modulating LLM Neurons in Reverse Keeps Them Sane</a>
               <span class="entry-meta">Research Blog · Nov 2026</span>
+              <div class="entry-refs">
+                <a href="weight_space"><i class="fa-solid fa-file-lines" style="margin-right:4px;"></i>read article ↗</a>
+                <a href="https://github.com/sirohikartik/weight_space" target="_blank" rel="noopener"><i class="fa-brands fa-github" style="margin-right:4px;"></i>github repository ↗</a>
+              </div>
             </div>
           </div>
 
+          <!-- 5. Diffusion Physics -->
           <div class="yt-card">
             <div class="yt-thumb">
               <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ripple flow pattern">
@@ -965,17 +959,14 @@
                 <g id="p2-lines" fill="none" stroke="#f2762e" stroke-width="2" stroke-linecap="round"></g>
                 <g id="p2-dots" fill="#e5484d"></g>
               </svg>
-              <div class="yt-overlay">
-                <div class="entry-desc">Diffusion surrogates on Barnes-Hut dynamics: displacement inflation (8.2×) drives rollout explosion; DDIM shrinks trajectories; probing fails on held-out orbits.</div>
-                <div class="entry-refs">
-                  <a href="diffusion_physics.html"><i class="fa-solid fa-file-lines"></i> read research article</a>
-                  <a href="https://github.com/sirohikartik/Barnes-Hut" target="_blank"><i class="fa-brands fa-github"></i> github repository</a>
-                </div>
-              </div>
             </div>
             <div class="yt-meta">
-              <span class="entry-title">Why Diffusion Models Fail at Physics: Autoregressive Collapse, Displacement Inflation, and the Probing Illusion</span>
+              <a class="entry-title" href="diffusion_physics.html" style="text-decoration:none;color:inherit;">Why Diffusion Models Fail at Physics: Autoregressive Collapse, Displacement Inflation, and the Probing Illusion</a>
               <span class="entry-meta">Research Article · Nov 2026</span>
+              <div class="entry-refs">
+                <a href="diffusion_physics.html"><i class="fa-solid fa-file-lines" style="margin-right:4px;"></i>read article ↗</a>
+                <a href="https://github.com/sirohikartik/Barnes-Hut" target="_blank" rel="noopener"><i class="fa-brands fa-github" style="margin-right:4px;"></i>github repository ↗</a>
+              </div>
             </div>
           </div>
 
@@ -1000,9 +991,6 @@
                 <span>Summer 2027</span>
               </div>
               <div class="commit-title">Software Engineer Program (SEP) Intern <span class="commit-org">@ JP Morgan Chase</span></div>
-              <div class="commit-detail">
-                Incoming SEP Intern for Summer 2027.
-              </div>
             </div>
           </div>
           <div class="commit-row">
@@ -1011,9 +999,6 @@
                 <span>Aug – Nov 2026</span>
               </div>
               <div class="commit-title">AI Engineering Intern <span class="commit-org">@ Horrazon AI</span></div>
-              <div class="commit-detail">
-                Built complete agentic web harness and cross-service security patches; performance engineered system pipelines cutting real-time response latency from <strong class="commit-metric">~2 min to under 2 sec</strong>.
-              </div>
             </div>
           </div>
           <div class="commit-row">
@@ -1022,9 +1007,6 @@
                 <span>Aug 2026 – present</span>
               </div>
               <div class="commit-title">AI Lead <span class="commit-org">@ Google Developer Groups on Campus NIT Jalandhar</span></div>
-              <div class="commit-detail">
-                Problem setter; one of the coordinators, evaluators, and judges for <a href="https://gdgc.hackmol.com/events/minimol" target="_blank" rel="noopener">MiniMol26</a>.
-              </div>
             </div>
           </div>
           <div class="commit-row">
@@ -1033,9 +1015,6 @@
                 <span>Aug 2026 – present</span>
               </div>
               <div class="commit-title">Technical Lead <span class="commit-org">@ Finnest</span></div>
-              <div class="commit-detail">
-                Taught <a href="https://sirohikartik.github.io/DeepLearningForFinance_Finnest_2026_Odd/" target="_blank" rel="noopener">Deep Learning for Finance</a> course as part of foundation elective; open source coordinator overseeing <a href="https://github.com/financesociety-nitj/IndiStat" target="_blank" rel="noopener">IndiStat</a> (introductory project to teach student contributors open source).
-              </div>
             </div>
           </div>
           <div class="commit-row">
@@ -1046,14 +1025,9 @@
               <div class="commit-title">
                 Research Intern <span class="commit-org">@ QWorld</span>
               </div>
-              <div class="commit-detail" style="display:flex;align-items:center;flex-wrap:wrap;gap:0.45rem 0.8rem;margin-top:0.25rem;">
-                <button type="button" class="cert-badge-link" id="cert-qworld-open-btn" title="View Best Presentation Award Certificate">
-                  <span class="icon">🏆</span>
-                  <span>Best Presentation Award</span>
-                  <span style="opacity:0.75;font-size:0.7rem;margin-left:2px;"></span>
-                </button>
-                <span style="color:var(--ink-faint);">·</span>
-                <a href="https://github.com/sirohikartik/QTagger" target="_blank">QTagger</a>
+              <div class="commit-detail" style="margin-top:0.35rem;display:flex;align-items:center;gap:0.45rem 0.6rem;flex-wrap:wrap;">
+                <span><a href="https://github.com/sirohikartik/QTagger" target="_blank" rel="noopener">QTagger</a> — Best Presentation Award</span>
+                <button type="button" class="cert-link" id="cert-qworld-open-btn"><i class="fa-solid fa-certificate" style="margin-right:4px;"></i>view certificate ↗</button>
               </div>
             </div>
           </div>
@@ -1061,9 +1035,6 @@
             <div class="commit-body">
               <div class="commit-refline"><span>Jan – Mar 2026</span></div>
               <div class="commit-title">AI Research Intern <span class="commit-org">@ University of Galway</span></div>
-             <div class="commit-detail">
-Papers accepted at IEEE Access and Comsys 2026
-    </div>
             </div>
           </div>
         </div>
@@ -1128,28 +1099,6 @@ Papers accepted at IEEE Access and Comsys 2026
       <span><a href="https://github.com/Tracer-Cloud/opensre">OpenSRE</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/852">#852</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/917">#917</a> <a href="https://github.com/Tracer-Cloud/opensre/pull/882">#882</a></span>
       <span><a href="https://github.com/dspinellis/alexandria3k">alexandria3k</a> <a href="https://github.com/dspinellis/alexandria3k/pull/63">#63</a></span>
       <span><a href="https://github.com/scipy/scipy">SciPy</a> <a href="https://github.com/scipy/scipy/pull/23129">#23129</a></span>
-    </div>
-
-    <!-- LIVE GITHUB CONTRIBUTIONS -->
-    <div class="contrib-card" aria-label="GitHub contributions over the last year">
-      <div class="contrib-head">
-        <div class="contrib-total">
-          <span class="contrib-number" id="contrib-total">—</span>
-          <span class="contrib-label">contributions in the last year</span>
-        </div>
-        <span class="contrib-period" id="contrib-period">loading GitHub activity…</span>
-      </div>
-      <div class="contrib-months" id="contrib-months" aria-hidden="true"></div>
-      <button class="contrib-graph" id="contrib-open-prs" type="button" aria-label="Show merged pull requests from GitHub">
-        <div class="contrib-grid" id="contrib-grid"></div>
-      </button>
-      <div class="contrib-legend">
-        <span>Less</span>
-        <span class="contrib-legend-scale" aria-hidden="true">
-          <i class="contrib-cell" data-level="0"></i><i class="contrib-cell" data-level="1"></i><i class="contrib-cell" data-level="2"></i><i class="contrib-cell" data-level="3"></i><i class="contrib-cell" data-level="4"></i>
-        </span>
-        <span>More</span>
-      </div>
     </div>
   </section>
 
@@ -1327,13 +1276,6 @@ Papers accepted at IEEE Access and Comsys 2026
 
 </div>
 
-<div class="pr-modal-overlay" id="pr-modal" role="dialog" aria-modal="true" aria-labelledby="pr-modal-title" aria-hidden="true">
-  <div class="pr-modal-card">
-    <div class="pr-modal-head"><h2 id="pr-modal-title">Merged pull requests</h2><button type="button" id="pr-modal-close" aria-label="Close dialog">×</button></div>
-    <div class="pr-modal-list" id="pr-modal-list" aria-live="polite">Loading merged pull requests…</div>
-  </div>
-</div>
-
 <!-- PROJECT DETAIL MODAL (LARGE SPECIMEN + EXPLANATION) -->
 <div class="proj-modal-overlay" id="proj-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title">
   <div class="proj-modal-card">
@@ -1399,7 +1341,88 @@ Papers accepted at IEEE Access and Comsys 2026
     function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
     var svgNS='http://www.w3.org/2000/svg';
 
-    // Wavefield: halftone dots, radius follows a sine interference field
+    // 1. AAAI: Dual Moiré Concentric Wavefield (hypnotic optical interference)
+    var gAAAI=document.getElementById('p-aaai-pat');
+    if(gAAAI){
+      for(var r1=18; r1<=420; r1+=12){
+        var op1 = (0.08 + 0.38 * Math.sin(r1 * 0.03)**2).toFixed(2);
+        var c1 = document.createElementNS(svgNS, 'circle');
+        c1.setAttribute('cx', '240'); c1.setAttribute('cy', '180');
+        c1.setAttribute('r', r1); c1.setAttribute('fill', 'none');
+        c1.setAttribute('stroke', '#6BAEEF'); c1.setAttribute('stroke-width', '1.2');
+        c1.setAttribute('opacity', op1);
+        gAAAI.appendChild(c1);
+      }
+      for(var r2=18; r2<=420; r2+=12){
+        var op2 = (0.08 + 0.38 * Math.cos(r2 * 0.03)**2).toFixed(2);
+        var c2 = document.createElementNS(svgNS, 'circle');
+        c2.setAttribute('cx', '400'); c2.setAttribute('cy', '180');
+        c2.setAttribute('r', r2); c2.setAttribute('fill', 'none');
+        c2.setAttribute('stroke', '#5ce1e6'); c2.setAttribute('stroke-width', '1.2');
+        c2.setAttribute('opacity', op2);
+        gAAAI.appendChild(c2);
+      }
+    }
+
+    // 2. IEEE: Smooth Multi-Loop Harmonograph Lissajous Ribbon
+    var gIEEE=document.getElementById('p-ieee-pat');
+    if(gIEEE){
+      var ribbonConfigs = [
+        { phase: 0.0, stroke: '#57C7B0', width: 2.0, opacity: 0.8 },
+        { phase: 0.35, stroke: '#7FC77A', width: 1.4, opacity: 0.6 },
+        { phase: 0.7, stroke: '#00f5d4', width: 1.0, opacity: 0.45 },
+        { phase: 1.05, stroke: '#6BAEEF', width: 0.8, opacity: 0.35 }
+      ];
+      ribbonConfigs.forEach(function(cfg){
+        var steps = 480;
+        var dStr = '';
+        for(var si=0; si<=steps; si++){
+          var t = (si / steps) * (Math.PI * 6);
+          var x = 320 + 265 * Math.sin(3 * t) * Math.cos(t + cfg.phase);
+          var y = 180 + 135 * Math.sin(4 * t + cfg.phase * 1.4);
+          dStr += (si === 0 ? 'M' : ' L') + x.toFixed(1) + ' ' + y.toFixed(1);
+        }
+        var pPath = document.createElementNS(svgNS, 'path');
+        pPath.setAttribute('d', dStr);
+        pPath.setAttribute('fill', 'none');
+        pPath.setAttribute('stroke', cfg.stroke);
+        pPath.setAttribute('stroke-width', cfg.width);
+        pPath.setAttribute('opacity', cfg.opacity);
+        gIEEE.appendChild(pPath);
+      });
+    }
+
+    // 3. COMSYS: Multi-Harmonic Guilloché Rosette Curves (Curvilinear Harmonic Waves)
+    var gCOM=document.getElementById('p-comsys-pat');
+    if(gCOM){
+      var layers = 28;
+      for(var i = 0; i < layers; i++){
+        var rBase = 26 + i * 5.6;
+        var amp = 14 + (i % 5) * 4.5;
+        var lobes = 6 + (i % 4) * 2; // 6, 8, 10, 12 harmonic lobes
+        var phase = i * 0.17;
+        var dStr = '';
+        var steps = 220;
+        for(var s = 0; s <= steps; s++){
+          var theta = (s / steps) * Math.PI * 2;
+          var r = rBase + amp * Math.cos(lobes * theta + phase);
+          var x = 320 + r * 1.58 * Math.cos(theta);
+          var y = 180 + r * 0.94 * Math.sin(theta);
+          dStr += (s === 0 ? 'M' : ' L') + x.toFixed(1) + ' ' + y.toFixed(1);
+        }
+        dStr += ' Z';
+        var pPath = document.createElementNS(svgNS, 'path');
+        pPath.setAttribute('d', dStr);
+        pPath.setAttribute('fill', 'none');
+        pPath.setAttribute('stroke', i % 2 === 0 ? '#f59e0b' : '#fbbf24');
+        pPath.setAttribute('stroke-width', (0.75 + (i % 3) * 0.3).toFixed(2));
+        var op = Math.max(0.12, Math.min(0.72, 0.2 + 0.55 * Math.sin((i / layers) * Math.PI))).toFixed(2);
+        pPath.setAttribute('opacity', op);
+        gCOM.appendChild(pPath);
+      }
+    }
+
+    // 4. Wavefield: halftone dots, radius follows a sine interference field
     var g1=document.getElementById('p1-dots');
     if(g1){
       var r1=mulberry32(42);
@@ -1417,14 +1440,14 @@ Papers accepted at IEEE Access and Comsys 2026
       }
     }
 
-    // Rippleflow: horizontal flow lines displaced by ripple + scattered accent dots
+    // 5. Rippleflow: horizontal flow lines displaced by ripple + scattered accent dots
     var g2=document.getElementById('p2-lines');
     if(g2){
       var r2=mulberry32(7);
-      for(var i=0;i<14;i++){
-        var y0=30+i*23, d='M0 '+y0.toFixed(1);
+      for(var i2=0;i2<14;i2++){
+        var y0=30+i2*23, d='M0 '+y0.toFixed(1);
         for(var x2=0;x2<=640;x2+=16){
-          var dy=Math.sin(x2*0.024+ i*0.7)*7 + Math.sin(x2*0.006)*5;
+          var dy=Math.sin(x2*0.024+ i2*0.7)*7 + Math.sin(x2*0.006)*5;
           d+=' L'+x2+' '+(y0+dy).toFixed(1);
         }
         var p=document.createElementNS(svgNS,'path');
@@ -1529,89 +1552,6 @@ Papers accepted at IEEE Access and Comsys 2026
   });
 })();
 
-/* ==================== EXPERIENCE DETAIL TOGGLES ==================== */
-(function(){
-  document.querySelectorAll('#experience .commit-row').forEach(function(row,index){
-    var body=row.querySelector('.commit-body');
-    var date=body && body.querySelector('.commit-refline');
-    var title=body && body.querySelector('.commit-title');
-    var detail=body && body.querySelector('.commit-detail');
-    if(!body||!date||!title||!detail)return;
-    var detailId='experience-detail-'+(index+1);
-    detail.id=detailId;
-    detail.hidden=true;
-    var button=document.createElement('button');
-    button.type='button';
-    button.className='commit-summary';
-    button.setAttribute('aria-expanded','false');
-    button.setAttribute('aria-controls',detailId);
-    var dateLabel=document.createElement('span');
-    dateLabel.className=date.className;
-    while(date.firstChild)dateLabel.appendChild(date.firstChild);
-    var roleLabel=document.createElement('span');
-    roleLabel.className=title.className;
-    while(title.firstChild)roleLabel.appendChild(title.firstChild);
-    body.insertBefore(button,date);
-    date.remove();title.remove();
-    button.appendChild(dateLabel);
-    button.appendChild(roleLabel);
-    button.addEventListener('click',function(){
-      var expanded=button.getAttribute('aria-expanded')==='true';
-      button.setAttribute('aria-expanded',String(!expanded));
-      detail.hidden=expanded;
-      row.classList.toggle('is-open',!expanded);
-    });
-  });
-})();
-
-/* ==================== LIVE GITHUB CONTRIBUTIONS ==================== */
-(function(){
-  var grid=document.getElementById('contrib-grid');
-  var totalEl=document.getElementById('contrib-total');
-  var periodEl=document.getElementById('contrib-period');
-  var monthsEl=document.getElementById('contrib-months');
-  if(!grid) return;
-  var cacheKey='ks_github_contributions_v1';
-  function render(data){
-    if(!data || !Array.isArray(data.contributions)) throw new Error('Invalid contribution data');
-    var days=data.contributions.slice(-365);
-    var total=days.reduce(function(sum,day){return sum+(Number(day.count)||0);},0);
-    totalEl.textContent=total.toLocaleString();
-    periodEl.textContent='last 365 days · updated from GitHub';
-    // Align the first day to its weekday, then show each day as a keyboard-friendly titled cell.
-    var first=new Date(days[0].date+'T00:00:00Z').getUTCDay();
-    var cells=new Array(first).fill('<span aria-hidden="true"></span>');
-    days.forEach(function(day){
-      var level=Math.max(0,Math.min(4,Number(day.level)||0));
-      var count=Number(day.count)||0;
-      cells.push('<span class="contrib-cell" data-level="'+level+'" title="'+count+' contribution'+(count===1?'':'s')+' on '+day.date+'"></span>');
-    });
-    grid.innerHTML=cells.join('');
-    var labels=[],lastMonth='';
-    days.forEach(function(day){var d=new Date(day.date+'T00:00:00Z');var key=d.getUTCFullYear()+'-'+d.getUTCMonth();if(key!==lastMonth){labels.push(d.toLocaleString('en',{month:'short',timeZone:'UTC'}));lastMonth=key;}});
-    monthsEl.innerHTML=labels.map(function(label){return '<span>'+label+'</span>';}).join('');
-  }
-  try{var cached=localStorage.getItem(cacheKey);if(cached)render(JSON.parse(cached));}catch(e){}
-  var openButton=document.getElementById('contrib-open-prs');
-  var modal=document.getElementById('pr-modal');
-  var closeButton=document.getElementById('pr-modal-close');
-  var list=document.getElementById('pr-modal-list');
-  var loadedPRs=false;
-  function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
-  function openModal(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');closeButton.focus();if(loadedPRs)return;loadedPRs=true;
-    fetch('https://api.github.com/search/issues?q='+encodeURIComponent('author:sirohikartik type:pr is:merged -user:sirohikartik')+'&sort=created&order=desc&per_page=100')
-      .then(function(res){if(!res.ok)throw new Error('GitHub API unavailable');return res.json();})
-      .then(function(data){var items=(data.items||[]).filter(function(item){return item.pull_request;});if(!items.length){list.innerHTML='<p>No merged pull requests found.</p>';return;}list.innerHTML=items.map(function(item){var repo=(item.repository_url||'').replace('https://api.github.com/repos/','');return '<a href="'+item.html_url+'" target="_blank" rel="noopener">'+repo+' · #'+item.number+'</a>';}).join('');})
-      .catch(function(){list.innerHTML='<p>Could not load pull requests right now. <a href="https://github.com/pulls?q=is%3Apr+is%3Amerged+author%3Asirohikartik" target="_blank" rel="noopener">View merged PRs on GitHub ↗</a></p>';});
-  }
-  openButton.addEventListener('click',openModal);closeButton.addEventListener('click',closeModal);
-  modal.addEventListener('click',function(event){if(event.target===modal)closeModal();});
-  document.addEventListener('keydown',function(event){if(event.key==='Escape'&&modal.classList.contains('open'))closeModal();});
-  fetch('https://github-contributions-api.jogruber.de/v4/sirohikartik?y=last')
-    .then(function(response){if(!response.ok)throw new Error('Contribution API unavailable');return response.json();})
-    .then(function(data){render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data));}catch(e){}})
-    .catch(function(){if(periodEl && totalEl.textContent==='—')periodEl.textContent='GitHub activity unavailable';});
-})();
 
 /* ==================== MOBILE THUMBNAIL TAP-TO-OPEN ==================== */
 (function(){
