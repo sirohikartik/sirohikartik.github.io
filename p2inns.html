@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P²INNs: Physio-Psychiatry Informed Neural Networks for Depression Risk Prediction</title>
+
+<meta name="description" content="P²INNs: Incorporating physiologically motivated differential equation constraints into neural networks for depression risk prediction from wearable sensor data. Published in IEEE Access.">
+<meta name="author" content="Nitesh Bharot, Kartik Sirohi, Muslim Jameel Syed, Cristina Hava Muntean, Priyanka Verma">
+<link rel="canonical" href="https://sirohikartik.github.io/p2inns.html">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F03NZLPT1H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F03NZLPT1H');
+</script>
+
+<!-- MathJax 3 -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 120px 24px;
+    color: #cccccc;
+  }
+
+  .nav-back {
+    margin-bottom: 40px;
+    font-size: 0.85rem;
+  }
+
+  .nav-back a {
+    color: #777777;
+    text-decoration: none;
+    border-bottom: 1px dotted #444444;
+    padding-bottom: 2px;
+  }
+
+  .nav-back a:hover {
+    color: #ffffff;
+    border-color: #888888;
+  }
+
+  header {
+    margin-bottom: 48px;
+  }
+
+  .venue {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 1.95rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 16px;
+  }
+
+  .authors {
+    font-size: 0.95rem;
+    color: #aaaaaa;
+    margin-bottom: 4px;
+  }
+
+  .affil {
+    font-size: 0.85rem;
+    color: #666666;
+    margin-bottom: 16px;
+  }
+
+  .pub-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82rem;
+    margin-top: 14px;
+  }
+
+  a {
+    color: #6baeed;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.25s ease;
+  }
+
+  a:hover {
+    background-size: 100% 1px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #cccccc;
+  }
+
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+    color: #e0e0e0;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  .table-wrap {
+    margin: 28px 0 36px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 500;
+    color: #888888;
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid #333333;
+  }
+
+  td {
+    padding: 10px 12px 10px 0;
+    color: #cccccc;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  td.num, th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .caption {
+    font-size: 0.82rem;
+    color: #777777;
+    margin-top: 10px;
+    line-height: 1.45;
+  }
+
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid #222222;
+    font-size: 0.82rem;
+    color: #666666;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer a {
+    color: #888888;
+  }
+
+  footer a:hover {
+    color: #ffffff;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">&larr; back to home</a>
+</div>
+
+<header>
+  <div class="venue">IEEE Access &middot; Volume 14, 2026 &middot; Open Access</div>
+  <h1>P²INNs: Physio-Psychiatry Informed Neural Networks for Depression Risk Prediction</h1>
+  <div class="authors">Nitesh Bharot, Kartik Sirohi, Muslim Jameel Syed, Cristina Hava Muntean, Priyanka Verma</div>
+  <div class="affil">Insight Research Ireland Centre for Data Analytics (University of Galway), Dr. B.R. Ambedkar NIT Jalandhar, National College of Ireland</div>
+  <div class="pub-links">
+    <a href="https://doi.org/10.1109/ACCESS.2026.3722150" target="_blank" rel="noopener">IEEE Xplore (DOI: 10.1109/ACCESS.2026.3722150) ↗</a>
+  </div>
+</header>
+
+<h2>Motivation</h2>
+<p>
+  Depression involves complex interactions between psychological states and physiological regulation. While consumer wearables can passively capture longitudinal signals like sleep cycles and motor activity, medical datasets in computational psychiatry remain small (often $N < 60$ participants). When deep neural networks are trained purely in a data-driven manner on small cohorts, they frequently latch onto spurious correlations and shortcut features, producing uncalibrated predictions that violate clinical biology.
+</p>
+<p>
+  Standard regularizers like $L_1$ and $L_2$ weight decay penalize parameter magnitudes indiscriminately, without incorporating domain knowledge. Physics-Informed Neural Networks (PINNs) have addressed similar data scarcity in physical and biological systems by embedding differential equations into the loss function. In this work, we introduce <strong>P²INNs (Physio-Psychiatry Informed Neural Networks)</strong>, adapting differential equation regularization to mental health prediction by embedding established physiological priors into neural network training.
+</p>
+
+<h2>Physiological Constraints</h2>
+<p>
+  Rather than modeling psychiatric disorders as deterministic physical systems, P²INNs encode empirically observed population trends as differentiable ordinary differential equation (ODE) penalties. We examine two distinct physiological modalities:
+</p>
+
+<ul>
+  <li>
+    <strong>Sleep Homeostasis (StudentLife Dataset, $N=46$):</strong> Epidemiological meta-analyses establish an asymmetric J-shaped relationship between sleep duration and depression risk, centered around a 7-hour reference:
+    $$\frac{dD}{dh} = k(h)(h - 7), \quad k(h) = \begin{cases} 2\alpha & h < 7 \\ 2\beta & h > 7 \end{cases}$$
+    Because population risk ratios are well-quantified in psychiatric literature, we fix $\alpha = 0.023$ (sleep deprivation regime) and $\beta = 0.066$ (oversleeping regime). Under a Gaussian sleep distribution $h \sim \mathcal{N}(\mu_h, \sigma_h^2)$, the expected slope with respect to mean sleep duration evaluates in closed form:
+    $$g(\mu_h, \sigma_h) = \sigma_h \phi(Z)(2\beta - 2\alpha) + (\mu_h - 7)[2\alpha \Phi(Z) + 2\beta(1 - \Phi(Z))]$$
+    where $Z = (7 - \mu_h)/\sigma_h$.
+  </li>
+  <li>
+    <strong>Physical Activity Saturation (Depresjon Dataset, $N=55$):</strong> Clinical literature establishes an inverse curvilinear association where increasing motor activity reduces depression risk with diminishing marginal benefits. We model this using an inverse rational form:
+    $$R(s) = \frac{k}{s + c} + \epsilon \implies \frac{dR}{ds} = -\frac{k}{(s + c)^2}$$
+    Because actigraphy scales vary across hardware, $k$ and $c$ are treated as learnable parameters. The expected derivative over summary statistics $[\mu_s, \sigma_s]$ is approximated via a second-order Taylor expansion:
+    $$g(\mu_s, \sigma_s) \approx -\frac{k}{(\mu_s + c)^2} - \frac{3k\sigma_s^2}{(\mu_s + c)^4}$$
+  </li>
+</ul>
+
+<h2>Training Objective</h2>
+<p>
+  The network $f_\theta$ is trained on subject-level summary statistics to simultaneously fit ground-truth labels and satisfy the physiological gradient target:
+</p>
+$$\mathcal{L} = \mathcal{L}_{\text{data}} + \lambda \mathcal{L}_{\text{phys}}, \quad \mathcal{L}_{\text{phys}} = \frac{1}{N} \sum_{i=1}^N \left( \frac{\partial f_\theta(x_i)}{\partial \mu_{z,i}} - g(\mu_{z,i}, \sigma_{z,i}) \right)^2$$
+<p>
+  The partial derivative $\frac{\partial f_\theta}{\partial \mu_z}$ is evaluated directly using PyTorch autograd. For regression (StudentLife PHQ-9 prediction), $\mathcal{L}_{\text{data}}$ is mean squared error. For classification (Depresjon clinical diagnosis), the constraint is applied to pre-sigmoid logits to preserve gradient interpretability.
+</p>
+
+<h2>Key Findings</h2>
+
+<p>
+  Experiments across 50 random subject-level splits yielded several concrete findings:
+</p>
+
+<ul>
+  <li>
+    <strong>Generalization Under Data Scarcity:</strong> On StudentLife, across training fractions from 0.2 to 0.5, P²INNs consistently achieved significantly lower median RMSE compared to unconstrained neural networks ($p < 0.05$ via paired Wilcoxon signed-rank tests), with differences diminishing as training data reached 60%.
+  </li>
+  <li>
+    <strong>Robustness to Regularization Pressure:</strong> Sweeping the regularization strength $\lambda$ across three orders of magnitude ($0.1 \le \lambda \le 100$) resulted in at most a <strong>4.1%</strong> shift in test RMSE for P²INNs. In contrast, standard $L_1$ and $L_2$ weight decay suffered a <strong>26% to 44%</strong> performance degradation over the same range. The physiological constraint self-regulates and removes the need for hyperparameter tuning.
+  </li>
+  <li>
+    <strong>Probabilistic Calibration:</strong> On the Depresjon classification task, P²INNs reduced Expected Calibration Error (ECE) from <strong>0.284</strong> (baseline neural net) down to <strong>0.216</strong>. The constraint penalizes pathological overconfidence on weak signals, aligning predicted probabilities with empirical risk rates.
+  </li>
+  <li>
+    <strong>Perspective on Classical Baselines:</strong> On two-dimensional aggregated summary statistics ($[\mu, \sigma]$), classical linear and logistic regressors (Ridge, Lasso, Logistic Regression) remain competitive. P²INNs are not intended to replace linear models on simple tabular features; their benefit lies in preventing overparameterized neural networks from collapsing in small-data regimes without restricting model flexibility, providing a principled path to scale to complex temporal sequences.
+  </li>
+</ul>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Model Variant</th>
+        <th>Training Task</th>
+        <th class="num">Median Metric</th>
+        <th class="num">ECE</th>
+        <th>Behavior Under Scarcity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Baseline Neural Network</td>
+        <td>StudentLife (PHQ-9)</td>
+        <td class="num">6.82 RMSE</td>
+        <td class="num">&mdash;</td>
+        <td>Prone to shortcut features &amp; overfitting</td>
+      </tr>
+      <tr>
+        <td><strong>P²INN (Ours)</strong></td>
+        <td>StudentLife (PHQ-9)</td>
+        <td class="num"><strong>5.68 RMSE</strong></td>
+        <td class="num">&mdash;</td>
+        <td>Consistent inductive bias, &plusmn;4.1% stability under &lambda;</td>
+      </tr>
+      <tr>
+        <td>Baseline Neural Network</td>
+        <td>Depresjon (Classification)</td>
+        <td class="num">0.572 AUC</td>
+        <td class="num">0.284</td>
+        <td>Overconfident probability outputs</td>
+      </tr>
+      <tr>
+        <td>Monotonic Neural Net</td>
+        <td>Depresjon (Classification)</td>
+        <td class="num">0.520 AUC</td>
+        <td class="num">0.126</td>
+        <td>Model collapse due to hard architectural sign constraints</td>
+      </tr>
+      <tr>
+        <td><strong>P²INN (Ours)</strong></td>
+        <td>Depresjon (Classification)</td>
+        <td class="num"><strong>0.634 AUC</strong></td>
+        <td class="num"><strong>0.216</strong></td>
+        <td>Well-calibrated probabilities, robust under Gaussian noise</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Summary of results across StudentLife (regression) and Depresjon (classification) evaluated over 50 subject-level seeds.</div>
+</div>
+
+<footer>
+  <div>Kartik Sirohi &middot; Research</div>
+  <div><a href="https://doi.org/10.1109/ACCESS.2026.3722150" target="_blank" rel="noopener">IEEE Access Article ↗</a></div>
+</footer>
+
+</body>
+</html>
