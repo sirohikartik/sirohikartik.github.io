@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DICE-RoBERTa: Dense Image Captioning with Entropy and RoBERTa for Efficient Video Classification</title>
+
+<meta name="description" content="DICE-RoBERTa: An interpretable video classification framework combining dense frame captioning with entropy-based selection. Accepted at COMSYS 2026.">
+<meta name="author" content="Nitesh Bharot, Kartik Sirohi, Nisha Chaurasia, Priyanka Verma, John G. Breslin">
+<link rel="canonical" href="https://sirohikartik.github.io/diceroberta.html">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F03NZLPT1H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F03NZLPT1H');
+</script>
+
+<!-- MathJax 3 -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 120px 24px;
+    color: #cccccc;
+  }
+
+  .nav-back {
+    margin-bottom: 40px;
+    font-size: 0.85rem;
+  }
+
+  .nav-back a {
+    color: #777777;
+    text-decoration: none;
+    border-bottom: 1px dotted #444444;
+    padding-bottom: 2px;
+  }
+
+  .nav-back a:hover {
+    color: #ffffff;
+    border-color: #888888;
+  }
+
+  header {
+    margin-bottom: 48px;
+  }
+
+  .venue {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 1.95rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 16px;
+  }
+
+  .authors {
+    font-size: 0.95rem;
+    color: #aaaaaa;
+    margin-bottom: 4px;
+  }
+
+  .affil {
+    font-size: 0.85rem;
+    color: #666666;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #cccccc;
+  }
+
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+    color: #e0e0e0;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  .table-wrap {
+    margin: 28px 0 36px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 500;
+    color: #888888;
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid #333333;
+  }
+
+  td {
+    padding: 10px 12px 10px 0;
+    color: #cccccc;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  td.num, th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .caption {
+    font-size: 0.82rem;
+    color: #777777;
+    margin-top: 10px;
+    line-height: 1.45;
+  }
+
+  pre {
+    background: #0a0a0a;
+    border: 1px solid #222222;
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #cccccc;
+    margin: 24px 0;
+    overflow-x: auto;
+    padding: 16px;
+  }
+
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid #222222;
+    font-size: 0.82rem;
+    color: #666666;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer a {
+    color: #888888;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">&larr; back to home</a>
+</div>
+
+<header>
+  <div class="venue">COMSYS 2026 &middot; Accepted &amp; Presented</div>
+  <h1>DICE-RoBERTa: Dense Image Captioning with Entropy and RoBERTa for Efficient Video Classification</h1>
+  <div class="authors">Nitesh Bharot, Kartik Sirohi, Nisha Chaurasia, Priyanka Verma, John G. Breslin</div>
+  <div class="affil">Insight Research Ireland Centre for Data Analytics (University of Galway) &amp; Dr. B.R. Ambedkar NIT Jalandhar</div>
+</header>
+
+<h2>Motivation</h2>
+<p>
+  State-of-the-art video action recognition models achieve high accuracy on benchmarks like UCF101 (&gt;97%), but they require clusters of high-end GPUs (e.g., multiple H100s) and long training times (20–50 hours). More importantly, these models operate as black boxes: when a model misclassifies an action (such as confusing bodyweight squats with lunges), practitioners cannot inspect why the failure occurred. Existing explainable methods rely on post-hoc saliency heatmaps or dense numerical concept matrices, which decouple visual context from chronological action.
+</p>
+<p>
+  DICE-RoBERTa addresses these limitations through three principles: <strong>accessibility</strong> (training on free-tier GPUs), <strong>interpretability</strong> (using natural language as an intermediate bottleneck), and <strong>efficiency</strong> (minimizing inference GFLOPs).
+</p>
+
+<h2>The DICE-RoBERTa Framework</h2>
+<p>
+  DICE-RoBERTa decouples visual perception from temporal reasoning through a three-stage pipeline:
+</p>
+<ul>
+  <li>
+    <strong>Stage 1: Histogram-Based Entropy Filtering.</strong> Before passing frames to any neural network, we compute the Shannon entropy difference of pixel intensities between consecutive frames ($\Delta H = |H(f_t) - H(f_{prev})|$). Frames with $\Delta H < \tau_{hist} = 0.01$ are visually redundant and rejected, reducing the number of processed frames by roughly 65%.
+  </li>
+  <li>
+    <strong>Stage 2: Visual-to-Linguistic Encoding.</strong> Selected frames are processed by <strong>Florence-2-Base</strong> (0.23B parameters) fine-tuned with Low-Rank Adaptation (LoRA, rank $r=64$, $\alpha=128$). Florence-2 generates dense, semantic captions describing the actors, objects, and interactions in the frame (e.g., <em>"holding violin"</em>, <em>"bowing strings"</em>).
+  </li>
+  <li>
+    <strong>Stage 3: Linguistic Classification.</strong> Frame captions are aggregated chronologically into a single text document and classified using fine-tuned <strong>RoBERTa-Large</strong> (355M parameters) to predict the final action label among 101 classes.
+  </li>
+</ul>
+
+<h2>Evaluation &amp; Results</h2>
+<p>
+  We evaluated DICE-RoBERTa on the standard UCF101 benchmark (Split 1), comparing against high-performance supervised 3D-CNNs and parameter-efficient baselines like MoCLIP-Lite.
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th class="num">Accuracy</th>
+        <th class="num">GFLOPs</th>
+        <th class="num">Explainable?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="color: #777;">
+        <td colspan="4"><em>Supervised 3D-CNNs</em></td>
+      </tr>
+      <tr>
+        <td>R(2+1)D-152</td>
+        <td class="num">97.3%</td>
+        <td class="num">252.0</td>
+        <td class="num">No</td>
+      </tr>
+      <tr>
+        <td>P3D</td>
+        <td class="num">93.7%</td>
+        <td class="num">n/a</td>
+        <td class="num">No</td>
+      </tr>
+      <tr>
+        <td>I3D</td>
+        <td class="num">93.4%</td>
+        <td class="num">n/a</td>
+        <td class="num">No</td>
+      </tr>
+      <tr>
+        <td>ResNet3D-50</td>
+        <td class="num">&gt;90.0%</td>
+        <td class="num">64.1</td>
+        <td class="num">No</td>
+      </tr>
+      <tr style="border-top: 1px solid #333; color: #777;">
+        <td colspan="4"><em>Efficient / Self-Supervised Baselines</em></td>
+      </tr>
+      <tr>
+        <td>MoCLIP-Lite</td>
+        <td class="num">89.2%</td>
+        <td class="num">16.9</td>
+        <td class="num">No</td>
+      </tr>
+      <tr>
+        <td>Video Clip Ordering</td>
+        <td class="num">64.9%</td>
+        <td class="num">n/a</td>
+        <td class="num">No</td>
+      </tr>
+      <tr>
+        <td>C3D (M&amp;A Pretext)</td>
+        <td class="num">58.8%</td>
+        <td class="num">39.5</td>
+        <td class="num">No</td>
+      </tr>
+      <tr style="border-top: 1px solid #333;">
+        <td><strong>DICE-RoBERTa (Ours)</strong></td>
+        <td class="num"><strong>85.0%</strong></td>
+        <td class="num"><strong>9.8</strong></td>
+        <td class="num"><strong>Yes</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Table 1: Comparison on the UCF101 test set. DICE-RoBERTa achieves competitive accuracy at 9.8 GFLOPs with full interpretability.</div>
+</div>
+
+<p>
+  A detailed breakdown across the 101 UCF101 action classes shows performance across different activity types:
+</p>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Bracket</th>
+        <th>F1 Range</th>
+        <th class="num">Count</th>
+        <th>Example Classes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Perfect</td>
+        <td>1.00</td>
+        <td class="num">14</td>
+        <td>BenchPress, Biking, Billiards, PlayingCello</td>
+      </tr>
+      <tr>
+        <td>Near Perfect</td>
+        <td>0.90–0.99</td>
+        <td class="num">35</td>
+        <td>BabyCrawling, BandMarching, BaseballPitch</td>
+      </tr>
+      <tr>
+        <td>Good</td>
+        <td>0.80–0.89</td>
+        <td class="num">23</td>
+        <td>ApplyEyeMakeup, ApplyLipstick, Archery</td>
+      </tr>
+      <tr>
+        <td>Fair</td>
+        <td>0.70–0.79</td>
+        <td class="num">15</td>
+        <td>BalanceBeam, BoxingSpeedBag, BrushingTeeth</td>
+      </tr>
+      <tr>
+        <td>Poor</td>
+        <td>0.60–0.69</td>
+        <td class="num">5</td>
+        <td>CricketShot, HammerThrow, HandstandWalking</td>
+      </tr>
+      <tr>
+        <td>Very Poor</td>
+        <td>&lt; 0.60</td>
+        <td class="num">9</td>
+        <td>BodyWeightSquats, CricketBowling, HighJump</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caption">Table 2: Breakdown of DICE-RoBERTa performance grouped by F1 score. Over 70% of classes achieve F1 &ge; 0.80.</div>
+</div>
+
+<h2>What Was Found</h2>
+<ul>
+  <li><strong>Competitive accuracy with intrinsic explainability:</strong> DICE-RoBERTa achieves <strong>85.0% top-1 accuracy</strong> on UCF101, significantly outperforming comparable self-supervised baselines (C3D at 58.8%, Clip Ordering at 64.9%).</li>
+  <li><strong>41% lower inference cost than MoCLIP-Lite:</strong> By discarding ~65% of frames via histogram entropy filtering, the pipeline requires only <strong>9.8 GFLOPs</strong> per video (vs. 16.9 GFLOPs for MoCLIP-Lite and 64.1 GFLOPs for ResNet3D-50).</li>
+  <li><strong>Trained on free-tier hardware:</strong> The complete pipeline was trained in <strong>6 hours and 48 minutes</strong> on a single free NVIDIA Tesla P100 (16GB) on Kaggle (Stage 1: 4h13m, Stage 2: 1h28m, Stage 3: 1h06m), democratizing research without requiring expensive multi-GPU infrastructure.</li>
+  <li><strong>Transparent error diagnosis:</strong> Because decisions flow through natural language captions, failure modes are directly inspectable. The model excels on object-centric actions (14 classes with 1.00 F1), but struggles on subtle bodyweight motions (such as <em>BodyWeightSquats</em>, F1: 0.33). Examining the text logs reveals that the vision captioner produced generic descriptions like <em>"person exercising indoors"</em> rather than specific kinematic cues like <em>"person squatting with bent knees"</em>—pinpointing the exact module to improve.</li>
+</ul>
+
+<footer>
+  <div>&copy; 2026 Kartik Sirohi</div>
+  <div><a href="index.html">&larr; back to home</a></div>
+</footer>
+
+</body>
+</html>
