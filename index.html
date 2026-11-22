@@ -474,7 +474,7 @@
     .yt-desc-fallback{display:block;font-size:0.8rem;line-height:1.5;color:var(--ink-soft);margin-top:0.4rem;}
     /* touch devices: thumbnails become tap targets that open the article */
     .yt-thumb{cursor:pointer;}
-    .yt-thumb:active>img,.yt-thumb:active>svg.yt-svg,.yt-thumb:active .post-thumb{opacity:0.72;}
+    .yt-thumb:active>img,.yt-thumb:active>svg.yt-svg{opacity:0.72;}
   }
   .yt-meta{padding:0.65rem 0.2rem 0;}
   .yt-meta .entry-title{display:block;font-size:0.95rem;line-height:1.35;background-image:none;transition:color 0.2s ease;}
@@ -648,28 +648,41 @@
     color:var(--ink-soft);text-align:center;letter-spacing:0.01em;
   }
 
-  /* ---- still, abstract blog artwork ---- */
-  .post-with-thumb{display:flex;gap:1.2rem;align-items:flex-start;}
-  .post-thumb{position:absolute;inset:0;overflow:hidden;background:#080b10;isolation:isolate;}
-  .post-thumb::before,.post-thumb::after{content:"";position:absolute;inset:0;pointer-events:none;}
-  .post-thumb[data-thumb="matmul"]{background:radial-gradient(ellipse at 68% 35%,rgba(51,126,205,.26),transparent 48%),linear-gradient(135deg,#07101c,#08090d 68%);}
-  .post-thumb[data-thumb="matmul"]::before{background:linear-gradient(rgba(107,174,239,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(107,174,239,.13) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(135deg,transparent 4%,#000 52%,transparent 100%);}
-  .post-thumb[data-thumb="matmul"]::after{inset:20% 13%;border:1px solid rgba(107,174,239,.45);background:repeating-linear-gradient(0deg,transparent 0 13px,rgba(107,174,239,.2) 14px),repeating-linear-gradient(90deg,transparent 0 13px,rgba(107,174,239,.2) 14px);transform:perspective(360px) rotateX(48deg) rotateZ(-18deg);box-shadow:0 0 42px rgba(37,120,212,.18);}
-  .post-thumb[data-thumb="tinygpt"]{background:radial-gradient(ellipse at center,rgba(44,129,114,.18),transparent 55%),linear-gradient(145deg,#06100f,#090a0d);}
-  .post-thumb[data-thumb="tinygpt"]::before{inset:18% 12%;background:radial-gradient(circle,rgba(112,219,192,.9) 0 2px,transparent 2.5px);background-size:34px 30px;mask-image:linear-gradient(115deg,transparent,#000 18% 82%,transparent);}
-  .post-thumb[data-thumb="tinygpt"]::after{inset:30% 22%;background:repeating-linear-gradient(24deg,transparent 0 24px,rgba(87,199,176,.28) 25px 26px,transparent 27px 48px);clip-path:polygon(0 25%,25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%);}
-  .post-thumb[data-thumb="backprop"]{background:radial-gradient(circle at 50% 46%,rgba(161,126,231,.23),transparent 52%),#0b0911;}
-  .post-thumb[data-thumb="backprop"]::before{inset:-15%;background:repeating-radial-gradient(ellipse at 50% 48%,transparent 0 15px,rgba(183,163,242,.24) 16px 17px,transparent 18px 31px);transform:rotate(-18deg);}
-  .post-thumb[data-thumb="backprop"]::after{inset:0;background:linear-gradient(135deg,transparent 47%,rgba(183,163,242,.45) 48%,transparent 49%),linear-gradient(35deg,transparent 57%,rgba(183,163,242,.28) 58%,transparent 59%);}
-  .post-thumb[data-thumb="neural"]{background:radial-gradient(ellipse at 35% 55%,rgba(226,128,98,.23),transparent 42%),radial-gradient(ellipse at 72% 35%,rgba(184,116,201,.2),transparent 40%),#110b0d;}
-  .post-thumb[data-thumb="neural"]::before{inset:-25%;background:repeating-linear-gradient(148deg,transparent 0 19px,rgba(255,177,143,.17) 20px 21px,transparent 22px 40px);transform:rotate(-10deg);}
-  .post-thumb[data-thumb="neural"]::after{inset:18%;border-radius:50%;border:1px solid rgba(255,190,163,.35);box-shadow:0 0 0 18px rgba(255,190,163,.035),0 0 0 36px rgba(255,190,163,.025);}
-  .post-thumb[data-thumb="graph"]{background:radial-gradient(ellipse at center,rgba(48,148,126,.22),transparent 58%),#07100f;}
-  .post-thumb[data-thumb="graph"]::before{background:linear-gradient(30deg,transparent 49.7%,rgba(87,199,176,.22) 50%,transparent 50.4%),linear-gradient(150deg,transparent 49.7%,rgba(87,199,176,.18) 50%,transparent 50.4%);background-size:52px 45px;mask-image:radial-gradient(ellipse,#000 15%,transparent 76%);}
-  .post-thumb[data-thumb="graph"]::after{inset:35% 42%;border:1px solid rgba(87,199,176,.7);border-radius:50%;box-shadow:0 0 0 12px rgba(87,199,176,.06),0 0 35px rgba(87,199,176,.25);}
-  .post-grid .yt-overlay{background:rgba(6,7,8,0.84);}
-  .post-grid .entry-title{background-image:none;}
-  .post-grid .yt-meta .entry-title:hover{color:var(--signal);}
+  /* ---- Clean Blog List (No thumbnails, animated underline on hover) ---- */
+  .blog-list{list-style:none;padding:0;margin:0.3rem 0;display:flex;flex-direction:column;gap:1.1rem;}
+  .blog-item{display:flex;flex-direction:column;gap:0.25rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .blog-item:last-child{border-bottom:none;padding-bottom:0;}
+  .blog-item-main{display:flex;align-items:baseline;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;}
+  .blog-title-link{
+    color:var(--signal);
+    font-family:var(--display);
+    font-size:1.02rem;
+    font-weight:600;
+    letter-spacing:-0.015em;
+    text-decoration:none;
+    background-image:linear-gradient(currentColor,currentColor);
+    background-repeat:no-repeat;
+    background-position:0 100%;
+    background-size:0% 1px;
+    transition:background-size 0.28s cubic-bezier(.4,0,.2,1);
+    padding-bottom:1px;
+  }
+  .blog-title-link:hover{
+    background-size:100% 1px;
+    color:var(--signal);
+  }
+  .blog-item-meta{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    white-space:nowrap;
+  }
+  .blog-item-desc{
+    font-size:0.86rem;
+    line-height:1.55;
+    color:var(--ink-soft);
+    max-width:68ch;
+  }
 
   footer{
     margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
@@ -1239,28 +1252,47 @@
   <!-- POSTS -->
   <section id="posts">
     <div class="hunk"><span class="content">Writing &amp; Notes</span></div>
-    <div class="logline"><span class="content"><div class="yt-grid post-grid">
-      <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="matmul" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">Notes on writing and tuning CUDA matrix multiplication kernels, from 44 to 376 GFLOP/s.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">Read article ↗</a></div></div></div>
-        <div class="yt-meta"><a class="entry-title" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul</a><span class="entry-meta">Sep 2026 · Research</span></div>
-      </article>
-      <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="tinygpt" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">Building a 30M-parameter GPT from scratch in C++ with NEON, SSE, and OpenMP.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/tinygpt_blog.html">Read article ↗</a></div></div></div>
-        <div class="yt-meta"><a class="entry-title" href="https://sirohikartik.github.io/tinygpt_blog.html">Building tinyGPT in C++</a><span class="entry-meta">Jul 2026 · Projects</span></div>
-      </article>
-      <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="backprop" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">An intuitive walkthrough of backpropagation, from the chain rule to automatic differentiation.</div><div class="entry-refs"><a href="https://sirohikartik.github.io/backprop.html">Read article ↗</a></div></div></div>
-        <div class="yt-meta"><a class="entry-title" href="https://sirohikartik.github.io/backprop.html">Backpropagation: The Engine of Deep Learning</a><span class="entry-meta">Jan 2026 · Tutorials</span></div>
-      </article>
-      <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="neural" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">A visual explanation of how neural networks learn one parameter at a time.</div><div class="entry-refs"><a href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Read article ↗</a></div></div></div>
-        <div class="yt-meta"><a class="entry-title" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470">Intuition Behind Neural Networks</a><span class="entry-meta">Oct 2025 · Tutorials</span></div>
-      </article>
-      <article class="yt-card">
-        <div class="yt-thumb"><div class="post-thumb" data-thumb="graph" aria-hidden="true"></div><div class="yt-overlay"><div class="entry-desc">A survey of graph retrieval methods and how they help retrieve connected knowledge.</div><div class="entry-refs"><a href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Read article ↗</a></div></div></div>
-        <div class="yt-meta"><a class="entry-title" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/">Graph Retrieval Methods</a><span class="entry-meta">Jul 2026 · Research</span></div>
-      </article>
-    </div></span></div>
+    <div class="logline">
+      <span class="content">
+        <ul class="blog-list">
+          <li class="blog-item">
+            <div class="blog-item-main">
+              <a class="blog-title-link" href="https://medium.com/@kartik.orion.dev/from-44-gflop-s-to-376-gflop-s-learning-gpu-performance-through-matmul-a88bcf2b7092" target="_blank" rel="noopener">From 44 GFLOP/s to 376 GFLOP/s: Learning GPU Performance Through MatMul ↗</a>
+              <span class="blog-item-meta">Sep 2026 · Research</span>
+            </div>
+            <div class="blog-item-desc">Notes on writing and tuning CUDA matrix multiplication kernels, from 44 to 376 GFLOP/s.</div>
+          </li>
+          <li class="blog-item">
+            <div class="blog-item-main">
+              <a class="blog-title-link" href="tinygpt_blog.html">Building tinyGPT in C++ ↗</a>
+              <span class="blog-item-meta">Jul 2026 · Projects</span>
+            </div>
+            <div class="blog-item-desc">Building a 30M-parameter GPT from scratch in C++ with NEON, SSE, and OpenMP.</div>
+          </li>
+          <li class="blog-item">
+            <div class="blog-item-main">
+              <a class="blog-title-link" href="backprop.html">Backpropagation: The Engine of Deep Learning ↗</a>
+              <span class="blog-item-meta">Jan 2026 · Tutorials</span>
+            </div>
+            <div class="blog-item-desc">An intuitive walkthrough of backpropagation, from the chain rule to automatic differentiation.</div>
+          </li>
+          <li class="blog-item">
+            <div class="blog-item-main">
+              <a class="blog-title-link" href="https://medium.com/@kartik.orion.dev/the-intuition-behind-neural-networks-one-parameter-at-a-time-c06787914470" target="_blank" rel="noopener">Intuition Behind Neural Networks ↗</a>
+              <span class="blog-item-meta">Oct 2025 · Tutorials</span>
+            </div>
+            <div class="blog-item-desc">A visual explanation of how neural networks learn one parameter at a time.</div>
+          </li>
+          <li class="blog-item">
+            <div class="blog-item-main">
+              <a class="blog-title-link" href="https://www.linkedin.com/pulse/graph-retrieval-methods-retrieving-knowledge-via-kartik-sirohi-hnscc/" target="_blank" rel="noopener">Graph Retrieval Methods ↗</a>
+              <span class="blog-item-meta">Jul 2026 · Research</span>
+            </div>
+            <div class="blog-item-desc">A survey of graph retrieval methods and how they help retrieve connected knowledge.</div>
+          </li>
+        </ul>
+      </span>
+    </div>
   </section>
 
   <footer>
