@@ -983,7 +983,7 @@
           <!-- 4. Financial TS Forecasting Preprint -->
           <div class="yt-card">
             <div class="yt-thumb">
-              <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract drifting aurora color field pattern">
+              <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Financial time series forecasting: Multi-horizon temporal wavefield">
                 <defs>
                   <linearGradient id="p-ts-bg" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0" stop-color="#0d0916"/><stop offset="1" stop-color="#04030a"/>
@@ -1566,57 +1566,128 @@
       gCOM.appendChild(gOdd);
     }
 
-    // 4. Financial TS Forecasting: Drifting Aurora Fields (soft flowing color washes)
+    // 4. Financial TS Forecasting: Dynamic Multi-Horizon Temporal Wavefield & Trajectories
     var gTS=document.getElementById('p-ts-pat');
-    var tsBlobs = [];
+    var tsWaves = [], tsDots = [];
     if(gTS){
-      var r3=mulberry32(20250624);
+      // Subtle background econometric grid & quantile reference levels
+      var gGrid = document.createElementNS(svgNS, 'g');
+      gGrid.setAttribute('opacity', '0.22');
+      [90, 150, 210, 270].forEach(function(yVal){
+        var l = document.createElementNS(svgNS, 'line');
+        l.setAttribute('x1', '0'); l.setAttribute('x2', '640');
+        l.setAttribute('y1', yVal); l.setAttribute('y2', yVal);
+        l.setAttribute('stroke', '#818cf8');
+        l.setAttribute('stroke-width', '0.7');
+        l.setAttribute('stroke-dasharray', '3 7');
+        gGrid.appendChild(l);
+      });
+      [120, 240, 360, 480, 600].forEach(function(xVal){
+        var l = document.createElementNS(svgNS, 'line');
+        l.setAttribute('x1', xVal); l.setAttribute('x2', xVal);
+        l.setAttribute('y1', '40'); l.setAttribute('y2', '320');
+        l.setAttribute('stroke', '#818cf8');
+        l.setAttribute('stroke-width', '0.5');
+        l.setAttribute('stroke-dasharray', '2 10');
+        gGrid.appendChild(l);
+      });
+      gTS.appendChild(gGrid);
 
-      // soft-focus filter shared by all fields
-      var tsFilter=document.createElementNS(svgNS,'filter');
-      tsFilter.setAttribute('id','p-ts-soft');
-      tsFilter.setAttribute('x','-50%'); tsFilter.setAttribute('y','-50%');
-      tsFilter.setAttribute('width','200%'); tsFilter.setAttribute('height','200%');
-      var tsBlur=document.createElementNS(svgNS,'feGaussianBlur');
-      tsBlur.setAttribute('stdDeviation','26');
-      tsFilter.appendChild(tsBlur);
-      gTS.appendChild(tsFilter);
-
-      var TS_FIELDS=[
-        { fill:'#7c3aed', rx:170, ry:95,  ax:210, ax2:60,  ay:70,  ay2:35, sx:0.10, sx2:0.23, sy:0.16, sy2:0.29, ph:0.0,  op:0.60 },
-        { fill:'#4361ee', rx:150, ry:110, ax:180, ax2:70,  ay:95,  ay2:40, sx:0.14, sx2:0.19, sy:0.11, sy2:0.25, ph:1.1,  op:0.52 },
-        { fill:'#22d3ee', rx:130, ry:80,  ax:230, ax2:55,  ay:110, ay2:30, sx:0.09, sx2:0.27, sy:0.19, sy2:0.22, ph:2.3,  op:0.42 },
-        { fill:'#c026d3', rx:160, ry:85,  ax:190, ax2:80,  ay:65,  ay2:45, sx:0.12, sx2:0.21, sy:0.15, sy2:0.31, ph:3.4,  op:0.48 },
-        { fill:'#312e81', rx:200, ry:120, ax:150, ax2:65,  ay:90,  ay2:50, sx:0.08, sx2:0.17, sy:0.13, sy2:0.24, ph:4.2,  op:0.70 },
-        { fill:'#0ea5e9', rx:120, ry:70,  ax:220, ax2:50,  ay:120, ay2:38, sx:0.16, sx2:0.24, sy:0.10, sy2:0.28, ph:5.0,  op:0.36 },
-        { fill:'#a855f7', rx:110, ry:75,  ax:200, ax2:72,  ay:80,  ay2:42, sx:0.19, sx2:0.26, sy:0.17, sy2:0.33, ph:r3(), op:0.40 }
+      // Trajectory wave configurations (multi-frequency foundation model decomposition)
+      var TS_WAVE_CFGS = [
+        // 0: Macro trend carrier wave
+        { stroke: '#818cf8', width: 2.0, dash: '', op: 0.82,
+          evalY: function(x, t){ return 180 + 52*Math.sin(0.008*x + t*0.75) + 24*Math.cos(0.017*x - t*0.4); } },
+        // 1: Primary cyclical harmonic (business cycle)
+        { stroke: '#a855f7', width: 1.6, dash: '', op: 0.78,
+          evalY: function(x, t){ return 180 + 44*Math.sin(0.012*x - t*0.95 + 1.2) + 22*Math.sin(0.024*x + t*0.6); } },
+        // 2: Upper probabilistic quantile horizon
+        { stroke: '#c084fc', width: 1.3, dash: '6 4', op: 0.70,
+          evalY: function(x, t){ return 142 + 40*Math.sin(0.010*x + t*0.8 + 0.5) + 18*Math.cos(0.020*x - t*0.5) - 15*Math.cos(0.005*x + t*0.3); } },
+        // 3: Lower probabilistic quantile horizon
+        { stroke: '#38bdf8', width: 1.3, dash: '6 4', op: 0.65,
+          evalY: function(x, t){ return 218 + 38*Math.sin(0.009*x - t*0.7 + 2.0) - 18*Math.cos(0.019*x + t*0.6) + 15*Math.cos(0.006*x - t*0.3); } },
+        // 4: Temporal foundation model latent trajectory
+        { stroke: '#a78bfa', width: 1.4, dash: '', op: 0.68,
+          evalY: function(x, t){ return 180 + 58*Math.cos(0.007*x + t*0.65 + 3.1) + 18*Math.sin(0.028*x - t*1.2); } },
+        // 5: High-frequency stochastic micro-structure / residual oscillations
+        { stroke: '#e879f9', width: 1.0, dash: '', op: 0.60,
+          evalY: function(x, t){ return 180 + (22*Math.sin(0.042*x + t*2.0)*Math.cos(0.013*x + t*0.7)) + 16*Math.sin(0.021*x - t*1.4); } },
+        // 6: Fast streaming temporal attention signal
+        { stroke: '#5ce1e6', width: 1.1, dash: '3 3', op: 0.58,
+          evalY: function(x, t){ return 180 + 34*Math.sin(0.018*x + t*1.5 + 4.2) + 14*Math.cos(0.035*x - t*1.8); } }
       ];
-      for(var bi=0; bi<TS_FIELDS.length; bi++){
-        var cfg=TS_FIELDS[bi];
-        var ell=document.createElementNS(svgNS,'ellipse');
-        ell.setAttribute('rx',cfg.rx.toFixed(1));
-        ell.setAttribute('ry',cfg.ry.toFixed(1));
-        ell.setAttribute('fill',cfg.fill);
-        ell.setAttribute('opacity',cfg.op.toFixed(2));
-        ell.setAttribute('filter','url(#p-ts-soft)');
-        gTS.appendChild(ell);
-        tsBlobs.push({ el: ell, cfg: cfg });
-      }
+
+      TS_WAVE_CFGS.forEach(function(cfg){
+        var p = document.createElementNS(svgNS, 'path');
+        p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', cfg.stroke);
+        p.setAttribute('stroke-width', cfg.width.toFixed(1));
+        if(cfg.dash) p.setAttribute('stroke-dasharray', cfg.dash);
+        p.setAttribute('stroke-linecap', 'round');
+        p.setAttribute('stroke-linejoin', 'round');
+        p.setAttribute('opacity', cfg.op.toFixed(2));
+        gTS.appendChild(p);
+        tsWaves.push({ el: p, cfg: cfg });
+      });
+
+      // Discrete temporal token nodes riding key points along waveforms
+      var dotPoints = [
+        { waveIdx: 0, x: 60,  fill: '#c084fc', r: 2.4 },
+        { waveIdx: 0, x: 190, fill: '#c084fc', r: 2.4 },
+        { waveIdx: 0, x: 330, fill: '#c084fc', r: 2.8 },
+        { waveIdx: 0, x: 470, fill: '#c084fc', r: 2.4 },
+        { waveIdx: 0, x: 590, fill: '#c084fc', r: 2.4 },
+        { waveIdx: 1, x: 130, fill: '#a855f7', r: 2.0 },
+        { waveIdx: 1, x: 270, fill: '#a855f7', r: 2.2 },
+        { waveIdx: 1, x: 410, fill: '#a855f7', r: 2.0 },
+        { waveIdx: 1, x: 540, fill: '#a855f7', r: 2.2 },
+        { waveIdx: 2, x: 100, fill: '#e879f9', r: 1.8 },
+        { waveIdx: 2, x: 240, fill: '#e879f9', r: 2.0 },
+        { waveIdx: 2, x: 380, fill: '#e879f9', r: 1.8 },
+        { waveIdx: 2, x: 510, fill: '#e879f9', r: 2.0 },
+        { waveIdx: 3, x: 150, fill: '#38bdf8', r: 1.8 },
+        { waveIdx: 3, x: 300, fill: '#38bdf8', r: 2.0 },
+        { waveIdx: 3, x: 440, fill: '#38bdf8', r: 1.8 },
+        { waveIdx: 3, x: 570, fill: '#38bdf8', r: 2.0 },
+        { waveIdx: 5, x: 210, fill: '#5ce1e6', r: 2.2 },
+        { waveIdx: 5, x: 360, fill: '#5ce1e6', r: 2.4 },
+        { waveIdx: 5, x: 490, fill: '#5ce1e6', r: 2.2 }
+      ];
+
+      var gDotGroup = document.createElementNS(svgNS, 'g');
+      dotPoints.forEach(function(dp, idx){
+        var c = document.createElementNS(svgNS, 'circle');
+        c.setAttribute('r', dp.r.toFixed(1));
+        c.setAttribute('fill', dp.fill);
+        c.setAttribute('opacity', '0.7');
+        gDotGroup.appendChild(c);
+        tsDots.push({ el: c, dp: dp, phase: idx * 0.4 });
+      });
+      gTS.appendChild(gDotGroup);
     }
 
     function updateTSForecast(tSec){
       if(!gTS) return;
-      for(var bi2=0; bi2<tsBlobs.length; bi2++){
-        var b=tsBlobs[bi2], c=b.cfg;
-        var x=320 + c.ax*Math.sin(tSec*c.sx + c.ph) + c.ax2*Math.sin(tSec*c.sx2 + c.ph*1.7);
-        var y=180 + c.ay*Math.sin(tSec*c.sy + c.ph*1.3 + 1.0) + c.ay2*Math.sin(tSec*c.sy2 + c.ph*2.1);
-        var rx=c.rx*(1 + 0.18*Math.sin(tSec*(c.sx*1.6) + c.ph));
-        var ry=c.ry*(1 + 0.22*Math.cos(tSec*(c.sy*1.4) + c.ph));
-        b.el.setAttribute('cx',x.toFixed(1));
-        b.el.setAttribute('cy',y.toFixed(1));
-        b.el.setAttribute('rx',rx.toFixed(1));
-        b.el.setAttribute('ry',ry.toFixed(1));
-        b.el.setAttribute('opacity',(c.op*(0.75 + 0.25*Math.sin(tSec*0.3 + c.ph))).toFixed(2));
+      var step = 8;
+      for(var wi=0; wi<tsWaves.length; wi++){
+        var w = tsWaves[wi];
+        var dStr = '';
+        for(var x=0; x<=640; x+=step){
+          var y = w.cfg.evalY(x, tSec);
+          dStr += (x === 0 ? 'M' : ' L') + x + ' ' + y.toFixed(1);
+        }
+        w.el.setAttribute('d', dStr);
+      }
+
+      for(var di=0; di<tsDots.length; di++){
+        var dObj = tsDots[di];
+        var waveCfg = tsWaves[dObj.dp.waveIdx].cfg;
+        var yPos = waveCfg.evalY(dObj.dp.x, tSec);
+        var op = 0.35 + 0.45 * (0.5 + 0.5 * Math.sin(tSec * 2.2 + dObj.phase));
+        dObj.el.setAttribute('cx', dObj.dp.x.toFixed(1));
+        dObj.el.setAttribute('cy', yPos.toFixed(1));
+        dObj.el.setAttribute('opacity', op.toFixed(2));
       }
     }
     updateTSForecast(0);
