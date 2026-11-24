@@ -980,7 +980,29 @@
             </div>
           </div>
 
-          <!-- 4. Weight Space -->
+          <!-- 4. Financial TS Forecasting Preprint -->
+          <div class="yt-card">
+            <div class="yt-thumb">
+              <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract drifting aurora color field pattern">
+                <defs>
+                  <linearGradient id="p-ts-bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#0d0916"/><stop offset="1" stop-color="#04030a"/>
+                  </linearGradient>
+                </defs>
+                <rect width="640" height="360" fill="url(#p-ts-bg)"/>
+                <g id="p-ts-pat"></g>
+              </svg>
+            </div>
+            <div class="yt-meta">
+              <a class="entry-title" href="https://www.preprints.org/manuscript/202506.2416" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">The Evolution of Financial Time Series Forecasting: From Classical Econometrics to Temporal Foundation Models and Multimodal LLMs</a>
+              <span class="entry-meta">Preprint · Preprints.org, Nov 2026</span>
+              <div class="entry-refs">
+                <a href="https://www.preprints.org/manuscript/202506.2416" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:4px;"></i>read preprint ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Weight Space -->
           <div class="yt-card">
             <div class="yt-thumb">
               <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Halftone wave pattern">
@@ -1003,7 +1025,7 @@
             </div>
           </div>
 
-          <!-- 5. Diffusion Physics -->
+          <!-- 6. Diffusion Physics -->
           <div class="yt-card">
             <div class="yt-thumb">
               <svg class="yt-svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ripple flow pattern">
@@ -1544,7 +1566,62 @@
       gCOM.appendChild(gOdd);
     }
 
-    // 4. Weight Space: 2D Halftone Traveling Wave Interference Dynamics
+    // 4. Financial TS Forecasting: Drifting Aurora Fields (soft flowing color washes)
+    var gTS=document.getElementById('p-ts-pat');
+    var tsBlobs = [];
+    if(gTS){
+      var r3=mulberry32(20250624);
+
+      // soft-focus filter shared by all fields
+      var tsFilter=document.createElementNS(svgNS,'filter');
+      tsFilter.setAttribute('id','p-ts-soft');
+      tsFilter.setAttribute('x','-50%'); tsFilter.setAttribute('y','-50%');
+      tsFilter.setAttribute('width','200%'); tsFilter.setAttribute('height','200%');
+      var tsBlur=document.createElementNS(svgNS,'feGaussianBlur');
+      tsBlur.setAttribute('stdDeviation','26');
+      tsFilter.appendChild(tsBlur);
+      gTS.appendChild(tsFilter);
+
+      var TS_FIELDS=[
+        { fill:'#7c3aed', rx:170, ry:95,  ax:210, ax2:60,  ay:70,  ay2:35, sx:0.10, sx2:0.23, sy:0.16, sy2:0.29, ph:0.0,  op:0.60 },
+        { fill:'#4361ee', rx:150, ry:110, ax:180, ax2:70,  ay:95,  ay2:40, sx:0.14, sx2:0.19, sy:0.11, sy2:0.25, ph:1.1,  op:0.52 },
+        { fill:'#22d3ee', rx:130, ry:80,  ax:230, ax2:55,  ay:110, ay2:30, sx:0.09, sx2:0.27, sy:0.19, sy2:0.22, ph:2.3,  op:0.42 },
+        { fill:'#c026d3', rx:160, ry:85,  ax:190, ax2:80,  ay:65,  ay2:45, sx:0.12, sx2:0.21, sy:0.15, sy2:0.31, ph:3.4,  op:0.48 },
+        { fill:'#312e81', rx:200, ry:120, ax:150, ax2:65,  ay:90,  ay2:50, sx:0.08, sx2:0.17, sy:0.13, sy2:0.24, ph:4.2,  op:0.70 },
+        { fill:'#0ea5e9', rx:120, ry:70,  ax:220, ax2:50,  ay:120, ay2:38, sx:0.16, sx2:0.24, sy:0.10, sy2:0.28, ph:5.0,  op:0.36 },
+        { fill:'#a855f7', rx:110, ry:75,  ax:200, ax2:72,  ay:80,  ay2:42, sx:0.19, sx2:0.26, sy:0.17, sy2:0.33, ph:r3(), op:0.40 }
+      ];
+      for(var bi=0; bi<TS_FIELDS.length; bi++){
+        var cfg=TS_FIELDS[bi];
+        var ell=document.createElementNS(svgNS,'ellipse');
+        ell.setAttribute('rx',cfg.rx.toFixed(1));
+        ell.setAttribute('ry',cfg.ry.toFixed(1));
+        ell.setAttribute('fill',cfg.fill);
+        ell.setAttribute('opacity',cfg.op.toFixed(2));
+        ell.setAttribute('filter','url(#p-ts-soft)');
+        gTS.appendChild(ell);
+        tsBlobs.push({ el: ell, cfg: cfg });
+      }
+    }
+
+    function updateTSForecast(tSec){
+      if(!gTS) return;
+      for(var bi2=0; bi2<tsBlobs.length; bi2++){
+        var b=tsBlobs[bi2], c=b.cfg;
+        var x=320 + c.ax*Math.sin(tSec*c.sx + c.ph) + c.ax2*Math.sin(tSec*c.sx2 + c.ph*1.7);
+        var y=180 + c.ay*Math.sin(tSec*c.sy + c.ph*1.3 + 1.0) + c.ay2*Math.sin(tSec*c.sy2 + c.ph*2.1);
+        var rx=c.rx*(1 + 0.18*Math.sin(tSec*(c.sx*1.6) + c.ph));
+        var ry=c.ry*(1 + 0.22*Math.cos(tSec*(c.sy*1.4) + c.ph));
+        b.el.setAttribute('cx',x.toFixed(1));
+        b.el.setAttribute('cy',y.toFixed(1));
+        b.el.setAttribute('rx',rx.toFixed(1));
+        b.el.setAttribute('ry',ry.toFixed(1));
+        b.el.setAttribute('opacity',(c.op*(0.75 + 0.25*Math.sin(tSec*0.3 + c.ph))).toFixed(2));
+      }
+    }
+    updateTSForecast(0);
+
+    // 5. Weight Space: 2D Halftone Traveling Wave Interference Dynamics
     var g1=document.getElementById('p1-dots');
     var weightDots = [];
     if(g1){
@@ -1575,7 +1652,7 @@
     }
     updateWeightSpace(0);
 
-    // 5. Rippleflow: horizontal flow lines displaced by ripple + scattered accent dots
+    // 6. Rippleflow: horizontal flow lines displaced by ripple + scattered accent dots
     var g2=document.getElementById('p2-lines');
     if(g2){
       var r2=mulberry32(7);
@@ -1613,6 +1690,7 @@
 
         if(gAAAI) updateAAAI(elapsedSec);
         if(updateRibbon) updateRibbon(elapsedSec * 0.22);
+        if(gTS) updateTSForecast(elapsedSec);
         if(g1) updateWeightSpace(elapsedSec);
 
         researchRaf = requestAnimationFrame(animateResearch);
