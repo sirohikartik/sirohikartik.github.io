@@ -1596,128 +1596,71 @@
       gCOM.appendChild(gOdd);
     }
 
-    // 4. Financial TS Forecasting: Dynamic Multi-Horizon Temporal Wavefield & Trajectories
-    var gTS=document.getElementById('p-ts-pat');
-    var tsWaves = [], tsDots = [];
+    // 4. Financial TS Forecasting: Evolutionary Horizon (Econometrics -> Foundation Quantile Fan -> Multimodal Attention)
+    var gTS = document.getElementById('p-ts-pat');
+    var tsFanBands = [], tsFanEdges = [], tsArcs = [], tsNodes = [], tsSpine = null, tsBaseline = null;
+    var TS_HORIZON_X = 280;
+
+    function tsMeanY(x, t){
+      // Smooth regime shift: calm mean-reverting econometrics -> richer foundation-model dynamics
+      var blend = Math.max(0, Math.min(1, (x - 140) / 220));
+      var classical = 188 + 18 * Math.sin(0.022 * x + t * 0.45) + 7 * Math.cos(0.045 * x - t * 0.3);
+      var foundation = 176 + 34 * Math.sin(0.011 * x - t * 0.72 + 0.6) + 16 * Math.cos(0.023 * x + t * 0.55) - 18 * blend * Math.sin(0.006 * x + t * 0.25);
+      return classical * (1 - blend) + foundation * blend;
+    }
+
+    function tsSpread(x, t){
+      if(x <= 120) return 4;
+      var u = Math.min(1, (x - 120) / 520);
+      var breathe = 1 + 0.10 * Math.sin(t * 0.85 - x * 0.008);
+      return (4 + 108 * Math.pow(u, 1.55)) * breathe;
+    }
+
     if(gTS){
-      // Subtle background econometric grid & quantile reference levels
+      // Stage 1: Logarithmic econometric time-grid & forecast horizon divider
       var gGrid = document.createElementNS(svgNS, 'g');
-      gGrid.setAttribute('opacity', '0.22');
-      [90, 150, 210, 270].forEach(function(yVal){
+      gGrid.setAttribute('opacity', '0.24');
+      [78, 130, 182, 234, 286].forEach(function(yVal, idx){
         var l = document.createElementNS(svgNS, 'line');
         l.setAttribute('x1', '0'); l.setAttribute('x2', '640');
         l.setAttribute('y1', yVal); l.setAttribute('y2', yVal);
-        l.setAttribute('stroke', '#818cf8');
-        l.setAttribute('stroke-width', '0.7');
-        l.setAttribute('stroke-dasharray', '3 7');
+        l.setAttribute('stroke', idx === 2 ? '#818cf8' : '#4f46e5');
+        l.setAttribute('stroke-width', idx === 2 ? '0.8' : '0.5');
+        l.setAttribute('stroke-dasharray', idx === 2 ? '4 6' : '2 8');
         gGrid.appendChild(l);
       });
-      [120, 240, 360, 480, 600].forEach(function(xVal){
+      [56, 112, 168, 224, TS_HORIZON_X, 348, 424, 510, 604].forEach(function(xVal){
+        var isHorizon = (xVal === TS_HORIZON_X);
         var l = document.createElementNS(svgNS, 'line');
         l.setAttribute('x1', xVal); l.setAttribute('x2', xVal);
-        l.setAttribute('y1', '40'); l.setAttribute('y2', '320');
-        l.setAttribute('stroke', '#818cf8');
-        l.setAttribute('stroke-width', '0.5');
-        l.setAttribute('stroke-dasharray', '2 10');
+        l.setAttribute('y1', isHorizon ? '22' : '36'); l.setAttribute('y2', isHorizon ? '338' : '324');
+        l.setAttribute('stroke', isHorizon ? '#c084fc' : '#6366f1');
+        l.setAttribute('stroke-width', isHorizon ? '1.1' : '0.5');
+        l.setAttribute('stroke-dasharray', isHorizon ? '3 4' : '1 9');
+        if(isHorizon) l.setAttribute('opacity', '0.7');
         gGrid.appendChild(l);
       });
       gTS.appendChild(gGrid);
 
-      // Trajectory wave configurations (multi-frequency foundation model decomposition)
-      var TS_WAVE_CFGS = [
-        // 0: Macro trend carrier wave
-        { stroke: '#818cf8', width: 2.0, dash: '', op: 0.82,
-          evalY: function(x, t){ return 180 + 52*Math.sin(0.008*x + t*0.75) + 24*Math.cos(0.017*x - t*0.4); } },
-        // 1: Primary cyclical harmonic (business cycle)
-        { stroke: '#a855f7', width: 1.6, dash: '', op: 0.78,
-          evalY: function(x, t){ return 180 + 44*Math.sin(0.012*x - t*0.95 + 1.2) + 22*Math.sin(0.024*x + t*0.6); } },
-        // 2: Upper probabilistic quantile horizon
-        { stroke: '#c084fc', width: 1.3, dash: '6 4', op: 0.70,
-          evalY: function(x, t){ return 142 + 40*Math.sin(0.010*x + t*0.8 + 0.5) + 18*Math.cos(0.020*x - t*0.5) - 15*Math.cos(0.005*x + t*0.3); } },
-        // 3: Lower probabilistic quantile horizon
-        { stroke: '#38bdf8', width: 1.3, dash: '6 4', op: 0.65,
-          evalY: function(x, t){ return 218 + 38*Math.sin(0.009*x - t*0.7 + 2.0) - 18*Math.cos(0.019*x + t*0.6) + 15*Math.cos(0.006*x - t*0.3); } },
-        // 4: Temporal foundation model latent trajectory
-        { stroke: '#a78bfa', width: 1.4, dash: '', op: 0.68,
-          evalY: function(x, t){ return 180 + 58*Math.cos(0.007*x + t*0.65 + 3.1) + 18*Math.sin(0.028*x - t*1.2); } },
-        // 5: High-frequency stochastic micro-structure / residual oscillations
-        { stroke: '#e879f9', width: 1.0, dash: '', op: 0.60,
-          evalY: function(x, t){ return 180 + (22*Math.sin(0.042*x + t*2.0)*Math.cos(0.013*x + t*0.7)) + 16*Math.sin(0.021*x - t*1.4); } },
-        // 6: Fast streaming temporal attention signal
-        { stroke: '#5ce1e6', width: 1.1, dash: '3 3', op: 0.58,
-          evalY: function(x, t){ return 180 + 34*Math.sin(0.018*x + t*1.5 + 4.2) + 14*Math.cos(0.035*x - t*1.8); } }
-      ];
-
-      TS_WAVE_CFGS.forEach(function(cfg){
-        var p = document.createElementNS(svgNS, 'path');
-        p.setAttribute('fill', 'none');
-        p.setAttribute('stroke', cfg.stroke);
-        p.setAttribute('stroke-width', cfg.width.toFixed(1));
-        if(cfg.dash) p.setAttribute('stroke-dasharray', cfg.dash);
-        p.setAttribute('stroke-linecap', 'round');
-        p.setAttribute('stroke-linejoin', 'round');
-        p.setAttribute('opacity', cfg.op.toFixed(2));
-        gTS.appendChild(p);
-        tsWaves.push({ el: p, cfg: cfg });
-      });
-
-      // Discrete temporal token nodes riding key points along waveforms
-      var dotPoints = [
-        { waveIdx: 0, x: 60,  fill: '#c084fc', r: 2.4 },
-        { waveIdx: 0, x: 190, fill: '#c084fc', r: 2.4 },
-        { waveIdx: 0, x: 330, fill: '#c084fc', r: 2.8 },
-        { waveIdx: 0, x: 470, fill: '#c084fc', r: 2.4 },
-        { waveIdx: 0, x: 590, fill: '#c084fc', r: 2.4 },
-        { waveIdx: 1, x: 130, fill: '#a855f7', r: 2.0 },
-        { waveIdx: 1, x: 270, fill: '#a855f7', r: 2.2 },
-        { waveIdx: 1, x: 410, fill: '#a855f7', r: 2.0 },
-        { waveIdx: 1, x: 540, fill: '#a855f7', r: 2.2 },
-        { waveIdx: 2, x: 100, fill: '#e879f9', r: 1.8 },
-        { waveIdx: 2, x: 240, fill: '#e879f9', r: 2.0 },
-        { waveIdx: 2, x: 380, fill: '#e879f9', r: 1.8 },
-        { waveIdx: 2, x: 510, fill: '#e879f9', r: 2.0 },
-        { waveIdx: 3, x: 150, fill: '#38bdf8', r: 1.8 },
-        { waveIdx: 3, x: 300, fill: '#38bdf8', r: 2.0 },
-        { waveIdx: 3, x: 440, fill: '#38bdf8', r: 1.8 },
-        { waveIdx: 3, x: 570, fill: '#38bdf8', r: 2.0 },
-        { waveIdx: 5, x: 210, fill: '#5ce1e6', r: 2.2 },
-        { waveIdx: 5, x: 360, fill: '#5ce1e6', r: 2.4 },
-        { waveIdx: 5, x: 490, fill: '#5ce1e6', r: 2.2 }
-      ];
-
-      var gDotGroup = document.createElementNS(svgNS, 'g');
-      dotPoints.forEach(function(dp, idx){
-        var c = document.createElementNS(svgNS, 'circle');
-        c.setAttribute('r', dp.r.toFixed(1));
-        c.setAttribute('fill', dp.fill);
-        c.setAttribute('opacity', '0.7');
-        gDotGroup.appendChild(c);
-        tsDots.push({ el: c, dp: dp, phase: idx * 0.4 });
-      });
-      gTS.appendChild(gDotGroup);
+      // Stage 1b: Classical econometric mean-reverting step/lattice baseline (x <= TS_HORIZON_X)
+      tsBaseline = document.createElementNS(svgNS, 'path');
+      tsBaseline.setAttribute('fill', 'none');
+      tsBaseline.setAttribute('stroke', '#6366f1');
+      tsBaseline.setAttribute('stroke-width', '1.3');
+      tsBaseline.setAttribute('stroke-dasharray', '2 3');
+      tsBaseline.setAttribute('opacity', '0.55');
+      gTS.appendChild(tsBaseline);
     }
 
     function updateTSForecast(tSec){
       if(!gTS) return;
-      var step = 8;
-      for(var wi=0; wi<tsWaves.length; wi++){
-        var w = tsWaves[wi];
-        var dStr = '';
-        for(var x=0; x<=640; x+=step){
-          var y = w.cfg.evalY(x, tSec);
-          dStr += (x === 0 ? 'M' : ' L') + x + ' ' + y.toFixed(1);
+      if(tsBaseline){
+        var dBase = '';
+        for(var bx = 0; bx <= TS_HORIZON_X; bx += 14){
+          var by = 182 + Math.round((tsMeanY(bx, tSec) - 182) / 8) * 8;
+          dBase += (bx === 0 ? 'M' : ' H' + bx + ' V') + (bx === 0 ? by : by);
         }
-        w.el.setAttribute('d', dStr);
-      }
-
-      for(var di=0; di<tsDots.length; di++){
-        var dObj = tsDots[di];
-        var waveCfg = tsWaves[dObj.dp.waveIdx].cfg;
-        var yPos = waveCfg.evalY(dObj.dp.x, tSec);
-        var op = 0.35 + 0.45 * (0.5 + 0.5 * Math.sin(tSec * 2.2 + dObj.phase));
-        dObj.el.setAttribute('cx', dObj.dp.x.toFixed(1));
-        dObj.el.setAttribute('cy', yPos.toFixed(1));
-        dObj.el.setAttribute('opacity', op.toFixed(2));
+        tsBaseline.setAttribute('d', dBase);
       }
     }
     updateTSForecast(0);
