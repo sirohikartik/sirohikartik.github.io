@@ -1689,6 +1689,53 @@
       tsSpine.setAttribute('stroke-linecap', 'round');
       tsSpine.setAttribute('opacity', '0.92');
       gTS.appendChild(tsSpine);
+
+      // Stage 3: Multimodal LLM attention arcs (linking past anchors to future forecast modes)
+      var arcDefs = [
+        { x1: 84,  x2: 390, qOffset: 0.0,  color: '#a855f7', arch: -58, phase: 0.0 },
+        { x1: 140, x2: 468, qOffset: 0.55, color: '#e879f9', arch: -68, phase: 1.1 },
+        { x1: 196, x2: 536, qOffset: -0.55,color: '#38bdf8', arch: 62,  phase: 2.2 },
+        { x1: 224, x2: 592, qOffset: 0.25, color: '#c084fc', arch: -48, phase: 3.1 },
+        { x1: 280, x2: 560, qOffset: -0.25,color: '#818cf8', arch: 46,  phase: 4.0 }
+      ];
+      arcDefs.forEach(function(ad){
+        var pArc = document.createElementNS(svgNS, 'path');
+        pArc.setAttribute('fill', 'none');
+        pArc.setAttribute('stroke', ad.color);
+        pArc.setAttribute('stroke-width', '1.15');
+        pArc.setAttribute('stroke-dasharray', '4 5');
+        pArc.setAttribute('stroke-linecap', 'round');
+        gTS.appendChild(pArc);
+        tsArcs.push({ el: pArc, def: ad });
+      });
+
+      // Generative token & regime anchor nodes
+      var nodeDefs = [
+        { x: 84,  qOffset: 0.0,   r: 2.6, color: '#6366f1', halo: false, phase: 0.2 },
+        { x: 140, qOffset: 0.0,   r: 2.8, color: '#818cf8', halo: false, phase: 0.9 },
+        { x: 196, qOffset: 0.0,   r: 3.0, color: '#818cf8', halo: false, phase: 1.6 },
+        { x: 280, qOffset: 0.0,   r: 3.8, color: '#e9d5ff', halo: true,  phase: 0.0 },
+        { x: 390, qOffset: 0.0,   r: 3.0, color: '#c084fc', halo: true,  phase: 2.1 },
+        { x: 468, qOffset: 0.55,  r: 2.8, color: '#e879f9', halo: false, phase: 2.8 },
+        { x: 536, qOffset: -0.55, r: 2.8, color: '#38bdf8', halo: false, phase: 3.5 },
+        { x: 560, qOffset: -0.25, r: 2.4, color: '#818cf8', halo: false, phase: 4.1 },
+        { x: 592, qOffset: 0.25,  r: 3.2, color: '#f0abfc', halo: true,  phase: 4.8 }
+      ];
+      nodeDefs.forEach(function(nd){
+        var haloEl = null;
+        if(nd.halo){
+          haloEl = document.createElementNS(svgNS, 'circle');
+          haloEl.setAttribute('fill', 'none');
+          haloEl.setAttribute('stroke', nd.color);
+          haloEl.setAttribute('stroke-width', '1.0');
+          gTS.appendChild(haloEl);
+        }
+        var cNode = document.createElementNS(svgNS, 'circle');
+        cNode.setAttribute('r', nd.r.toFixed(1));
+        cNode.setAttribute('fill', nd.color);
+        gTS.appendChild(cNode);
+        tsNodes.push({ el: cNode, halo: haloEl, def: nd });
+      });
     }
 
     function updateTSForecast(tSec){
@@ -1740,6 +1787,32 @@
           dSp += (si === 0 ? 'M' : ' L') + spinePts[si].x + ' ' + spinePts[si].y.toFixed(1);
         }
         tsSpine.setAttribute('d', dSp);
+      }
+
+      for(var ai = 0; ai < tsArcs.length; ai++){
+        var arc = tsArcs[ai];
+        var y1 = tsMeanY(arc.def.x1, tSec);
+        var y2 = tsMeanY(arc.def.x2, tSec) + arc.def.qOffset * tsSpread(arc.def.x2, tSec);
+        var cx = (arc.def.x1 + arc.def.x2) * 0.5;
+        var cy = (y1 + y2) * 0.5 + arc.def.arch;
+        arc.el.setAttribute('d', 'M' + arc.def.x1 + ' ' + y1.toFixed(1) + ' Q' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + arc.def.x2 + ' ' + y2.toFixed(1));
+        arc.el.setAttribute('stroke-dashoffset', (-tSec * 14).toFixed(1));
+        arc.el.setAttribute('opacity', (0.24 + 0.34 * (0.5 + 0.5 * Math.sin(tSec * 1.4 + arc.def.phase))).toFixed(2));
+      }
+
+      for(var ni = 0; ni < tsNodes.length; ni++){
+        var nd = tsNodes[ni];
+        var ny = tsMeanY(nd.def.x, tSec) + nd.def.qOffset * tsSpread(nd.def.x, tSec);
+        var pulse = 0.5 + 0.5 * Math.sin(tSec * 2.1 + nd.def.phase);
+        nd.el.setAttribute('cx', nd.def.x);
+        nd.el.setAttribute('cy', ny.toFixed(1));
+        nd.el.setAttribute('opacity', (0.55 + 0.42 * pulse).toFixed(2));
+        if(nd.halo){
+          nd.halo.setAttribute('cx', nd.def.x);
+          nd.halo.setAttribute('cy', ny.toFixed(1));
+          nd.halo.setAttribute('r', (nd.def.r + 3.2 + 3.5 * pulse).toFixed(1));
+          nd.halo.setAttribute('opacity', (0.45 * (1 - pulse * 0.7)).toFixed(2));
+        }
       }
     }
     updateTSForecast(0);
