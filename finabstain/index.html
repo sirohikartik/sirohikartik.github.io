@@ -100,6 +100,25 @@
   .affil {
     font-size: 0.85rem;
     color: #666666;
+    margin-bottom: 16px;
+  }
+
+  .pub-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82rem;
+    margin-top: 14px;
+  }
+
+  a {
+    color: #6baeed;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 
   h2 {
@@ -218,6 +237,9 @@
   <h1>FinAbstain: Do Small Open Language Models Know Why a Financial Question Cannot Be Answered?</h1>
   <div class="authors">Kartik Sirohi, Kumar Prateek, Simranjit Singh</div>
   <div class="affil">Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar, Punjab, India</div>
+  <div class="pub-links">
+    <a href="https://github.com/SPELLAILab/FinAbstain" target="_blank" rel="noopener">GitHub (SPELLAILab/FinAbstain) ↗</a>
+  </div>
 </header>
 
 <h2>Motivation</h2>
@@ -246,6 +268,9 @@
 </ul>
 <p>
   To avoid memorization from pre-training data, monetary amounts were randomly scaled by $\alpha \in [0.55, 1.8] \setminus [0.9, 1.1]$. Gemma 4 31B generated initial question-answer pairs and proposed surgical edits for unanswerable items. Edits were applied deterministically by code, verified through code checks, and double-checked through blind validation by two independent models (<code>gpt-oss-120b</code> and <code>nemotron-3-super</code>). An item was included only when both validator models agreed with the gold label.
+</p>
+<p>
+  The complete benchmark dataset and evaluation suite are available on GitHub at <a href="https://github.com/SPELLAILab/FinAbstain" target="_blank" rel="noopener">SPELLAILab/FinAbstain</a>.
 </p>
 
 <h2>Evaluation &amp; Results</h2>
